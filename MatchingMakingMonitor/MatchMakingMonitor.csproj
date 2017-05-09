@@ -6,13 +6,14 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{5731B626-BC65-477B-BEA7-3A5163B306AE}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>MatchingMakingMonitor</RootNamespace>
+    <RootNamespace>MatchMakingMonitor</RootNamespace>
     <AssemblyName>MatchMakingMonitor</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -23,37 +24,91 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
+		<AppConfig>App.Release.config</AppConfig>
+		<PreBuildEvent>
+		  cd $(TargetDir)
+		  del log.txt
+		  del *.config
+		  RD /S /Q "$(TargetDir)config"
+		  RD /S /Q "$(TargetDir)bin"
+	  </PreBuildEvent>
+	  <PostBuildEvent>
+		  cd $(TargetDir)
+		  del *.xml
+
+		  del Xceed.Wpf.AvalonDock.*
+		  del Xceed.Wpf.DataGrid.dll
+		  RD /S /Q "$(TargetDir)en"
+		  RD /S /Q "$(TargetDir)de"
+		  RD /S /Q "$(TargetDir)es"
+		  RD /S /Q "$(TargetDir)fr"
+		  RD /S /Q "$(TargetDir)hu"
+		  RD /S /Q "$(TargetDir)it"
+		  RD /S /Q "$(TargetDir)ro"
+		  RD /S /Q "$(TargetDir)ru"
+		  RD /S /Q "$(TargetDir)sv"
+		  RD /S /Q "$(TargetDir)pt-br"
+
+		  mkdir bin
+		  move *.dll bin
+		  RD /S /Q "$(TargetDir)zh-Hans"
+	  </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Images\favicon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="EngineIoClientDotNet, Version=0.9.22.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EngineIoClientDotNet.0.9.22\lib\net45\EngineIoClientDotNet.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp.105.2.3\lib\net452\RestSharp.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="SocketIoClientDotNet, Version=0.9.13.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SocketIoClientDotNet.0.9.13\lib\net45\SocketIoClientDotNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
+    <Reference Include="System.Reactive.Core, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.Core.3.1.1\lib\net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.Interfaces.3.1.1\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.Linq.3.1.1\lib\net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.PlatformServices.3.1.1\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Windows.Threading, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.Windows.Threading.3.1.1\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WebSocket4Net, Version=0.14.1.0, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebSocket4Net.0.14.1\lib\net45\WebSocket4Net.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -82,9 +137,47 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Settings.xaml.cs">
-      <DependentUpon>Settings.xaml</DependentUpon>
+    <Compile Include="config\SettingsJson.cs" />
+    <Compile Include="Models\DisplayPlayerStats.cs" />
+    <Compile Include="Models\MobileDisplayPlayerStats.cs" />
+    <Compile Include="Models\MobileSettings.cs" />
+    <Compile Include="Models\PlayerShip.cs" />
+    <Compile Include="Models\Replay\Vehicle.cs" />
+    <Compile Include="Models\ResponseTypes\Aircraft.cs" />
+    <Compile Include="Models\ResponseTypes\Data.cs" />
+    <Compile Include="Models\ResponseTypes\MainBattery.cs" />
+    <Compile Include="Models\ResponseTypes\Meta.cs" />
+    <Compile Include="Models\ResponseTypes\Pvp.cs" />
+    <Compile Include="Models\ResponseTypes\Ramming.cs" />
+    <Compile Include="Models\ResponseTypes\SecondBattery.cs" />
+    <Compile Include="Models\ResponseTypes\Ship.cs" />
+    <Compile Include="Models\ResponseTypes\Torpedoes.cs" />
+    <Compile Include="Models\ResponseTypes\WargamingPlayer.cs" />
+    <Compile Include="QrCodeWindow.xaml.cs">
+      <DependentUpon>QrCodeWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\ApiService.cs" />
+    <Compile Include="Services\ILogger.cs" />
+    <Compile Include="Services\IocKernel.cs" />
+    <Compile Include="Services\FileLogger.cs" />
+    <Compile Include="Services\Settings.cs" />
+    <Compile Include="Services\StatsService.cs" />
+    <Compile Include="Services\WatcherService.cs" />
+    <Compile Include="SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SocketIO\LiveMatchSocket.cs" />
+    <Compile Include="SocketIO\SocketIOService.cs" />
+    <Compile Include="View\Util\BaseViewBinding.cs" />
+    <Compile Include="View\Util\PercentageStringFormatConverter.cs" />
+    <Compile Include="View\SubHeaderViewModel.cs" />
+    <Compile Include="View\HeaderViewModel.cs" />
+    <Compile Include="View\MainWindowViewModel.cs" />
+    <Compile Include="View\QrCodeViewModel.cs" />
+    <Compile Include="View\Util\RelayCommand.cs" />
+    <Compile Include="View\SettingsWindowViewModel.cs" />
+    <Compile Include="View\StatsViewModel.cs" />
+    <Compile Include="View\Util\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -97,17 +190,20 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Settings.xaml">
+    <Page Include="QrCodeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\PlayerShipStats.cs" />
-    <Compile Include="Models\PlayerStatsByShip.cs" />
-    <Compile Include="Models\ReplayModel.cs" />
-    <Compile Include="Models\ShipModel.cs" />
-    <Compile Include="Models\WargamingSearch.cs" />
+    <Compile Include="Models\ResponseTypes\PlayerStats.cs" />
+    <Compile Include="Models\Replay\Replay.cs" />
+    <Compile Include="Models\ShipInfo.cs" />
+    <Compile Include="Models\ResponseTypes\WargamingSearch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -116,23 +212,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="config\settings.default.json" />
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+		<None Include="App.Release.config">
+			<DependentUpon>App.config</DependentUpon>
+		</None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\gearIcon.png" />
@@ -146,6 +237,11 @@
     <Resource Include="Images\64x64Icon.png" />
     <Resource Include="Images\96x96Icon.png" />
     <Resource Include="Images\favicon.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\connectionIcon.png" />
+    <Resource Include="Images\qrcodeIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
