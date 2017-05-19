@@ -1,14 +1,15 @@
-﻿using MatchMakingMonitor.Services;
-using System.Windows;
+﻿using System.Windows;
+using MatchMakingMonitor.Services;
 
 namespace MatchMakingMonitor
 {
 	/// <summary>
-	/// Interaction logic for App.xaml
+	///   Interaction logic for App.xaml
 	/// </summary>
 	public partial class App
 	{
 		public static bool IsDebug;
+
 		protected override void OnStartup(StartupEventArgs e)
 		{
 #if DEBUG

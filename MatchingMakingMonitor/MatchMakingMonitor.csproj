@@ -35,15 +35,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>true</Prefer32Bit>
-		<AppConfig>App.Release.config</AppConfig>
-		<PreBuildEvent>
+    <AppConfig>App.Release.config</AppConfig>
+    <PreBuildEvent>
 		  cd $(TargetDir)
 		  del log.txt
 		  del *.config
 		  RD /S /Q "$(TargetDir)config"
 		  RD /S /Q "$(TargetDir)bin"
 	  </PreBuildEvent>
-	  <PostBuildEvent>
+    <PostBuildEvent>
 		  cd $(TargetDir)
 		  del *.xml
 
@@ -137,22 +137,38 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="config\BaseUrl.cs" />
+    <Compile Include="config\AppId.cs" />
+    <Compile Include="config\LimitsType.cs" />
+    <Compile Include="config\LimitsTier.cs" />
+    <Compile Include="config\Reflection\ChangedSetting.cs" />
+    <Compile Include="config\Reflection\ExportSettingAttribute.cs" />
+    <Compile Include="config\Region.cs" />
     <Compile Include="config\SettingsJson.cs" />
+    <Compile Include="config\warshipsToday\Extensions.cs" />
+    <Compile Include="config\warshipsToday\RemoteStats.cs" />
+    <Compile Include="config\warshipsToday\WarshipsTodayShip.cs" />
+    <Compile Include="config\warshipsToday\WarshipsTodayShipStats.cs" />
+    <Compile Include="config\warshipsToday\WarshipsTodayStats.cs" />
+    <Compile Include="config\warshipsToday\WarshipsTodayEntry.cs" />
+    <Compile Include="config\warshipsToday\WarshipsTodayVehicle.cs" />
+    <Compile Include="Models\ResponseTypes\ShipType.cs" />
+    <Compile Include="Models\ResponseTypes\ShipTier.cs" />
     <Compile Include="Models\DisplayPlayerStats.cs" />
     <Compile Include="Models\MobileDisplayPlayerStats.cs" />
     <Compile Include="Models\MobileSettings.cs" />
     <Compile Include="Models\PlayerShip.cs" />
-    <Compile Include="Models\Replay\Vehicle.cs" />
-    <Compile Include="Models\ResponseTypes\Aircraft.cs" />
-    <Compile Include="Models\ResponseTypes\Data.cs" />
-    <Compile Include="Models\ResponseTypes\MainBattery.cs" />
-    <Compile Include="Models\ResponseTypes\Meta.cs" />
-    <Compile Include="Models\ResponseTypes\Pvp.cs" />
-    <Compile Include="Models\ResponseTypes\Ramming.cs" />
-    <Compile Include="Models\ResponseTypes\SecondBattery.cs" />
-    <Compile Include="Models\ResponseTypes\Ship.cs" />
-    <Compile Include="Models\ResponseTypes\Torpedoes.cs" />
-    <Compile Include="Models\ResponseTypes\WargamingPlayer.cs" />
+    <Compile Include="Models\Replay\ReplayVehicle.cs" />
+    <Compile Include="Models\ResponseTypes\WgPlayerShipsStatsData.cs" />
+    <Compile Include="Models\ResponseTypes\WgShip.cs" />
+    <Compile Include="Models\ResponseTypes\WgStatsAircraft.cs" />
+    <Compile Include="Models\ResponseTypes\WgStatsMainBattery.cs" />
+    <Compile Include="Models\ResponseTypes\WgStatsPvp.cs" />
+    <Compile Include="Models\ResponseTypes\WgStatsRamming.cs" />
+    <Compile Include="Models\ResponseTypes\WgStatsSecondBattery.cs" />
+    <Compile Include="Models\ResponseTypes\WgStatsShip.cs" />
+    <Compile Include="Models\ResponseTypes\WgStatsTorpedoes.cs" />
+    <Compile Include="Models\ResponseTypes\WgStatsPlayer.cs" />
     <Compile Include="QrCodeWindow.xaml.cs">
       <DependentUpon>QrCodeWindow.xaml</DependentUpon>
     </Compile>
@@ -160,7 +176,7 @@
     <Compile Include="Services\ILogger.cs" />
     <Compile Include="Services\IocKernel.cs" />
     <Compile Include="Services\FileLogger.cs" />
-    <Compile Include="Services\Settings.cs" />
+    <Compile Include="Services\SettingsWrapper.cs" />
     <Compile Include="Services\StatsService.cs" />
     <Compile Include="Services\WatcherService.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
@@ -168,14 +184,20 @@
     </Compile>
     <Compile Include="SocketIO\LiveMatchSocket.cs" />
     <Compile Include="SocketIO\SocketIOService.cs" />
-    <Compile Include="View\Util\BaseViewBinding.cs" />
-    <Compile Include="View\Util\PercentageStringFormatConverter.cs" />
+    <Compile Include="View\Settings\ColorsEditor.cs" />
+    <Compile Include="View\Settings\ColorsViewModel.cs" />
+    <Compile Include="View\Settings\ILimitsEditor.cs" />
+    <Compile Include="View\Settings\DoubleLimitsEditor.cs" />
+    <Compile Include="View\Settings\LimitsViewModel.cs" />
+    <Compile Include="View\Settings\WeightsEditor.cs" />
+    <Compile Include="View\Settings\WeightsViewModel.cs" />
+    <Compile Include="View\Util\ViewModelBase.cs" />
     <Compile Include="View\SubHeaderViewModel.cs" />
     <Compile Include="View\HeaderViewModel.cs" />
     <Compile Include="View\MainWindowViewModel.cs" />
     <Compile Include="View\QrCodeViewModel.cs" />
     <Compile Include="View\Util\RelayCommand.cs" />
-    <Compile Include="View\SettingsWindowViewModel.cs" />
+    <Compile Include="View\Settings\SettingsWindowViewModel.cs" />
     <Compile Include="View\StatsViewModel.cs" />
     <Compile Include="View\Util\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
@@ -200,10 +222,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\ResponseTypes\PlayerStats.cs" />
+    <Compile Include="Models\ResponseTypes\WgPlayerShipsStatsResult.cs" />
     <Compile Include="Models\Replay\Replay.cs" />
-    <Compile Include="Models\ShipInfo.cs" />
-    <Compile Include="Models\ResponseTypes\WargamingSearch.cs" />
+    <Compile Include="Models\ResponseTypes\WgShipResponse.cs" />
+    <Compile Include="Models\ResponseTypes\WgPlayerSearchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -221,9 +243,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-		<None Include="App.Release.config">
-			<DependentUpon>App.config</DependentUpon>
-		</None>
+    <None Include="App.Release.config">
+      <DependentUpon>App.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\gearIcon.png" />

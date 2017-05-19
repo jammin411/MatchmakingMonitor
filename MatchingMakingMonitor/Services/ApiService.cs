@@ -1,52 +1,64 @@
-﻿using MatchMakingMonitor.Models;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using MatchMakingMonitor.Models;
 using MatchMakingMonitor.Models.Replay;
 using MatchMakingMonitor.Models.ResponseTypes;
+using Newtonsoft.Json;
 
 namespace MatchMakingMonitor.Services
 {
 	public class ApiService
 	{
-		private readonly Settings _settings;
+		private static readonly Regex DateStart = new Regex("\"data\":{");
+		private static readonly Regex ShipIdRegex = new Regex("\"(\\d){10}\":");
+		private static readonly Regex DataEnd = new Regex("}}$");
 		private readonly ILogger _logger;
-
-		private List<ShipInfo> _shipInfos;
-		public IReadOnlyList<ShipInfo> ShipInfos => _shipInfos.AsReadOnly();
+		private readonly SettingsWrapper _settingsWrapper;
 
 		private HttpClient _httpClient;
-		public ApiService(ILogger logger, Settings settings)
+
+		private List<WgShip> _wgShips;
+
+		public ApiService(ILogger logger, SettingsWrapper settingsWrapper)
 		{
-			_settings = settings;
+			_settingsWrapper = settingsWrapper;
 			_logger = logger;
 #pragma warning disable 4014
 			Ships();
 #pragma warning restore 4014
 		}
 
-		private string ApplicationId => _settings.Get<string>("appId" + _settings.Region);
+		public IReadOnlyList<WgShip> WgShips => _wgShips.AsReadOnly();
+
+		private string ApplicationId => _settingsWrapper.AppId;
 
 		private async void Ships()
 		{
 			try
 			{
-				var client = new HttpClient() { BaseAddress = new Uri("https://wowreplays.com") };
+				var baseUrl = _settingsWrapper.BaseUrl;
+				var client = new HttpClient {BaseAddress = new Uri(baseUrl)};
 
-				var result = await client.PostAsync("/Home/GetShipsForMatchmakingMonitor", null);
+				var result =
+					await client.PostAsync(
+						$"/wows/encyclopedia/ships/?application_id={ApplicationId}&fields=name%2C+tier%2C+type%2C+ship_id", null);
 				if (result.StatusCode != HttpStatusCode.OK) return;
 				var shipsJson = await result.Content.ReadAsStringAsync();
-				_shipInfos = await Task.Run(() => JsonConvert.DeserializeObject<List<ShipInfo>>(shipsJson));
+				shipsJson = DateStart.Replace(shipsJson, "\"data\":[");
+				shipsJson = ShipIdRegex.Replace(shipsJson, string.Empty);
+				shipsJson = DataEnd.Replace(shipsJson, "]}");
+				_wgShips = (await Task.Run(() => JsonConvert.DeserializeObject<WgShipResponse>(shipsJson)))?.Data;
 			}
 			catch (Exception e)
 			{
-				_logger.Error("Exception Occurred While Retrieving Ships", e);
-				_shipInfos = new List<ShipInfo>();
+				_logger.Error("Exception occurred while retrieving ships", e);
+				_wgShips = new List<WgShip>();
 			}
 		}
 
@@ -54,12 +66,10 @@ namespace MatchMakingMonitor.Services
 		{
 			try
 			{
-				while (_shipInfos == null)
-				{
+				while (_wgShips == null)
 					await Task.Delay(1000);
-				}
-				var baseUrl = _settings.Get<string>("baseUrl" + _settings.Region);
-				_httpClient = new HttpClient { BaseAddress = new Uri(baseUrl) };
+				var baseUrl = _settingsWrapper.BaseUrl;
+				_httpClient = new HttpClient {BaseAddress = new Uri(baseUrl)};
 
 				var tasks = replay.Vehicles.Select(GetAsync).ToList();
 				var list = await Task.WhenAll(tasks);
@@ -73,37 +83,39 @@ namespace MatchMakingMonitor.Services
 		}
 
 		[SuppressMessage("ReSharper", "InvertIf")]
-		private async Task<PlayerShip> GetAsync(Vehicle vehicle)
+		private async Task<PlayerShip> GetAsync(ReplayVehicle replayVehicle)
 		{
-			var shipInfo = ShipInfos.SingleOrDefault(s => s.ShipId == vehicle.ShipId);
+			var wgShip = WgShips.SingleOrDefault(s => s.ShipId == replayVehicle.ShipId);
 
-			var playerResponse = await _httpClient.GetAsync($"wows/account/list/?application_id={ApplicationId}&search={vehicle.Name}");
+			var playerResponse =
+				await _httpClient.GetAsync($"wows/account/list/?application_id={ApplicationId}&search={replayVehicle.Name}");
 			if (playerResponse.StatusCode == HttpStatusCode.OK)
 			{
 				var playerJson = await playerResponse.Content.ReadAsStringAsync();
-				var players = await Task.Run(() => JsonConvert.DeserializeObject<WargamingSearch>(playerJson));
+				var players = await Task.Run(() => JsonConvert.DeserializeObject<WgPlayerSearchResult>(playerJson));
 
-				var player = players.Data.SingleOrDefault(p => p.Nickname == vehicle.Name);
+				var player = players.Data.SingleOrDefault(p => p.Nickname == replayVehicle.Name);
 				if (player != null)
 				{
-					var shipResponse = await _httpClient.GetAsync($"wows/ships/stats/?application_id={ApplicationId}&account_id={player.AccountId}&ship_id={vehicle.ShipId}");
-					if (shipResponse.StatusCode == HttpStatusCode.OK)
+					var shipStatsResponse = await _httpClient.GetAsync(
+						$"wows/ships/stats/?application_id={ApplicationId}&account_id={player.AccountId}&ship_id={replayVehicle.ShipId}");
+					if (shipStatsResponse.StatusCode == HttpStatusCode.OK)
 					{
-						var shipJson = await shipResponse.Content.ReadAsStringAsync();
-						shipJson = shipJson.Replace("\"" + player.AccountId + "\":", "\"Ships\":");
-						var stats = await Task.Run(() => JsonConvert.DeserializeObject<PlayerStats>(shipJson));
-						if (stats?.Data?.Ships != null && stats.Data.Ships.Any())
+						var shipStatsJson = await shipStatsResponse.Content.ReadAsStringAsync();
+						shipStatsJson = shipStatsJson.Replace("\"" + player.AccountId + "\":", "\"Ships\":");
+						var shipStats = await Task.Run(() => JsonConvert.DeserializeObject<WgPlayerShipsStatsResult>(shipStatsJson));
+						if (shipStats?.Data?.Ships != null && shipStats.Data.Ships.Any())
 						{
-							var ship = stats.Data.Ships.First();
-							return new PlayerShip(ship, player, shipInfo, vehicle.Relation);
+							var ship = shipStats.Data.Ships.First();
+							return new PlayerShip(ship, player, wgShip, replayVehicle.Relation);
 						}
 					}
 				}
 			}
-			return new PlayerShip(shipInfo)
+			return new PlayerShip(wgShip)
 			{
-				Nickname = vehicle.Name,
-				Relation = vehicle.Relation,
+				Nickname = replayVehicle.Name,
+				Relation = replayVehicle.Relation,
 				IsPrivateOrHidden = true
 			};
 		}

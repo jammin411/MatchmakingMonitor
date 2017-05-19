@@ -18,7 +18,7 @@ namespace MatchMakingMonitor.Services
 			_kernel.Bind<WatcherService>().To<WatcherService>().InSingletonScope();
 			_kernel.Bind<StatsService>().To<StatsService>().InSingletonScope();
 			_kernel.Bind<ApiService>().To<ApiService>().InSingletonScope();
-			_kernel.Bind<Settings>().To<Settings>().InSingletonScope();
+			_kernel.Bind<SettingsWrapper>().To<SettingsWrapper>().InSingletonScope();
 
 			_kernel.Bind<StatsViewModel>().To<StatsViewModel>().InSingletonScope();
 		}

@@ -2,22 +2,22 @@
 using System.IO;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using MatchMakingMonitor.config;
 
 namespace MatchMakingMonitor.Services
 {
 	public class WatcherService
 	{
-		private bool _initialCheckDone;
-
-		private readonly Settings _settings;
 		private readonly ILogger _logger;
 
 		private readonly BehaviorSubject<string> _matchFoundSubject;
 
-		public IObservable<string> MatchFound => _matchFoundSubject.AsObservable();
-		public WatcherService(ILogger logger, Settings settings)
+		private readonly SettingsWrapper _settingsWrapper;
+		private bool _initialCheckDone;
+
+		public WatcherService(ILogger logger, SettingsWrapper settingsWrapper)
 		{
-			_settings = settings;
+			_settingsWrapper = settingsWrapper;
 			_logger = logger;
 
 			_matchFoundSubject = new BehaviorSubject<string>(null);
@@ -26,22 +26,17 @@ namespace MatchMakingMonitor.Services
 			{
 				Filter = "tempArenaInfo.json",
 				NotifyFilter = NotifyFilters.FileName | NotifyFilters.CreationTime | NotifyFilters.Attributes |
-											 NotifyFilters.LastAccess
+				               NotifyFilters.LastAccess
 			};
-			fileSystemWatcher.Created += (obj, args) =>
-			{
-				CallMatchFound(args.FullPath);
-			};
-			fileSystemWatcher.Changed += (obj, args) =>
-			{
-				CallMatchFound(args.FullPath);
-			};
+			fileSystemWatcher.Created += (obj, args) => { CallMatchFound(args.FullPath); };
+			fileSystemWatcher.Changed += (obj, args) => { CallMatchFound(args.FullPath); };
 
 
-			settings.SettingChanged(Settings.KeyInstallDirectory).Subscribe(key =>
+			settingsWrapper.SettingChanged(nameof(SettingsJson.InstallDirectory)).Subscribe(key =>
 			{
-				var directory = settings.InstallDirectory;
-				if (Directory.Exists(Path.Combine(directory, "replays")) && File.Exists(Path.Combine(directory, "WorldOfWarships.exe")))
+				var directory = settingsWrapper.CurrentSettings.InstallDirectory;
+				if (Directory.Exists(Path.Combine(directory, "replays")) &&
+				    File.Exists(Path.Combine(directory, "WorldOfWarships.exe")))
 				{
 					fileSystemWatcher.Path = Path.Combine(directory, "replays");
 					fileSystemWatcher.EnableRaisingEvents = true;
@@ -55,21 +50,18 @@ namespace MatchMakingMonitor.Services
 				}
 			});
 
-			settings.SettingChanged(Settings.KeyRegion, false).Subscribe(key =>
-			{
-				CheckStatic();
-			});
+			settingsWrapper.SettingChanged(nameof(SettingsJson.Region), false).Subscribe(key => { CheckStatic(); });
 		}
+
+		public IObservable<string> MatchFound => _matchFoundSubject.AsObservable();
 
 		private void CheckStatic()
 		{
-			var directory = _settings.InstallDirectory;
+			var directory = _settingsWrapper.CurrentSettings.InstallDirectory;
 			var path = Path.Combine(directory, "replays", "tempArenaInfo.json");
 			_logger.Info("Checking for match in path " + path);
 			if (File.Exists(path))
-			{
 				CallMatchFound(path);
-			}
 		}
 
 		private void CallMatchFound(string path)

@@ -1,26 +1,20 @@
-﻿using Quobject.SocketIoClientDotNet.Client;
-using System;
+﻿using System;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using Quobject.SocketIoClientDotNet.Client;
 
 namespace MatchMakingMonitor.SocketIO
 {
 	public class SocketIoService
 	{
-		public LiveMatchSocket Hub;
-
-		public IObservable<ConnectionState> StateChanged => _stateChanged.AsObservable();
+		private readonly Socket _socketConnection;
 
 		private readonly ReplaySubject<ConnectionState> _stateChanged;
-
-
-		public ConnectionState ConnectionState { get; private set; }
-
-		private readonly Socket _socketConnection;
+		public LiveMatchSocket Hub;
 
 		public SocketIoService()
 		{
-			_socketConnection = IO.Socket("http://localhost:4000", new IO.Options() { AutoConnect = false });
+			_socketConnection = IO.Socket("http://localhost:4000", new IO.Options {AutoConnect = false});
 			Hub = new LiveMatchSocket(_socketConnection);
 
 			_stateChanged = new ReplaySubject<ConnectionState>();
@@ -50,6 +44,11 @@ namespace MatchMakingMonitor.SocketIO
 			});
 		}
 
+		public IObservable<ConnectionState> StateChanged => _stateChanged.AsObservable();
+
+
+		public ConnectionState ConnectionState { get; private set; }
+
 		public void Connect()
 		{
 			ConnectionState = ConnectionState.Connecting;
@@ -61,7 +60,6 @@ namespace MatchMakingMonitor.SocketIO
 		{
 			_socketConnection.Disconnect();
 		}
-		
 	}
 
 	public enum ConnectionState

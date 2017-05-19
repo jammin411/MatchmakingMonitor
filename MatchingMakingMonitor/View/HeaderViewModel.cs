@@ -1,18 +1,35 @@
 ﻿using System;
+using System.Diagnostics;
 using MatchMakingMonitor.Services;
 using MatchMakingMonitor.SocketIO;
 using MatchMakingMonitor.View.Util;
 
 namespace MatchMakingMonitor.View
 {
-	public class HeaderViewModel : BaseViewBinding
+	public class HeaderViewModel : ViewModelBase
 	{
-		public RelayCommand LogoClickCommand { get; set; }
-		public RelayCommand SettingsCommand { get; set; }
+		private readonly ILogger _logger;
 
 		private string _connectionState;
 
 		private SettingsWindow _settingsWindow;
+
+		public HeaderViewModel()
+		{
+		}
+
+		public HeaderViewModel(ILogger logger, SocketIoService socketIoService)
+		{
+			_logger = logger;
+
+			LogoClickCommand = new RelayCommand(LogoClick);
+			SettingsCommand = new RelayCommand(SettingsClick);
+
+			socketIoService.StateChanged.Subscribe(state => { ConnectionState = state.ToString(); });
+		}
+
+		public RelayCommand LogoClickCommand { get; set; }
+		public RelayCommand SettingsCommand { get; set; }
 
 		public string ConnectionState
 		{
@@ -24,32 +41,11 @@ namespace MatchMakingMonitor.View
 			}
 		}
 
-
-		private readonly ILogger _logger;
-
-		public HeaderViewModel()
-		{
-
-		}
-
-		public HeaderViewModel(ILogger logger, SocketIoService socketIoService)
-		{
-			_logger = logger;
-
-			LogoClickCommand = new RelayCommand(LogoClick);
-			SettingsCommand = new RelayCommand(SettingsClick);
-
-			socketIoService.StateChanged.Subscribe(state =>
-			{
-				ConnectionState = state.ToString();
-			});
-		}
-
 		private void LogoClick()
 		{
 			try
 			{
-				System.Diagnostics.Process.Start("https://wowreplays.com");
+				Process.Start("https://wowreplays.com");
 			}
 			catch (Exception e)
 			{
@@ -62,10 +58,7 @@ namespace MatchMakingMonitor.View
 			if (_settingsWindow != null) return;
 			_settingsWindow = IoCKernel.Get<SettingsWindow>();
 			_settingsWindow.Show();
-			_settingsWindow.Closed += (sender, args) =>
-			{
-				_settingsWindow = null;
-			};
+			_settingsWindow.Closed += (sender, args) => { _settingsWindow = null; };
 		}
 	}
 }
