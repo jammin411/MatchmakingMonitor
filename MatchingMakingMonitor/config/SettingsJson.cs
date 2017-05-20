@@ -5,6 +5,8 @@ namespace MatchMakingMonitor.config
 {
 	public class SettingsJson
 	{
+		[JsonProperty("version")] public string Version;
+
 		[JsonProperty("appIds")] public AppId[] AppIds;
 
 		[JsonProperty("avgDmgLimits")] [ExportSetting] public LimitsType AvgDmgLimits;

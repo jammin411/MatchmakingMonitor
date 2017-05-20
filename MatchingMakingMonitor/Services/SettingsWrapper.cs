@@ -76,16 +76,39 @@ namespace MatchMakingMonitor.Services
 		private async void Init()
 		{
 			if (!File.Exists(SettingsPath))
-			{
-				// ReSharper disable once AssignNullToNotNullAttribute
-				Directory.CreateDirectory(Path.GetDirectoryName(SettingsPath));
-				using (var f = File.CreateText(SettingsPath))
-				{
-					f.Write(Defaults());
-				}
-			}
+				WriteDefaults();
 			FromJson();
+			if (!CheckVersion())
+				WriteDefaults();
 			await SyncWithRemoteSettings();
+		}
+
+		private bool CheckVersion()
+		{
+			var currentVersion = Assembly.GetExecutingAssembly().GetName().Version;
+			try
+			{
+				var settingsVersion = new Version(CurrentSettings.Version);
+				var result = currentVersion.CompareTo(settingsVersion);
+				if (result == 0) return true;
+				_logger.Info("Settings are not matching the current version");
+				return false;
+			}
+			catch (Exception e)
+			{
+				_logger.Error("Error occured while comparing versions", e);
+				return true;
+			}
+		}
+
+		private static void WriteDefaults()
+		{
+			// ReSharper disable once AssignNullToNotNullAttribute
+			Directory.CreateDirectory(Path.GetDirectoryName(SettingsPath));
+			using (var f = File.CreateText(SettingsPath))
+			{
+				f.Write(Defaults());
+			}
 		}
 
 		private static string Defaults()
@@ -98,7 +121,7 @@ namespace MatchMakingMonitor.Services
 			{
 				result = sr.ReadToEnd();
 			}
-			return result;
+			return result.Replace("{{versionPlaceholder}}", Assembly.GetExecutingAssembly().GetName().Version.ToString());
 		}
 
 		private void FromJson()
