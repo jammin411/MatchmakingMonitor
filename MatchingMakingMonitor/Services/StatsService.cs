@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Threading;
 using System.Threading.Tasks;
 using MatchMakingMonitor.config;
 using MatchMakingMonitor.Models;
@@ -47,30 +49,48 @@ namespace MatchMakingMonitor.Services
 		{
 			Replay replay = null;
 			var sr = new StreamReader(path);
-
+			var jsonString = await sr.ReadToEndAsync();
+			sr.Dispose();
 			try
 			{
-				// ReSharper disable once AccessToDisposedClosure
-				replay = await Task.Run(
-					async () => JsonConvert.DeserializeObject<Replay>(await sr.ReadToEndAsync(), new IsoDateTimeConverter()));
+				replay = await Task.Run(() => JsonConvert.DeserializeObject<Replay>(jsonString, new IsoDateTimeConverter()));
+			}
+			catch (FormatException e)
+			{
+				_logger.Error(
+					$"Error while reading replay file - Invalid DateTime format. Trying again with another Converter ({jsonString})",
+					e);
+				try
+				{
+					replay = await Task.Run(() =>
+					{
+						Thread.CurrentThread.CurrentCulture = new CultureInfo("en-us");
+						return JsonConvert.DeserializeObject<Replay>(jsonString, new IsoDateTimeConverter());
+					});
+				}
+				catch (Exception innerE)
+				{
+					_logger.Error($"Error while reading replay file ({jsonString})", innerE);
+				}
 			}
 			catch (Exception e)
 			{
-				_logger.Error("Error while reading replay file", e);
+				_logger.Error($"Error while reading replay file ({jsonString})", e);
 			}
-			sr.Dispose();
+
 
 			if (replay != null)
 			{
 				var region = _settingsWrapper.CurrentSettings.Region;
 				if (_currentReplay == null || region != _currentRegion ||
-						_currentReplay != null && replay.DateTime > _currentReplay.DateTime)
+				    _currentReplay != null && replay.DateTime > _currentReplay.DateTime)
 				{
 					_logger.Info("Valid replay found. Fetching stats");
 					_currentReplay = replay;
 					_currentRegion = region;
 					_statsStatusChangedSubject.OnNext(StatsStatus.Fetching);
-					var players = (await _apiService.Players(_currentReplay)).OrderByDescending(p => p.ShipType).ThenByDescending(p => p.ShipTier).ToArray();
+					var players = (await _apiService.Players(_currentReplay)).OrderByDescending(p => p.ShipType)
+						.ThenByDescending(p => p.ShipTier).ToArray();
 					if (players.Count(p => p.AccountId != 0) > 6)
 					{
 						try
