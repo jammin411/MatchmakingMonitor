@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Newtonsoft.Json;
 
 namespace MatchMakingMonitor.Models.Replay
 {
 	public class Replay
 	{
+		private DateTime? _dateTime;
+
 		[JsonProperty("clientVersionFromXml")]
 		public string ClientVersionFromXml { get; set; }
 
@@ -46,7 +49,24 @@ namespace MatchMakingMonitor.Models.Replay
 		public int PlayersPerTeam { get; set; }
 
 		[JsonProperty("dateTime")]
-		public DateTime DateTime { get; set; }
+		public string DateTimeString { get; set; }
+
+		public DateTime DateTime
+		{
+			get
+			{
+				if (!_dateTime.HasValue)
+					try
+					{
+						_dateTime = DateTime.ParseExact(DateTimeString, "dd.MM.yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+					}
+					catch
+					{
+						_dateTime = DateTime.Now;
+					}
+				return _dateTime.Value;
+			}
+		}
 
 		[JsonProperty("mapName")]
 		public string MapName { get; set; }

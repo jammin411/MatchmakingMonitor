@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Threading;
 using System.Threading.Tasks;
 using MatchMakingMonitor.config;
 using MatchMakingMonitor.Models;
@@ -54,24 +52,6 @@ namespace MatchMakingMonitor.Services
 			try
 			{
 				replay = await Task.Run(() => JsonConvert.DeserializeObject<Replay>(jsonString, new IsoDateTimeConverter()));
-			}
-			catch (FormatException e)
-			{
-				_logger.Error(
-					$"Error while reading replay file - Invalid DateTime format. Trying again with another Converter ({jsonString})",
-					e);
-				try
-				{
-					replay = await Task.Run(() =>
-					{
-						Thread.CurrentThread.CurrentCulture = new CultureInfo("en-us");
-						return JsonConvert.DeserializeObject<Replay>(jsonString, new IsoDateTimeConverter());
-					});
-				}
-				catch (Exception innerE)
-				{
-					_logger.Error($"Error while reading replay file ({jsonString})", innerE);
-				}
 			}
 			catch (Exception e)
 			{
