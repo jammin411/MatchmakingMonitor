@@ -5,8 +5,6 @@ namespace MatchMakingMonitor.config
 {
 	public class SettingsJson
 	{
-		[JsonProperty("version")] public string Version;
-
 		[JsonProperty("appIds")] public AppId[] AppIds;
 
 		[JsonProperty("avgDmgLimits")] [ExportSetting] public LimitsType AvgDmgLimits;
@@ -31,11 +29,14 @@ namespace MatchMakingMonitor.config
 
 		[JsonProperty("fontSize")] [ExportSetting] public int FontSize;
 
+		[JsonProperty("hideLowBattles")] [ExportSetting] public bool HideLowBattles;
+
 		[JsonProperty("installDirectory")] public string InstallDirectory;
 
 		[JsonProperty("region")] public Region Region;
 
 		[JsonProperty("token")] public string Token;
+		[JsonProperty("version")] public string Version;
 
 		[JsonProperty("winRateLimits")] [ExportSetting] public double[] WinRateLimits;
 

@@ -14,6 +14,8 @@ namespace MatchMakingMonitor.Models
 
 		private SolidColorBrush _background;
 
+		private SolidColorBrush _color = Brushes.Black;
+
 		private SolidColorBrush _colorAvgDamage = Brushes.Black;
 		private int _colorAvgDamageKey;
 
@@ -28,14 +30,15 @@ namespace MatchMakingMonitor.Models
 
 		private SolidColorBrush _colorBorder = Brushes.Transparent;
 
-		private SolidColorBrush _colorName = Brushes.Black;
-
-		private int _colorNameKey;
+		private int _colorKey;
 
 		private SolidColorBrush _colorWinRate = Brushes.Black;
 		private int _colorWinRateKey;
 
 		private int _fontSize;
+		private Visibility _hideLowBattlesVisibility = Visibility.Collapsed;
+		private Visibility _privateVisibility;
+		private Visibility _visibility;
 
 		public DisplayPlayerStats(SettingsWrapper settingsWrapper, PlayerShip player) : this()
 		{
@@ -65,12 +68,12 @@ namespace MatchMakingMonitor.Models
 			}
 		}
 
-		public SolidColorBrush ColorName
+		public SolidColorBrush Color
 		{
-			get => _colorName;
+			get => _color;
 			set
 			{
-				_colorName = value;
+				_color = value;
 				FirePropertyChanged();
 			}
 		}
@@ -145,6 +148,36 @@ namespace MatchMakingMonitor.Models
 			}
 		}
 
+		public Visibility Visibility
+		{
+			get => _visibility;
+			set
+			{
+				_visibility = value;
+				FirePropertyChanged();
+			}
+		}
+
+		public Visibility PrivateVisibility
+		{
+			get => _privateVisibility;
+			set
+			{
+				_privateVisibility = value;
+				FirePropertyChanged();
+			}
+		}
+
+		public Visibility HideLowBattlesVisibility
+		{
+			get => _hideLowBattlesVisibility;
+			set
+			{
+				_hideLowBattlesVisibility = value;
+				FirePropertyChanged();
+			}
+		}
+
 
 		public string TextBattles => $"Battles: {Player.Battles}";
 		public string TextWins => $"Wins: {Player.Wins}";
@@ -167,10 +200,66 @@ namespace MatchMakingMonitor.Models
 		public double AvgFrags { get; private set; }
 		public double AvgDamage { get; private set; }
 
+		public void ComputeUi()
+		{
+			try
+			{
+				if (Player.IsPrivateOrHidden)
+				{
+					IsPrivateProfile();
+					return;
+				}
 
-		public Visibility Visibility => Player.IsPrivateOrHidden ? Visibility.Collapsed : Visibility.Visible;
+				FontSize = _settingsWrapper.CurrentSettings.FontSize;
+				if (_settingsWrapper.CurrentSettings.HideLowBattles && Player.Battles <= 10)
+				{
+					IsLowBattles();
+					Color = Brushes.Black;
+					SetBackground(Color);
+					return;
+				}
 
-		public Visibility TextVisibility => !Player.IsPrivateOrHidden ? Visibility.Collapsed : Visibility.Visible;
+				IsNormal();
+				double totalRating = 0;
+				ColorWinRate = GetColor(WinRate, _settingsWrapper.CurrentSettings.WinRateLimits, totalRating,
+					_settingsWrapper.CurrentSettings.WinRateWeight, out totalRating,
+					out _colorWinRateKey);
+				ColorAvgFrags = GetColor(AvgFrags, _settingsWrapper.CurrentSettings.AvgFragsLimits, totalRating,
+					_settingsWrapper.CurrentSettings.AvgFragsWeight, out totalRating,
+					out _colorAvgFragsKey);
+				ColorAvgXp = GetColor(AvgXp,
+					_settingsWrapper.CurrentSettings.AvgXpLimits.Single(l => l.ShipTier == Player.ShipTier).Values, totalRating,
+					_settingsWrapper.CurrentSettings.AvgXpWeight, out totalRating,
+					out _colorAvgXpKey);
+				ColorAvgDamage = GetColor(AvgDamage,
+					_settingsWrapper.CurrentSettings.AvgDmgLimits.GetLimits(Player.ShipType, Player.ShipTier), totalRating,
+					_settingsWrapper.CurrentSettings.AvgDmgWeight, out totalRating, out _colorAvgDamageKey);
+				ColorBattles = GetColor(Player.Battles, _settingsWrapper.CurrentSettings.BattleLimits, totalRating,
+					_settingsWrapper.CurrentSettings.BattleWeight, out totalRating,
+					out _colorBattlesKey);
+
+				_colorKey = (int) Math.Floor(totalRating / 5);
+				if (_colorKey == 0) _colorKey = 1;
+				Color = _settingsWrapper.Brushes[_colorKey - 1];
+
+				SetBackground(Color);
+			}
+			catch (Exception e)
+			{
+				IoCKernel.Get<ILogger>().Error("Error during UI computation", e);
+			}
+		}
+
+		private void SetBackground(SolidColorBrush brush)
+		{
+			var color = brush.CloneCurrentValue();
+			color.Opacity = 0.08;
+			color.Freeze();
+			Background = color;
+
+			ColorBorder = Player.Relation == 0 ? Color : Brushes.Transparent;
+		}
+
 
 		public static DisplayPlayerStats MockPlayer(int relation = 1, bool privateOrHidden = false)
 		{
@@ -191,47 +280,25 @@ namespace MatchMakingMonitor.Models
 			};
 		}
 
-		public void ComputeUi()
+		private void IsPrivateProfile()
 		{
-			try
-			{
-				FontSize = _settingsWrapper.CurrentSettings.FontSize;
-				double totalRating = 0;
-				if (!Player.IsPrivateOrHidden)
-				{
-					ColorWinRate = GetColor(WinRate, _settingsWrapper.CurrentSettings.WinRateLimits, totalRating,
-						_settingsWrapper.CurrentSettings.WinRateWeight, out totalRating,
-						out _colorWinRateKey);
-					ColorAvgFrags = GetColor(AvgFrags, _settingsWrapper.CurrentSettings.AvgFragsLimits, totalRating,
-						_settingsWrapper.CurrentSettings.AvgFragsWeight, out totalRating,
-						out _colorAvgFragsKey);
-					ColorAvgXp = GetColor(AvgXp,
-						_settingsWrapper.CurrentSettings.AvgXpLimits.Single(l => l.ShipTier == Player.ShipTier).Values, totalRating,
-						_settingsWrapper.CurrentSettings.AvgXpWeight, out totalRating,
-						out _colorAvgXpKey);
-					ColorAvgDamage = GetColor(AvgDamage,
-						_settingsWrapper.CurrentSettings.AvgDmgLimits.GetLimits(Player.ShipType, Player.ShipTier), totalRating,
-						_settingsWrapper.CurrentSettings.AvgDmgWeight, out totalRating, out _colorAvgDamageKey);
-					ColorBattles = GetColor(Player.Battles, _settingsWrapper.CurrentSettings.BattleLimits, totalRating,
-						_settingsWrapper.CurrentSettings.BattleWeight, out totalRating,
-						out _colorBattlesKey);
+			Visibility = Visibility.Collapsed;
+			PrivateVisibility = Visibility.Visible;
+			HideLowBattlesVisibility = Visibility.Collapsed;
+		}
 
-					_colorNameKey = (int) Math.Floor(totalRating / 5);
-					if (_colorNameKey == 0) _colorNameKey = 1;
-					ColorName = _settingsWrapper.Brushes[_colorNameKey - 1];
-				}
+		private void IsLowBattles()
+		{
+			Visibility = Visibility.Collapsed;
+			PrivateVisibility = Visibility.Collapsed;
+			HideLowBattlesVisibility = Visibility.Visible;
+		}
 
-				var color = ColorName.CloneCurrentValue();
-				color.Opacity = 0.08;
-				color.Freeze();
-				Background = color;
-
-				ColorBorder = Player.Relation == 0 ? ColorName : Brushes.Transparent;
-			}
-			catch (Exception e)
-			{
-				IoCKernel.Get<ILogger>().Error("Error during UI computation", e);
-			}
+		private void IsNormal()
+		{
+			Visibility = Visibility.Visible;
+			PrivateVisibility = Visibility.Collapsed;
+			HideLowBattlesVisibility = Visibility.Collapsed;
 		}
 
 		#region Colors
@@ -271,7 +338,7 @@ namespace MatchMakingMonitor.Models
 				AvgFrags = AvgFrags,
 				AvgDamage = AvgDamage,
 
-				ColorNameKey = _colorNameKey,
+				ColorNameKey = _colorKey,
 				ColorWinRateKey = _colorWinRateKey,
 				ColorAvgFragsKey = _colorAvgFragsKey,
 				ColorAvgXpKey = _colorAvgXpKey,

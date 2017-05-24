@@ -163,7 +163,7 @@ namespace MatchMakingMonitor.Services
 		public async Task SyncWithRemoteSettings()
 		{
 			var sourceSettings = await Task.Run(() => JsonConvert.DeserializeObject<SettingsJson>(Defaults()));
-			await RemoteStats.Get(sourceSettings);
+			await RemoteStats.Get(sourceSettings, _logger);
 			CopyUiSettings(CurrentSettings, sourceSettings);
 		}
 

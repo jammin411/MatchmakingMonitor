@@ -51,6 +51,7 @@
 		"#930d0d"
 	],
 	"fontSize": 12,
+	"hideLowBattles": true,
 	"battleLimits": [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
 	"winRateLimits": [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
 	"avgFragsLimits": [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],

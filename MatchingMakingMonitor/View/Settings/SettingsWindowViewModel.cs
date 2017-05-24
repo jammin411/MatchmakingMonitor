@@ -14,6 +14,7 @@ namespace MatchMakingMonitor.View.Settings
 		private readonly SettingsWrapper _settingsWrapper;
 
 		private int _fontSize;
+		private bool _hideLowBattles;
 
 		[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 		public SettingsWindowViewModel(SettingsWrapper settingsWrapper)
@@ -25,6 +26,7 @@ namespace MatchMakingMonitor.View.Settings
 			ResetCommand = new RelayCommand(Reset);
 
 			_fontSize = _settingsWrapper.CurrentSettings.FontSize;
+			_hideLowBattles = _settingsWrapper.CurrentSettings.HideLowBattles;
 
 			ColorsViewModel = new ColorsViewModel("Colors",
 				new ColorsEditor(_settingsWrapper.SettingChangedSubject, ref settingsWrapper.CurrentSettings.Colors));
@@ -97,6 +99,18 @@ namespace MatchMakingMonitor.View.Settings
 			}
 		}
 
+		public bool HideLowBattles
+		{
+			get => _hideLowBattles;
+			set
+			{
+				var oldValue = _hideLowBattles;
+				_hideLowBattles = value;
+				_settingsWrapper.CurrentSettings.HideLowBattles = value;
+				_settingsWrapper.SettingChangedSubject.OnNext(new ChangedSetting(oldValue, _hideLowBattles));
+				FirePropertyChanged();
+			}
+		}
 
 		private async void Import()
 		{
@@ -136,6 +150,7 @@ namespace MatchMakingMonitor.View.Settings
 		private void LoadValues()
 		{
 			FontSize = _settingsWrapper.CurrentSettings.FontSize;
+			HideLowBattles = _settingsWrapper.CurrentSettings.HideLowBattles;
 			ColorsViewModel.LoadValues();
 			WeightsViewModel.LoadValues();
 

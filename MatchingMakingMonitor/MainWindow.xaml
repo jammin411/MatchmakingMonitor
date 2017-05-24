@@ -96,7 +96,7 @@
 											</Grid.ColumnDefinitions>
 											<StackPanel Grid.Column="0" Orientation="Vertical">
 												<TextBlock Margin="5" FontSize="{Binding FontSize}"
-												           FontWeight="Bold" Foreground="{Binding ColorName}" Text="{Binding TextName}" />
+												           FontWeight="Bold" Foreground="{Binding Color}" Text="{Binding TextName}" />
 												<TextBlock Margin="5" FontSize="{Binding FontSize}"
 												           Foreground="Black" Text="{Binding TextShipName}" />
 											</StackPanel>
@@ -118,9 +118,13 @@
 												<TextBlock Margin="5" Foreground="{Binding ColorAvgFrags}" Text="{Binding TextAvgFrags}"
 												           FontSize="{Binding FontSize}" />
 											</StackPanel>
-											<DockPanel Grid.Column="1" Visibility="{Binding TextVisibility}">
+											<DockPanel Grid.Column="1" Visibility="{Binding PrivateVisibility}">
 												<TextBlock Margin="5" VerticalAlignment="Center" Foreground="{Binding ColorAvgDamage}"
 												           Text="No stats or hidden" />
+											</DockPanel>
+											<DockPanel Grid.Column="1" Grid.ColumnSpan="3" Visibility="{Binding HideLowBattlesVisibility}">
+												<TextBlock Margin="5" VerticalAlignment="Center" Foreground="{Binding Color}"
+												           Text="Player has less than 10 battles in the current ship" />
 											</DockPanel>
 										</Grid>
 									</ControlTemplate>

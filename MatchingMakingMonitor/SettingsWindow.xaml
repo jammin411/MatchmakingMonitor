@@ -49,12 +49,18 @@
 		</ResourceDictionary>
 	</Window.Resources>
 	<StackPanel Orientation="Vertical" Margin="10" Height="Auto">
-		<StackPanel x:Name="TextPanel" HorizontalAlignment="Stretch" VerticalAlignment="Top" Width="auto" Height="auto"
-		            CanVerticallyScroll="true">
-			<TextBlock Text="Text Size" />
-			<ComboBox x:Name="ComboTextSizes" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"
-			          ItemsSource="{Binding FontSizes}"
-			          SelectedValue="{Binding FontSize}" />
+		<StackPanel Orientation="Horizontal">
+			<StackPanel x:Name="TextPanel" HorizontalAlignment="Stretch" VerticalAlignment="Top" Width="auto" Height="auto"
+			            CanVerticallyScroll="true">
+				<TextBlock Text="Text Size" />
+				<ComboBox x:Name="ComboTextSizes" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"
+				          ItemsSource="{Binding FontSizes}"
+				          SelectedValue="{Binding FontSize}" />
+			</StackPanel>
+			<StackPanel Orientation="Vertical" Margin="20,0,0,0">
+				<TextBlock Text="Hide players that have less than 10 battles in the current ship" />
+				<CheckBox IsChecked="{Binding HideLowBattles}" Margin="0,3,0,0" />
+			</StackPanel>
 		</StackPanel>
 		<Grid Name="SettingsGrid" VerticalAlignment="Top" Margin="0,10,0,10">
 			<Grid.ColumnDefinitions>
