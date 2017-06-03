@@ -327,6 +327,7 @@ namespace MatchMakingMonitor.Models
 			{
 				Relation = Player.Relation,
 				PrivateOrHidden = Player.IsPrivateOrHidden,
+				IsLowBattles = _settingsWrapper.CurrentSettings.HideLowBattles && Player.Battles <= 10,
 				DisplayName = TextName,
 				Name = Player.Nickname,
 				AccountId = AccountId,

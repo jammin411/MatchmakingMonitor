@@ -4,6 +4,7 @@
 	{
 		public int Relation { get; set; }
 		public bool PrivateOrHidden { get; set; }
+		public bool IsLowBattles { get; set; }
 		public string DisplayName { get; set; }
 		public string Name { get; set; }
 		public string AccountId { get; set; }

@@ -1,4 +1,5 @@
-﻿using MatchMakingMonitor.config.Reflection;
+﻿using MatchmakingMonitor.config;
+using MatchMakingMonitor.config.Reflection;
 using Newtonsoft.Json;
 
 namespace MatchMakingMonitor.config
@@ -33,9 +34,12 @@ namespace MatchMakingMonitor.config
 
 		[JsonProperty("installDirectory")] public string InstallDirectory;
 
+		[JsonProperty("lastWindowProperties")] public LastWindowProperties LastWindowProperties;
+
 		[JsonProperty("region")] public Region Region;
 
 		[JsonProperty("token")] public string Token;
+
 		[JsonProperty("version")] public string Version;
 
 		[JsonProperty("winRateLimits")] [ExportSetting] public double[] WinRateLimits;

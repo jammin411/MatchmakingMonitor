@@ -8,9 +8,5 @@ namespace MatchMakingMonitor.Models
 		{
 			return new MobileSettings();
 		}
-
-		public void ToSettings(SettingsWrapper settingsWrapper)
-		{
-		}
 	}
 }

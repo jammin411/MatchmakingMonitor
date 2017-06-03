@@ -141,6 +141,7 @@
     </ApplicationDefinition>
     <Compile Include="config\BaseUrl.cs" />
     <Compile Include="config\AppId.cs" />
+    <Compile Include="config\LastWindowProperties.cs" />
     <Compile Include="config\LimitsType.cs" />
     <Compile Include="config\LimitsTier.cs" />
     <Compile Include="config\Reflection\ChangedSetting.cs" />

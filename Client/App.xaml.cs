@@ -1,9 +1,9 @@
-﻿using System.Windows;
-using MatchMakingMonitor.Services;
-using System.Net.Http;
-using System;
-using System.Reflection;
+﻿using System;
 using System.Diagnostics;
+using System.Net.Http;
+using System.Reflection;
+using System.Windows;
+using MatchMakingMonitor.Services;
 
 namespace MatchMakingMonitor
 {
@@ -47,7 +47,7 @@ namespace MatchMakingMonitor
 		{
 			try
 			{
-				var client = new HttpClient()
+				var client = new HttpClient
 				{
 					BaseAddress = new Uri("http://monitor.pepespub.de")
 				};
@@ -59,11 +59,12 @@ namespace MatchMakingMonitor
 				var currentVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
 				if (latestVersion.CompareTo(currentVersion) <= 0) return;
-				var messageBoxResult = MessageBox.Show($"A newer version is available for download.{Environment.NewLine}Current version: {currentVersion}, Latest version: {latestVersion}{Environment.NewLine}Go to download page?", "Newer version available", MessageBoxButton.YesNo);
+				var messageBoxResult =
+					MessageBox.Show(
+						$"A newer version is available for download.{Environment.NewLine}Current version: {currentVersion}, Latest version: {latestVersion}{Environment.NewLine}Go to download page?",
+						"Newer version available", MessageBoxButton.YesNo);
 				if (messageBoxResult == MessageBoxResult.Yes)
-				{
 					Process.Start("http://monitor.pepespub.de/download/latest");
-				}
 			}
 			catch (Exception e)
 			{
