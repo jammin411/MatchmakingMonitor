@@ -1,0 +1,138 @@
+@import '../node_modules/@angular/material/_theming.scss';
+
+@include mat-core();
+
+$primary: mat-palette($mat-indigo);
+$accent: mat-palette($mat-orange);
+
+$theme: mat-light-theme($primary, $accent);
+
+@include angular-material-theme($theme);
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: 'Roboto', sans-serif;
+	color: #333 !important;
+	background: #fafafa !important;
+}
+
+h1, h2, h3, p {
+	margin-top: 0;
+}
+
+h1,
+h1.mat-dialog-title {
+	font-size: 2em;
+	font-weight: 400;
+	margin-bottom: 2rem;
+}
+
+h2 {
+	font-weight: 300;
+	margin-bottom: 0.7rem;
+}
+
+p {
+	font-size: 1.2rem;
+	line-height: 1.5rem;
+
+	&.centered {
+		text-align: center;
+	}
+}
+
+a {
+	cursor: pointer;
+	color: #3f51b5;
+
+	&.unstyled {
+		text-decoration: none;
+		color: #FFF;
+	}
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+	margin-bottom: 20px;
+
+	li {
+		margin: 0;
+		padding: 0;
+		margin-left: 20px;
+		margin-bottom: 5px;
+	}
+}
+
+.spacer-hor {
+	height: 20px;
+	clear: both;
+}
+
+.mat-toolbar-row {
+	.app-toolbar-filler {
+		flex: 1 1 auto;
+	}
+}
+
+.app-inner {
+	max-width: 1200px;
+	width: 100%;
+	margin: auto;
+	padding-top: 20px;
+	//padding: 20px;
+	//background: #FFF
+}
+
+.half-wrapper {
+	flex-direction: row;
+	display: flex;
+
+	> div {
+		flex: 1;
+
+		&:first-child {
+			margin-right: 10px;
+		}
+
+		&:last-child {
+			margin-left: 10px;
+		}
+	}
+}
+
+.download-card {
+	margin-bottom: 20px;
+
+	p {
+		text-align: center;
+	}
+}
+
+.instructions-card {
+	li {
+		font-size: 1.2rem;
+		margin-bottom: 0.8rem;
+	}
+}
+
+form {
+	.row {
+		margin-bottom: 10px;
+	}
+
+	.full-width {
+		width: 100%;
+	}
+
+	.form-error {
+		color: #f44336;
+	}
+}
+
+markdown {
+}

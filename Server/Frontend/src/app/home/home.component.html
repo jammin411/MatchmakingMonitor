@@ -1,0 +1,52 @@
+<md-card>
+	<h1>Welcome</h1>
+	<md-card-content>
+		<p>
+			This is just a small website to provide the downloads and some information about the app
+		</p>
+		<button md-raised-button routerLink="/download" color="accent">Downloads / Changelogs</button>
+	</md-card-content>
+</md-card>
+<div class="spacer-hor"></div>
+<div class="half-wrapper">
+	<div>
+		<md-card>
+			<h2>Report bug / Request feature</h2>
+			<md-card-content>
+				<p>
+					If you are familiar with <a href="https://github.com" target="_blank">github</a> you can submit an issue <a href="https://github.com/jammin411/MatchmakingMonitor/issues" target="_blank">here,</a> otherwise you can use this form.
+				</p>
+				<form [formGroup]="form" (ngSubmit)="submit(form.value)" *ngIf="!formSend">
+					<div class="row">
+						<md-radio-group formControlName="mode">
+							<md-radio-button value="0">Bug</md-radio-button>
+							<md-radio-button value="1">Feature</md-radio-button>
+						</md-radio-group>
+					</div>
+					<div class="row">
+						<md-input-container class="full-width">
+							<input #title maxlength="70" formControlName="title" mdInput placeholder="Title (required)">
+							<md-hint align="end">{{title.value.length}} / 70</md-hint>
+						</md-input-container>
+					</div>
+					<div class="row">
+						<md-input-container class="full-width">
+							<textarea formControlName="message" mdInput placeholder="Message (required)"></textarea>
+						</md-input-container>
+					</div>
+					<div class="row form-error" *ngIf="formError">
+						<span>{{formError}}</span>
+					</div>
+
+					<button md-raised-button type="submit" color="accent">Submit</button>
+				</form>
+				<p *ngIf="formSend" class="centered">
+					Thank you for your feedback!
+				</p>
+			</md-card-content>
+		</md-card>
+	</div>
+	<div>
+
+	</div>
+</div>
