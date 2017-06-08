@@ -8,9 +8,9 @@ namespace MatchMakingMonitor
 	public partial class QrCodeWindow
 	{
 		// ReSharper disable once NotAccessedField.Local
-		private SocketIoService _socketIoService;
+		private SocketIOService _socketIoService;
 
-		public QrCodeWindow(SocketIoService socketIoService)
+		public QrCodeWindow(SocketIOService socketIoService)
 		{
 			_socketIoService = socketIoService;
 			InitializeComponent();

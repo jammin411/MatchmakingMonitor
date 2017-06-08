@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using MatchMakingMonitor.Models.ResponseTypes;
 using MatchMakingMonitor.Services;
 using MatchMakingMonitor.View.Util;
 
@@ -190,7 +191,7 @@ namespace MatchMakingMonitor.Models
 		public string TextShipName => $"{ShipName} (Tier {Player.ShipTier})";
 
 
-		public string[] CommandParams => new[] {AccountId, Player.Nickname};
+		public string[] CommandParams => new[] { AccountId, Player.Nickname };
 
 		public string ShipName => Player?.ShipName;
 		public string AccountId => Player?.AccountId.ToString();
@@ -238,7 +239,7 @@ namespace MatchMakingMonitor.Models
 					_settingsWrapper.CurrentSettings.BattleWeight, out totalRating,
 					out _colorBattlesKey);
 
-				_colorKey = (int) Math.Floor(totalRating / 5);
+				_colorKey = (int)Math.Floor(totalRating / 5);
 				if (_colorKey == 0) _colorKey = 1;
 				Color = _settingsWrapper.Brushes[_colorKey - 1];
 
@@ -321,24 +322,32 @@ namespace MatchMakingMonitor.Models
 
 		#endregion
 
-		public MobileDisplayPlayerStats ToMobile()
+		public MobilePlayerStats ToMobile()
 		{
-			return new MobileDisplayPlayerStats
+			return new MobilePlayerStats
 			{
 				Relation = Player.Relation,
 				PrivateOrHidden = Player.IsPrivateOrHidden,
-				IsLowBattles = _settingsWrapper.CurrentSettings.HideLowBattles && Player.Battles <= 10,
+				IsLowBattles = Player.Battles <= 10,
 				DisplayName = TextName,
 				Name = Player.Nickname,
 				AccountId = AccountId,
 				ShipName = ShipName,
+				ShipTier = Player.ShipTier.ToString(),
 				Battles = Player.Battles,
 				Wins = Player.Wins,
 				WinRate = WinRate,
 				AvgXp = AvgXp,
 				AvgFrags = AvgFrags,
 				AvgDamage = AvgDamage,
+			};
+		}
 
+		public MobileColorKeys GetColorKeys()
+		{
+			return new MobileColorKeys
+			{
+				AccountId = AccountId,
 				ColorNameKey = _colorKey,
 				ColorWinRateKey = _colorWinRateKey,
 				ColorAvgFragsKey = _colorAvgFragsKey,

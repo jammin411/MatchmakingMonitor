@@ -6,7 +6,7 @@ namespace MatchMakingMonitor.View.Settings
 {
 	public class DoubleLimitsEditor : ILimitsEditor
 	{
-		private readonly BehaviorSubject<ChangedSetting> _changedSubject;
+		private readonly Subject<ChangedSetting> _changedSubject;
 		private readonly bool _initial;
 		private readonly double[] _values;
 		private double _value1;
@@ -20,7 +20,7 @@ namespace MatchMakingMonitor.View.Settings
 		private double _value9;
 		private Action _valuesChanged;
 
-		public DoubleLimitsEditor(BehaviorSubject<ChangedSetting> changedSubject, double[] values)
+		public DoubleLimitsEditor(Subject<ChangedSetting> changedSubject, double[] values)
 		{
 			_changedSubject = changedSubject;
 			_values = values;

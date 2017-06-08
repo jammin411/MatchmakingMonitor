@@ -30,6 +30,7 @@ export class DownloadComponent {
 		this.api.getAllVersions().subscribe(v => {
 			this.allVersions = v;
 			this.selectedVersion = this.allVersions[0];
+			this.selectVersion(this.selectedVersion);
 		});
 		this.api.getChangelogs().subscribe(c => this.changelogs = c);
 	}
@@ -72,6 +73,7 @@ export class DownloadComponent {
 		if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
 			ga('send', 'event', { eventCategory: 'download', eventAction: 'download', eventLabel: this.link });
 		}
+		console.log(this.link);
 		window.location.href = this.link;
 	}
 

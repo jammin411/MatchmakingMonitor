@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{5731B626-BC65-477B-BEA7-3A5163B306AE}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Test", "Server\Backend.Test\Backend.Test.csproj", "{39DDE3FC-FE0F-4E2E-B9C2-CACB89D34C9A}"
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Frontend", "Server\Frontend\Frontend.njsproj", "{325DB2CC-9186-400C-B7C3-060CEFA307B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSocketApp", "TestSocketApp\TestSocketApp.csproj", "{D08C40F5-AC84-4525-82AA-9CB34CC09E30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{325DB2CC-9186-400C-B7C3-060CEFA307B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{325DB2CC-9186-400C-B7C3-060CEFA307B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{325DB2CC-9186-400C-B7C3-060CEFA307B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D08C40F5-AC84-4525-82AA-9CB34CC09E30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D08C40F5-AC84-4525-82AA-9CB34CC09E30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D08C40F5-AC84-4525-82AA-9CB34CC09E30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D08C40F5-AC84-4525-82AA-9CB34CC09E30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

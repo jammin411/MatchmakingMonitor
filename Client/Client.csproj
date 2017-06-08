@@ -155,11 +155,11 @@
     <Compile Include="config\warshipsToday\WarshipsTodayStats.cs" />
     <Compile Include="config\warshipsToday\WarshipsTodayEntry.cs" />
     <Compile Include="config\warshipsToday\WarshipsTodayVehicle.cs" />
+    <Compile Include="Models\MobileColorKeys.cs" />
     <Compile Include="Models\ResponseTypes\ShipType.cs" />
     <Compile Include="Models\ResponseTypes\ShipTier.cs" />
     <Compile Include="Models\DisplayPlayerStats.cs" />
-    <Compile Include="Models\MobileDisplayPlayerStats.cs" />
-    <Compile Include="Models\MobileSettings.cs" />
+    <Compile Include="Models\MobilePlayerStats.cs" />
     <Compile Include="Models\PlayerShip.cs" />
     <Compile Include="Models\Replay\ReplayVehicle.cs" />
     <Compile Include="Models\ResponseTypes\WgPlayerShipsStatsData.cs" />

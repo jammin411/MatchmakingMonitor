@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="WoWReplays Matchmaking Monitor"
         WindowStartupLocation="Manual"
-        WindowState="Maximized"
+        WindowState="Normal"
         Icon="Images/favicon.ico"
         Width="1280"
         Height="768"

@@ -13,6 +13,7 @@ using MatchmakingMonitor.Services;
 using MatchMakingMonitor.config;
 using MatchMakingMonitor.config.Reflection;
 using MatchMakingMonitor.config.warshipsToday;
+using MatchMakingMonitor.SocketIO;
 using MatchMakingMonitor.View.Util;
 using Newtonsoft.Json;
 
@@ -31,23 +32,27 @@ namespace MatchMakingMonitor.Services
 		private static readonly Type SettingsType = typeof(SettingsJson);
 
 		private readonly ILogger _logger;
+		private readonly SocketIOService _socketIoService;
 
 		private readonly Subject<object> _saveQueueSubject;
 
 		private readonly Subject<ChangedSetting> _uiSettingsChangedSubject;
-		public readonly BehaviorSubject<ChangedSetting> SettingChangedSubject;
+		public readonly Subject<ChangedSetting> SettingChangedSubject;
 
-		public SettingsWrapper(ILogger logger)
+		public SettingsWrapper(ILogger logger, SocketIOService socketIoService)
 		{
 			_logger = logger;
+			_socketIoService = socketIoService;
 
 			Init();
+
+			socketIoService.Hub.OnSettingsRequested.Subscribe(_ => { SettingsRequested(); });
 
 			_saveQueueSubject = new Subject<object>();
 
 			_saveQueueSubject.Throttle(TimeSpan.FromSeconds(10)).Subscribe(async _ => { await InternalSaveAsync(); });
 
-			SettingChangedSubject = new BehaviorSubject<ChangedSetting>(null);
+			SettingChangedSubject = new Subject<ChangedSetting>();
 			SettingChangedSubject.Where(setting => setting?.Key != null && setting.HasChanged)
 				.Do(setting => _logger.Info($"Setting ({setting.Key}) changed from '{setting.OldValue}' to '{setting.NewValue}'"))
 				.Throttle(TimeSpan.FromSeconds(2))
@@ -61,6 +66,7 @@ namespace MatchMakingMonitor.Services
 			uiSettingsChangedInternal.Subscribe(changedSetting =>
 			{
 				SetBrushes();
+				SettingsRequested();
 				_uiSettingsChangedSubject.OnNext(changedSetting);
 			});
 			SetBrushes();
@@ -74,6 +80,17 @@ namespace MatchMakingMonitor.Services
 		public IObservable<ChangedSetting> UiSettingsChanged => _uiSettingsChangedSubject.AsObservable();
 
 		public SolidColorBrush[] Brushes { get; private set; }
+
+		private void SettingsRequested()
+		{
+			var export = new Dictionary<string, object>
+			{
+				{FirstLetterToLower(nameof(SettingsJson.Colors)), CurrentSettings.Colors},
+				{FirstLetterToLower(nameof(SettingsJson.HideLowBattles)), CurrentSettings.HideLowBattles},
+				{FirstLetterToLower(nameof(SettingsJson.Region)), CurrentSettings.Region}
+			};
+			_socketIoService.Hub.SendSettings(export);
+		}
 
 		private async void Init()
 		{
@@ -104,6 +121,16 @@ namespace MatchMakingMonitor.Services
 				WriteDefaults();
 			}
 			await SyncWithRemoteSettings();
+			if (string.IsNullOrEmpty(CurrentSettings.Token))
+				CurrentSettings.Token = Guid.NewGuid().ToString();
+			InternalSave();
+			_socketIoService.StateChanged.Subscribe(state =>
+			{
+				if (state == ConnectionState.Connected)
+				{
+					_socketIoService.Hub.SetToken(CurrentSettings.Token);
+				}
+			});
 		}
 
 		private int CheckVersion(Version currentVersion, Version settingsVersion)
@@ -143,18 +170,23 @@ namespace MatchMakingMonitor.Services
 				JsonConvert.DeserializeObject<SettingsJson>(File.ReadAllText(SettingsPath), JsonSerializerSettings);
 		}
 
-		public async Task ExportUiSettings(string path)
+		public async Task ExportSettings(string path)
 		{
-			var export = new Dictionary<string, object>();
-			foreach (var field in GetExportSettings(SettingsType))
-				export.Add(FirstLetterToLower(field.Name), field.GetValue(CurrentSettings));
-
-			var exportJson = await Task.Run(() => JsonConvert.SerializeObject(export, JsonSerializerSettings));
+			var exportJson = await Task.Run(() => JsonConvert.SerializeObject(GetExportSettings(), JsonSerializerSettings));
 
 			using (var f = File.CreateText(path))
 			{
 				await f.WriteAsync(exportJson);
 			}
+		}
+
+		private Dictionary<string, object> GetExportSettings()
+		{
+			var export = new Dictionary<string, object>();
+			foreach (var field in GetExportSettingsProperties(SettingsType))
+				export.Add(FirstLetterToLower(field.Name), field.GetValue(CurrentSettings));
+
+			return export;
 		}
 
 		public async Task ImportUiSettings(string path)
@@ -206,7 +238,7 @@ namespace MatchMakingMonitor.Services
 		{
 			var obs = SettingChangedSubject.AsObservable().Where(s => s != null && (s.Key == key && s.HasChanged || s.Initial));
 			if (initial)
-				SettingChangedSubject.OnNext(new ChangedSetting(null, null, key) {Initial = true});
+				SettingChangedSubject.OnNext(new ChangedSetting(null, null, key) { Initial = true });
 			return obs;
 		}
 
@@ -233,21 +265,21 @@ namespace MatchMakingMonitor.Services
 				targetSettings.WinRateLimits[i] = sourceSettings.WinRateLimits[i];
 
 			for (var i = 0; i < sourceSettings.AvgXpLimits.Length; i++)
-			for (var x = 0; x < sourceSettings.AvgXpLimits[i].Values.Length; x++)
-				targetSettings.AvgXpLimits[i].Values[x] = sourceSettings.AvgXpLimits[i].Values[x];
+				for (var x = 0; x < sourceSettings.AvgXpLimits[i].Values.Length; x++)
+					targetSettings.AvgXpLimits[i].Values[x] = sourceSettings.AvgXpLimits[i].Values[x];
 
 			for (var i = 0; i < sourceSettings.AvgDmgLimits.Battleship.Length; i++)
-			for (var x = 0; x < sourceSettings.AvgDmgLimits.Battleship[i].Values.Length; x++)
-				targetSettings.AvgDmgLimits.Battleship[i].Values[x] = sourceSettings.AvgDmgLimits.Battleship[i].Values[x];
+				for (var x = 0; x < sourceSettings.AvgDmgLimits.Battleship[i].Values.Length; x++)
+					targetSettings.AvgDmgLimits.Battleship[i].Values[x] = sourceSettings.AvgDmgLimits.Battleship[i].Values[x];
 			for (var i = 0; i < sourceSettings.AvgDmgLimits.Cruiser.Length; i++)
-			for (var x = 0; x < sourceSettings.AvgDmgLimits.Cruiser[i].Values.Length; x++)
-				targetSettings.AvgDmgLimits.Cruiser[i].Values[x] = sourceSettings.AvgDmgLimits.Cruiser[i].Values[x];
+				for (var x = 0; x < sourceSettings.AvgDmgLimits.Cruiser[i].Values.Length; x++)
+					targetSettings.AvgDmgLimits.Cruiser[i].Values[x] = sourceSettings.AvgDmgLimits.Cruiser[i].Values[x];
 			for (var i = 0; i < sourceSettings.AvgDmgLimits.Destroyer.Length; i++)
-			for (var x = 0; x < sourceSettings.AvgDmgLimits.Destroyer[i].Values.Length; x++)
-				targetSettings.AvgDmgLimits.Destroyer[i].Values[x] = sourceSettings.AvgDmgLimits.Destroyer[i].Values[x];
+				for (var x = 0; x < sourceSettings.AvgDmgLimits.Destroyer[i].Values.Length; x++)
+					targetSettings.AvgDmgLimits.Destroyer[i].Values[x] = sourceSettings.AvgDmgLimits.Destroyer[i].Values[x];
 			for (var i = 0; i < sourceSettings.AvgDmgLimits.AirCarrier.Length; i++)
-			for (var x = 0; x < sourceSettings.AvgDmgLimits.AirCarrier[i].Values.Length; x++)
-				targetSettings.AvgDmgLimits.AirCarrier[i].Values[x] = sourceSettings.AvgDmgLimits.AirCarrier[i].Values[x];
+				for (var x = 0; x < sourceSettings.AvgDmgLimits.AirCarrier[i].Values.Length; x++)
+					targetSettings.AvgDmgLimits.AirCarrier[i].Values[x] = sourceSettings.AvgDmgLimits.AirCarrier[i].Values[x];
 
 			if (sourceSettings.BattleWeight > 0)
 				targetSettings.BattleWeight = sourceSettings.BattleWeight;
@@ -261,7 +293,7 @@ namespace MatchMakingMonitor.Services
 				targetSettings.AvgFragsWeight = sourceSettings.AvgFragsWeight;
 		}
 
-		private static IEnumerable<FieldInfo> GetExportSettings(Type type)
+		private static IEnumerable<FieldInfo> GetExportSettingsProperties(Type type)
 		{
 			return type.GetFields().Where(field => field.GetCustomAttribute(typeof(ExportSettingAttribute)) != null);
 		}
@@ -272,7 +304,7 @@ namespace MatchMakingMonitor.Services
 			{
 				var convertFromString = ColorConverter.ConvertFromString(colorValue);
 				if (convertFromString == null) return System.Windows.Media.Brushes.Black;
-				var brush = new SolidColorBrush((Color) convertFromString);
+				var brush = new SolidColorBrush((Color)convertFromString);
 				brush.Freeze();
 				return brush;
 			}).ToArray();

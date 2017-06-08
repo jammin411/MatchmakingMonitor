@@ -43,7 +43,7 @@ namespace MatchMakingMonitor.Services
 			try
 			{
 				var baseUrl = _settingsWrapper.BaseUrl;
-				var client = new HttpClient {BaseAddress = new Uri(baseUrl)};
+				var client = new HttpClient { BaseAddress = new Uri(baseUrl) };
 
 				var result =
 					await client.PostAsync(
@@ -69,7 +69,7 @@ namespace MatchMakingMonitor.Services
 				while (_wgShips == null)
 					await Task.Delay(1000);
 				var baseUrl = _settingsWrapper.BaseUrl;
-				_httpClient = new HttpClient {BaseAddress = new Uri(baseUrl)};
+				_httpClient = new HttpClient { BaseAddress = new Uri(baseUrl) };
 
 				var tasks = replay.Vehicles.Select(GetAsync).ToList();
 				var list = await Task.WhenAll(tasks);
@@ -86,32 +86,52 @@ namespace MatchMakingMonitor.Services
 		private async Task<PlayerShip> GetAsync(ReplayVehicle replayVehicle)
 		{
 			var wgShip = WgShips.SingleOrDefault(s => s.ShipId == replayVehicle.ShipId);
-
-			var playerResponse =
-				await _httpClient.GetAsync($"wows/account/list/?application_id={ApplicationId}&search={replayVehicle.Name}");
-			if (playerResponse.StatusCode == HttpStatusCode.OK)
+			try
 			{
-				var playerJson = await playerResponse.Content.ReadAsStringAsync();
-				var players = await Task.Run(() => JsonConvert.DeserializeObject<WgPlayerSearchResult>(playerJson));
-
-				var player = players.Data.SingleOrDefault(p => p.Nickname == replayVehicle.Name);
-				if (player != null)
+				var playerResponse =
+					await _httpClient.GetAsync($"wows/account/list/?application_id={ApplicationId}&search={replayVehicle.Name}");
+				if (playerResponse.StatusCode == HttpStatusCode.OK)
 				{
-					var shipStatsResponse = await _httpClient.GetAsync(
-						$"wows/ships/stats/?application_id={ApplicationId}&account_id={player.AccountId}&ship_id={replayVehicle.ShipId}");
-					if (shipStatsResponse.StatusCode == HttpStatusCode.OK)
+					var playerJson = await playerResponse.Content.ReadAsStringAsync();
+					var players = await Task.Run(() => JsonConvert.DeserializeObject<WgPlayerSearchResult>(playerJson));
+					if (players.Status != "error")
 					{
-						var shipStatsJson = await shipStatsResponse.Content.ReadAsStringAsync();
-						shipStatsJson = shipStatsJson.Replace("\"" + player.AccountId + "\":", "\"Ships\":");
-						var shipStats = await Task.Run(() => JsonConvert.DeserializeObject<WgPlayerShipsStatsResult>(shipStatsJson));
-						if (shipStats?.Data?.Ships != null && shipStats.Data.Ships.Any())
+						var player = players.Data.SingleOrDefault(p => p.Nickname == replayVehicle.Name);
+						if (player != null)
 						{
-							var ship = shipStats.Data.Ships.First();
-							return new PlayerShip(ship, player, wgShip, replayVehicle.Relation);
+							var shipStatsResponse = await _httpClient.GetAsync(
+								$"wows/ships/stats/?application_id={ApplicationId}&account_id={player.AccountId}&ship_id={replayVehicle.ShipId}");
+							if (shipStatsResponse.StatusCode == HttpStatusCode.OK)
+							{
+								var shipStatsJson = await shipStatsResponse.Content.ReadAsStringAsync();
+								shipStatsJson = shipStatsJson.Replace("\"" + player.AccountId + "\":", "\"Ships\":");
+								var shipStats = await Task.Run(() => JsonConvert.DeserializeObject<WgPlayerShipsStatsResult>(shipStatsJson));
+								if (shipStats.Status != "error")
+								{
+									if (shipStats?.Data?.Ships != null && shipStats.Data.Ships.Any())
+									{
+										var ship = shipStats.Data.Ships.First();
+										return new PlayerShip(ship, player, wgShip, replayVehicle.Relation);
+									}
+								}
+								else
+								{
+									_logger.Error("Error occured while fetching player " + replayVehicle.Name, null);
+								}
+							}
 						}
+					}
+					else
+					{
+						_logger.Error("Error occured while fetching player " + replayVehicle.Name, null);
 					}
 				}
 			}
+			catch (Exception e)
+			{
+				_logger.Error("Error occured while fetching player " + replayVehicle.Name, e);
+			}
+
 			return new PlayerShip(wgShip)
 			{
 				Nickname = replayVehicle.Name,

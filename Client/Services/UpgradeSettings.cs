@@ -14,16 +14,24 @@ namespace MatchmakingMonitor.Services
 				From1000(settings);
 			if (settingsVersion.CompareTo(new Version("1.0.2.0")) <= 0)
 				From1020(settings);
+			if (settingsVersion.CompareTo(new Version("1.0.3.0")) <= 0)
+				From1030(settings);
 		}
 
 		public static void From1000(SettingsJson settings)
 		{
 			settings.AppIds[3].Region = Region.ASIA;
+			settings.BaseUrls[3].Region = Region.ASIA;
 		}
 
 		public static void From1020(SettingsJson settings)
 		{
 			settings.LastWindowProperties = new LastWindowProperties();
+		}
+
+		public static void From1030(SettingsJson settings)
+		{
+			settings.BaseUrls[3].Region = Region.ASIA;
 		}
 	}
 }

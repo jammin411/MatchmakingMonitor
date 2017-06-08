@@ -4,6 +4,7 @@
 	{
 		public FormMode Mode { get; set; }
 		public string Title { get; set; }
+		public string Contact { get; set; }
 		public string Message { get; set; }
 	}
 

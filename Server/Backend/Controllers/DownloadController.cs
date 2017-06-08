@@ -50,11 +50,11 @@ namespace Backend.Controllers
 			try
 			{
 				var cachedBytes = cache.Get(cacheKey) as byte[];
-//#if !DEBUG
+#if !DEBUG
 				if (cachedBytes != null && cachedBytes.Length > 0)
 					binaryWriter.Write(cachedBytes);
 				else
-//#endif
+#endif
 					await Task.Run(() =>
 					{
 						var bytes = File.ReadAllBytes(path);

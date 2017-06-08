@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using MatchMakingMonitor.Models;
 using MatchMakingMonitor.Services;
+using MatchMakingMonitor.SocketIO;
 using MatchMakingMonitor.View.Util;
 
 namespace MatchMakingMonitor.View
@@ -25,11 +26,11 @@ namespace MatchMakingMonitor.View
 		private Visibility _listVisibility = Visibility.Collapsed;
 		private List<DisplayPlayerStats> _stats;
 
-		public StatsViewModel(ILogger logger, StatsService statsService, SettingsWrapper settingsWrapper)
+		public StatsViewModel(ILogger logger, StatsService statsService, SettingsWrapper settingsWrapper, SocketIOService socketIoService)
 		{
 			_settingsWrapper = settingsWrapper;
 
-			DetailCommand = new RelayCommand(param => OpenPlayerDetail((string[]) param));
+			DetailCommand = new RelayCommand(param => OpenPlayerDetail((string[])param));
 
 			statsService.Stats.Subscribe(async stats =>
 			{
@@ -49,6 +50,7 @@ namespace MatchMakingMonitor.View
 				FontSize = _settingsWrapper.CurrentSettings.FontSize;
 				foreach (var player in _stats)
 					await Task.Run(() => { player.ComputeUi(); });
+				socketIoService.Hub.SendColorKeys(_stats.Select(s => s.GetColorKeys()).ToList());
 			});
 		}
 
@@ -56,10 +58,10 @@ namespace MatchMakingMonitor.View
 		{
 			FriendlyPlayers =
 				new ObservableCollection<DisplayPlayerStats>(
-					new List<DisplayPlayerStats> {DisplayPlayerStats.MockPlayer(), DisplayPlayerStats.MockPlayer(0)});
+					new List<DisplayPlayerStats> { DisplayPlayerStats.MockPlayer(), DisplayPlayerStats.MockPlayer(0) });
 			EnemyPlayers =
 				new ObservableCollection<DisplayPlayerStats>(
-					new List<DisplayPlayerStats> {DisplayPlayerStats.MockPlayer(2), DisplayPlayerStats.MockPlayer(2, true)});
+					new List<DisplayPlayerStats> { DisplayPlayerStats.MockPlayer(2), DisplayPlayerStats.MockPlayer(2, true) });
 			ListVisibility = Visibility.Visible;
 		}
 

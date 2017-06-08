@@ -8,7 +8,7 @@ namespace MatchMakingMonitor.View.Settings
 {
 	public class ColorsEditor
 	{
-		private readonly BehaviorSubject<ChangedSetting> _changedSubject;
+		private readonly Subject<ChangedSetting> _changedSubject;
 		private readonly bool _initial;
 		private readonly string[] _values;
 		private Color _color1;
@@ -22,7 +22,7 @@ namespace MatchMakingMonitor.View.Settings
 		private Color _color9;
 		private Action _valuesChanged;
 
-		public ColorsEditor(BehaviorSubject<ChangedSetting> changedSubject, ref string[] values)
+		public ColorsEditor(Subject<ChangedSetting> changedSubject, ref string[] values)
 		{
 			_changedSubject = changedSubject;
 			_values = values;

@@ -26,7 +26,7 @@ namespace MatchMakingMonitor.Services
 			{
 				Filter = "tempArenaInfo.json",
 				NotifyFilter = NotifyFilters.FileName | NotifyFilters.CreationTime | NotifyFilters.Attributes |
-				               NotifyFilters.LastAccess
+											 NotifyFilters.LastAccess
 			};
 			fileSystemWatcher.Created += (obj, args) => { CallMatchFound(args.FullPath); };
 			fileSystemWatcher.Changed += (obj, args) => { CallMatchFound(args.FullPath); };
@@ -36,7 +36,7 @@ namespace MatchMakingMonitor.Services
 			{
 				var directory = settingsWrapper.CurrentSettings.InstallDirectory;
 				if (Directory.Exists(Path.Combine(directory, "replays")) &&
-				    File.Exists(Path.Combine(directory, "WorldOfWarships.exe")))
+						File.Exists(Path.Combine(directory, "WorldOfWarships.exe")))
 				{
 					fileSystemWatcher.Path = Path.Combine(directory, "replays");
 					fileSystemWatcher.EnableRaisingEvents = true;
@@ -50,10 +50,14 @@ namespace MatchMakingMonitor.Services
 				}
 			});
 
-			settingsWrapper.SettingChanged(nameof(SettingsJson.Region), false).Subscribe(key => { CheckStatic(); });
+			settingsWrapper.SettingChanged(nameof(SettingsJson.Region), false).Subscribe(change =>
+			{
+				if (!change.Initial)
+					CheckStatic();
+			});
 		}
 
-		public IObservable<string> MatchFound => _matchFoundSubject.AsObservable();
+		public IObservable<string> MatchFound => _matchFoundSubject.Throttle(TimeSpan.FromMilliseconds(150)).AsObservable();
 
 		private void CheckStatic()
 		{

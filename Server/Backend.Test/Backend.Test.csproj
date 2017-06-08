@@ -124,6 +124,7 @@
     <Content Include="versions\MatchmakingMonitor-1.0.2.0.zip" />
     <Content Include="changelogs\1.0.1.0.md" />
     <Content Include="changelogs\1.0.2.0.md" />
+    <Content Include="changelogs\1.0.3.0.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

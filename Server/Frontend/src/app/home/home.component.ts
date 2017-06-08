@@ -16,6 +16,7 @@ export class HomeComponent {
 		this.form = new FormGroup({
 			'mode': new FormControl('0'),
 			'title': new FormControl('', Validators.compose([Validators.required, Validators.maxLength(70)])),
+			'contact': new FormControl('', Validators.required),
 			'message': new FormControl('', Validators.required)
 		});
 

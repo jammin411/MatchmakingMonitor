@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Windows;
 using MatchMakingMonitor.Services;
+using MatchMakingMonitor.SocketIO;
 
 namespace MatchMakingMonitor
 {
@@ -13,6 +14,7 @@ namespace MatchMakingMonitor
 	public partial class App
 	{
 		public static bool IsDebug;
+		private SocketIOService _socketIoService;
 
 		protected override void OnStartup(StartupEventArgs e)
 		{
@@ -26,16 +28,17 @@ namespace MatchMakingMonitor
 
 
 			CheckForUpdate();
-			//socketIOService = IoCKernel.Get<SocketIOService>();
-			//socketIOService.Connect();
-			//socketIOService.StateChanged.Where(s => s == ConnectionState.Connected).Subscribe(_ =>
-			//{
-			//	if (!string.IsNullOrEmpty(MatchMakingMonitor.Properties.Settings.Default.Token))
-			//	{
-			//		socketIOService.Hub.SetToken(MatchMakingMonitor.Properties.Settings.Default.Token);
-			//	}
-			//});
+			_socketIoService = IoCKernel.Get<SocketIOService>();
+#if DEBUG
+			_socketIoService.Connect();
+#endif
 			base.OnStartup(e);
+		}
+
+		protected override void OnExit(ExitEventArgs e)
+		{
+			_socketIoService.Disconnect();
+			base.OnExit(e);
 		}
 
 		private static void ConfigureMainWindow()

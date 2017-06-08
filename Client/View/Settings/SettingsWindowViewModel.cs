@@ -135,7 +135,7 @@ namespace MatchMakingMonitor.View.Settings
 				Filter = "JSON Documents (.json)|*.json"
 			};
 			if (sfd.ShowDialog() == true)
-				await _settingsWrapper.ExportUiSettings(sfd.FileName);
+				await _settingsWrapper.ExportSettings(sfd.FileName);
 		}
 
 		private async void Reset()

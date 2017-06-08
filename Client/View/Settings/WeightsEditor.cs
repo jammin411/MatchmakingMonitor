@@ -7,7 +7,7 @@ namespace MatchMakingMonitor.View.Settings
 {
 	public class WeightsEditor
 	{
-		private readonly BehaviorSubject<ChangedSetting> _changedSubject;
+		private readonly Subject<ChangedSetting> _changedSubject;
 		private readonly bool _initial;
 		private readonly SettingsJson _settings;
 		private double _avgDmgWeight;
@@ -17,7 +17,7 @@ namespace MatchMakingMonitor.View.Settings
 		private Action _valuesChanged;
 		private double _winRateWeight;
 
-		public WeightsEditor(BehaviorSubject<ChangedSetting> changedSubject, SettingsJson settings)
+		public WeightsEditor(Subject<ChangedSetting> changedSubject, SettingsJson settings)
 		{
 			_changedSubject = changedSubject;
 			_settings = settings;

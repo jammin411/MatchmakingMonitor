@@ -22,6 +22,8 @@ namespace Backend.Controllers
 				{
 					await sw.WriteLineAsync(form.Title);
 					await sw.WriteLineAsync();
+					await sw.WriteLineAsync(form.Contact);
+					await sw.WriteLineAsync();
 					await sw.WriteLineAsync(form.Message);
 				}
 				return true;

@@ -5,14 +5,14 @@ using Quobject.SocketIoClientDotNet.Client;
 
 namespace MatchMakingMonitor.SocketIO
 {
-	public class SocketIoService
+	public class SocketIOService
 	{
 		private readonly Socket _socketConnection;
 
 		private readonly ReplaySubject<ConnectionState> _stateChanged;
 		public LiveMatchSocket Hub;
 
-		public SocketIoService()
+		public SocketIOService()
 		{
 			_socketConnection = IO.Socket("http://localhost:4000", new IO.Options {AutoConnect = false});
 			Hub = new LiveMatchSocket(_socketConnection);

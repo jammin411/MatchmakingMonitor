@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using MatchmakingMonitor.config;
 using MatchMakingMonitor.Services;
@@ -16,6 +17,7 @@ namespace MatchMakingMonitor
 			InitializeComponent();
 
 			_settingsWrapper = settingsWrapper;
+#if !DEBUG
 			Left = _settingsWrapper.CurrentSettings.LastWindowProperties.Left;
 			Top = _settingsWrapper.CurrentSettings.LastWindowProperties.Top;
 			if (_settingsWrapper.CurrentSettings.LastWindowProperties.Width != 0)
@@ -25,11 +27,12 @@ namespace MatchMakingMonitor
 				Height = _settingsWrapper.CurrentSettings.LastWindowProperties.Height;
 
 			WindowState = _settingsWrapper.CurrentSettings.LastWindowProperties.WindowState;
+#endif
 		}
 
 		private void WindowSizeChanged(object sender, SizeChangedEventArgs e)
 		{
-			Scroller.Height = e.NewSize.Height - Header.ActualHeight;
+			Scroller.Height = e.NewSize.Height - Header.ActualHeight - 40;
 		}
 
 		protected override void OnClosing(CancelEventArgs e)

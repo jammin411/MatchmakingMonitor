@@ -16,6 +16,9 @@
 				<p>
 					If you are familiar with <a href="https://github.com" target="_blank">github</a> you can submit an issue <a href="https://github.com/jammin411/MatchmakingMonitor/issues" target="_blank">here,</a> otherwise you can use this form.
 				</p>
+				<p>
+				  Please submit bug and feature reports only for the latest version available
+				</p>
 				<form [formGroup]="form" (ngSubmit)="submit(form.value)" *ngIf="!formSend">
 					<div class="row">
 						<md-radio-group formControlName="mode">
@@ -25,13 +28,18 @@
 					</div>
 					<div class="row">
 						<md-input-container class="full-width">
-							<input #title maxlength="70" formControlName="title" mdInput placeholder="Title (required)">
+							<input #title maxlength="70" formControlName="title" mdInput placeholder="Title">
 							<md-hint align="end">{{title.value.length}} / 70</md-hint>
 						</md-input-container>
 					</div>
 					<div class="row">
 						<md-input-container class="full-width">
-							<textarea formControlName="message" mdInput placeholder="Message (required)"></textarea>
+							<input #title maxlength="70" formControlName="contact" mdInput placeholder="Contact me here">
+						</md-input-container>
+					</div>
+					<div class="row">
+						<md-input-container class="full-width">
+							<textarea formControlName="message" mdInput placeholder="Message"></textarea>
 						</md-input-container>
 					</div>
 					<div class="row form-error" *ngIf="formError">

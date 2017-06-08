@@ -38,7 +38,10 @@ namespace MatchMakingMonitor.View
 
 			_region = _settingsWrapper.CurrentSettings.Region;
 
-			_settingsWrapper.SettingChanged(nameof(SettingsJson.InstallDirectory)).Subscribe(s => InitPath());
+			_settingsWrapper.SettingChanged(nameof(SettingsJson.InstallDirectory)).Subscribe(s =>
+			{
+				InitPath();
+			});
 			statsService.StatsStatusChanged.Subscribe(status =>
 			{
 				SetStatusText(status);
@@ -53,6 +56,9 @@ namespace MatchMakingMonitor.View
 					ShowProgress = Visibility.Collapsed;
 				}
 			});
+
+			// TODO: Should be called in line 43 initially. It's not. rip.
+			InitPath();
 		}
 
 		public SubHeaderViewModel()
@@ -61,7 +67,7 @@ namespace MatchMakingMonitor.View
 
 		public RelayCommand PathClickCommand { get; set; }
 
-		public IEnumerable<Region> Regions { get; } = new List<Region> {Region.NA, Region.EU, Region.RU, Region.ASIA};
+		public IEnumerable<Region> Regions { get; } = new List<Region> { Region.NA, Region.EU, Region.RU, Region.ASIA };
 
 		public Region Region
 		{
@@ -140,7 +146,7 @@ namespace MatchMakingMonitor.View
 		{
 			var directory = _settingsWrapper.CurrentSettings.InstallDirectory;
 			if (Directory.Exists(Path.Combine(directory, "replays")) &&
-			    File.Exists(Path.Combine(directory, "WorldOfWarships.exe")))
+					File.Exists(Path.Combine(directory, "WorldOfWarships.exe")))
 			{
 				InstallDirectoryColor = Brushes.Green;
 				InstallDirectoryText = directory;
