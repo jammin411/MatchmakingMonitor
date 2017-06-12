@@ -15,6 +15,8 @@ Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Frontend", "Server\Frontend
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSocketApp", "TestSocketApp\TestSocketApp.csproj", "{D08C40F5-AC84-4525-82AA-9CB34CC09E30}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushNewVersion", "Server\PushNewVersion\PushNewVersion.csproj", "{AF2D04E3-7762-4AED-8EF0-BFF9EA4694A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{D08C40F5-AC84-4525-82AA-9CB34CC09E30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D08C40F5-AC84-4525-82AA-9CB34CC09E30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D08C40F5-AC84-4525-82AA-9CB34CC09E30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF2D04E3-7762-4AED-8EF0-BFF9EA4694A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF2D04E3-7762-4AED-8EF0-BFF9EA4694A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF2D04E3-7762-4AED-8EF0-BFF9EA4694A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF2D04E3-7762-4AED-8EF0-BFF9EA4694A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,5 +55,6 @@ Global
 		{30F5A1A3-3E6E-4F42-ABFA-DA3EBEAAA013} = {EA8D2D70-6CCB-4EEE-9735-31574126D560}
 		{39DDE3FC-FE0F-4E2E-B9C2-CACB89D34C9A} = {EA8D2D70-6CCB-4EEE-9735-31574126D560}
 		{325DB2CC-9186-400C-B7C3-060CEFA307B4} = {EA8D2D70-6CCB-4EEE-9735-31574126D560}
+		{AF2D04E3-7762-4AED-8EF0-BFF9EA4694A5} = {EA8D2D70-6CCB-4EEE-9735-31574126D560}
 	EndGlobalSection
 EndGlobal

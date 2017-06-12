@@ -20,7 +20,7 @@ namespace MatchMakingMonitor.Services
 
 		private readonly ILogger _logger;
 		private readonly SettingsWrapper _settingsWrapper;
-		private readonly SocketIOService _socketIoService;
+		private readonly SocketIoService _socketIoService;
 
 		private readonly BehaviorSubject<StatsStatus> _statsStatusChangedSubject;
 
@@ -29,7 +29,7 @@ namespace MatchMakingMonitor.Services
 		private Replay _currentReplay;
 
 		public StatsService(ILogger logger, SettingsWrapper settingsWrapper, WatcherService watcherService,
-			ApiService apiService, SocketIOService socketIoService)
+			ApiService apiService, SocketIoService socketIoService)
 		{
 			_logger = logger;
 			_apiService = apiService;
@@ -47,7 +47,7 @@ namespace MatchMakingMonitor.Services
 				try
 				{
 					socketIoService.Hub.SendColorKeys(players.Select(p => p.GetColorKeys()).ToList());
-					socketIoService.Hub.SendPlayers(players.Select(p => p.ToMobile()).ToList());	
+					socketIoService.Hub.SendPlayers(players.Select(p => p.ToMobile()).ToList());
 				}
 				catch (Exception e)
 				{

@@ -50,7 +50,7 @@
 					<md-list *ngIf="changelogs">
 						<a md-list-item (click)="openChangelog(c)" *ngFor="let c of changelogs"> {{c}} </a>
 					</md-list>
-					<p *ngIf="changelogs && changelogs.length == 0">
+					<p *ngIf="changelogs && changelogs.length === 0">
 						No changelogs found
 					</p>
 				</div>

@@ -18,7 +18,7 @@ namespace MatchMakingMonitor.View
 		{
 		}
 
-		public HeaderViewModel(ILogger logger, SocketIOService socketIoService)
+		public HeaderViewModel(ILogger logger, SocketIoService socketIoService)
 		{
 			_logger = logger;
 

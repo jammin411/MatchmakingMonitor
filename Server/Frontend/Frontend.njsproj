@@ -43,6 +43,9 @@
     <Content Include="src\assets\.gitkeep" />
     <Content Include="src\favicon.ico" />
     <Content Include="src\index.html" />
+    <Content Include="src\manifest.json">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\styles.scss" />
     <Content Include="src\tsconfig.app.json" />
     <Content Include="tsconfig.json" />
@@ -72,7 +75,7 @@
     <TypeScriptCompile Include="src\typings.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\check-for-update.worker.js">
+    <Compile Include="src\push-service.js">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

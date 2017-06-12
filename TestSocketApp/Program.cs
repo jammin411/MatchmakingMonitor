@@ -3,11 +3,11 @@ using Quobject.SocketIoClientDotNet.Client;
 
 namespace TestSocketApp
 {
-	class Program
+	internal class Program
 	{
-		static void Main(string[] args)
+		private static void Main()
 		{
-			var socket = IO.Socket("http://localhost:4000", new IO.Options() { AutoConnect = false });
+			var socket = IO.Socket("http://localhost:4000", new IO.Options {AutoConnect = false});
 
 			socket.On(Socket.EVENT_CONNECT, () =>
 			{
@@ -15,23 +15,11 @@ namespace TestSocketApp
 				socket.Emit("setToken", "fa0531ba-4223-4149-9d5c-039c5f293619");
 			});
 
-			socket.On("tokenChanged", () =>
-			{
-				Console.WriteLine("tokenChanged");
+			socket.On("tokenChanged", () => { Console.WriteLine("tokenChanged"); });
 
-			});
+			socket.On("statsReceived", stats => { Console.WriteLine("statsReceived"); });
 
-			socket.On("statsReceived", (stats) =>
-			{
-				Console.WriteLine("statsReceived");
-
-			});
-
-			socket.On("settingsReceived", (stats) =>
-			{
-				Console.WriteLine("settingsReceived");
-
-			});
+			socket.On("settingsReceived", stats => { Console.WriteLine("settingsReceived"); });
 
 			socket.Connect();
 

@@ -54,12 +54,12 @@ export class DownloadComponent {
 		this.remaining = time;
 		this.timeout = setTimeout(() => this.downloadLink(), time * 1000);
 		this.interval = setInterval(() => {
-			if (this.remaining > 0) {
-				this.remaining--;
-			} else {
-				clearInterval(this.interval);
-			}
-		},
+				if (this.remaining > 0) {
+					this.remaining--;
+				} else {
+					clearInterval(this.interval);
+				}
+			},
 			1000);
 	}
 

@@ -43,7 +43,7 @@ namespace MatchMakingMonitor.Services
 			try
 			{
 				var baseUrl = _settingsWrapper.BaseUrl;
-				var client = new HttpClient { BaseAddress = new Uri(baseUrl) };
+				var client = new HttpClient {BaseAddress = new Uri(baseUrl)};
 
 				var result =
 					await client.PostAsync(
@@ -69,7 +69,7 @@ namespace MatchMakingMonitor.Services
 				while (_wgShips == null)
 					await Task.Delay(1000);
 				var baseUrl = _settingsWrapper.BaseUrl;
-				_httpClient = new HttpClient { BaseAddress = new Uri(baseUrl) };
+				_httpClient = new HttpClient {BaseAddress = new Uri(baseUrl)};
 
 				var tasks = replay.Vehicles.Select(GetAsync).ToList();
 				var list = await Task.WhenAll(tasks);
@@ -106,7 +106,7 @@ namespace MatchMakingMonitor.Services
 								var shipStatsJson = await shipStatsResponse.Content.ReadAsStringAsync();
 								shipStatsJson = shipStatsJson.Replace("\"" + player.AccountId + "\":", "\"Ships\":");
 								var shipStats = await Task.Run(() => JsonConvert.DeserializeObject<WgPlayerShipsStatsResult>(shipStatsJson));
-								if (shipStats.Status != "error")
+								if (shipStats?.Status != "error")
 								{
 									if (shipStats?.Data?.Ships != null && shipStats.Data.Ships.Any())
 									{

@@ -6,7 +6,6 @@ using Microsoft.Owin;
 using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
 using Owin;
-using Swashbuckle.Application;
 
 namespace Backend
 {

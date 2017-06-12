@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TestSocketApp")]
+[assembly: AssemblyTitle("PushNewVersion")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TestSocketApp")]
+[assembly: AssemblyProduct("PushNewVersion")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d08c40f5-ac84-4525-82aa-9cb34cc09e30")]
+[assembly: Guid("af2d04e3-7762-4aed-8ef0-bff9ea4694a5")]
 
 // Version information for an assembly consists of the following four values:
 //

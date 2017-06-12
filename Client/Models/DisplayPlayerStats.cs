@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using MatchMakingMonitor.Models.ResponseTypes;
 using MatchMakingMonitor.Services;
 using MatchMakingMonitor.View.Util;
 
@@ -191,7 +190,7 @@ namespace MatchMakingMonitor.Models
 		public string TextShipName => $"{ShipName} (Tier {Player.ShipTier})";
 
 
-		public string[] CommandParams => new[] { AccountId, Player.Nickname };
+		public string[] CommandParams => new[] {AccountId, Player.Nickname};
 
 		public string ShipName => Player?.ShipName;
 		public string AccountId => Player?.AccountId.ToString();
@@ -239,7 +238,7 @@ namespace MatchMakingMonitor.Models
 					_settingsWrapper.CurrentSettings.BattleWeight, out totalRating,
 					out _colorBattlesKey);
 
-				_colorKey = (int)Math.Floor(totalRating / 5);
+				_colorKey = (int) Math.Floor(totalRating / 5);
 				if (_colorKey == 0) _colorKey = 1;
 				Color = _settingsWrapper.Brushes[_colorKey - 1];
 
@@ -339,7 +338,7 @@ namespace MatchMakingMonitor.Models
 				WinRate = WinRate,
 				AvgXp = AvgXp,
 				AvgFrags = AvgFrags,
-				AvgDamage = AvgDamage,
+				AvgDamage = AvgDamage
 			};
 		}
 

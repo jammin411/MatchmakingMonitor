@@ -26,11 +26,12 @@ namespace MatchMakingMonitor.View
 		private Visibility _listVisibility = Visibility.Collapsed;
 		private List<DisplayPlayerStats> _stats;
 
-		public StatsViewModel(ILogger logger, StatsService statsService, SettingsWrapper settingsWrapper, SocketIOService socketIoService)
+		public StatsViewModel(ILogger logger, StatsService statsService, SettingsWrapper settingsWrapper,
+			SocketIoService socketIoService)
 		{
 			_settingsWrapper = settingsWrapper;
 
-			DetailCommand = new RelayCommand(param => OpenPlayerDetail((string[])param));
+			DetailCommand = new RelayCommand(param => OpenPlayerDetail((string[]) param));
 
 			statsService.Stats.Subscribe(async stats =>
 			{
@@ -58,10 +59,10 @@ namespace MatchMakingMonitor.View
 		{
 			FriendlyPlayers =
 				new ObservableCollection<DisplayPlayerStats>(
-					new List<DisplayPlayerStats> { DisplayPlayerStats.MockPlayer(), DisplayPlayerStats.MockPlayer(0) });
+					new List<DisplayPlayerStats> {DisplayPlayerStats.MockPlayer(), DisplayPlayerStats.MockPlayer(0)});
 			EnemyPlayers =
 				new ObservableCollection<DisplayPlayerStats>(
-					new List<DisplayPlayerStats> { DisplayPlayerStats.MockPlayer(2), DisplayPlayerStats.MockPlayer(2, true) });
+					new List<DisplayPlayerStats> {DisplayPlayerStats.MockPlayer(2), DisplayPlayerStats.MockPlayer(2, true)});
 			ListVisibility = Visibility.Visible;
 		}
 

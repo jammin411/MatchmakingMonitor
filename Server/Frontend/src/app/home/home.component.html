@@ -2,7 +2,9 @@
 	<h1>Welcome</h1>
 	<md-card-content>
 		<p>
-			This is just a small website to provide the downloads and some information about the app
+			This is just a small website to provide the downloads and some information about the app.
+			<br/><br/>
+			You can contact me in the <a href="http://forum.worldofwarships.eu/index.php?/user/cpt-stewie-503276471/" target="_blank">EU</a>/<a href="http://forum.worldofwarships.com/index.php?/user/cpt-stewie-1026312329/" target="_blank">NA</a> forum (cpt_stewie) or on the wowreplays.com <a href="https://discord.gg/nDQNx" target="_blank">discord</a>
 		</p>
 		<button md-raised-button routerLink="/download" color="accent">Downloads / Changelogs</button>
 	</md-card-content>
@@ -17,7 +19,7 @@
 					If you are familiar with <a href="https://github.com" target="_blank">github</a> you can submit an issue <a href="https://github.com/jammin411/MatchmakingMonitor/issues" target="_blank">here,</a> otherwise you can use this form.
 				</p>
 				<p>
-				  Please submit bug and feature reports only for the latest version available
+					Please submit bug and feature reports only for the latest version available
 				</p>
 				<form [formGroup]="form" (ngSubmit)="submit(form.value)" *ngIf="!formSend">
 					<div class="row">

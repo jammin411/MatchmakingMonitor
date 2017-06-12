@@ -3,7 +3,6 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.Caching;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;

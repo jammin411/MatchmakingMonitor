@@ -14,7 +14,7 @@ namespace MatchMakingMonitor.Services
 			_kernel = new StandardKernel();
 
 			_kernel.Bind<ILogger>().To<FileLogger>().InSingletonScope();
-			_kernel.Bind<SocketIOService>().To<SocketIOService>().InSingletonScope();
+			_kernel.Bind<SocketIoService>().To<SocketIoService>().InSingletonScope();
 			_kernel.Bind<WatcherService>().To<WatcherService>().InSingletonScope();
 			_kernel.Bind<StatsService>().To<StatsService>().InSingletonScope();
 			_kernel.Bind<ApiService>().To<ApiService>().InSingletonScope();

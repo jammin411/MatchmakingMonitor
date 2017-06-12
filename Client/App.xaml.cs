@@ -14,7 +14,7 @@ namespace MatchMakingMonitor
 	public partial class App
 	{
 		public static bool IsDebug;
-		private SocketIOService _socketIoService;
+		private SocketIoService _socketIoService;
 
 		protected override void OnStartup(StartupEventArgs e)
 		{
@@ -28,7 +28,7 @@ namespace MatchMakingMonitor
 
 
 			CheckForUpdate();
-			_socketIoService = IoCKernel.Get<SocketIOService>();
+			_socketIoService = IoCKernel.Get<SocketIoService>();
 #if DEBUG
 			_socketIoService.Connect();
 #endif
