@@ -16,6 +16,8 @@ namespace MatchmakingMonitor.Services
 				From1020(settings);
 			if (settingsVersion.CompareTo(new Version("1.0.3.0")) <= 0)
 				From1030(settings);
+			if (settingsVersion.CompareTo(new Version("1.0.4.0")) <= 0)
+				From1040(settings);
 		}
 
 		public static void From1000(SettingsJson settings)
@@ -32,6 +34,12 @@ namespace MatchmakingMonitor.Services
 		public static void From1030(SettingsJson settings)
 		{
 			settings.BaseUrls[3].Region = Region.ASIA;
+		}
+
+		public static void From1040(SettingsJson settings)
+		{
+			settings.AutomaticLimitsSync = true;
+			settings.AutomaticAppUpdate = true;
 		}
 	}
 }

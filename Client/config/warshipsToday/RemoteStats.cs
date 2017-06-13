@@ -10,9 +10,9 @@ namespace MatchMakingMonitor.config.warshipsToday
 {
 	internal static class RemoteStats
 	{
-		private static readonly int[] Tiers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		private static readonly int[] Tiers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
-		public static async Task Get(SettingsJson settings, ILogger logger)
+		public static async Task<bool> Get(SettingsJson settings, ILogger logger)
 		{
 			var allRegions = (await GetEntries(Region.EU, logger))
 				.Concat(await GetEntries(Region.RU, logger))
@@ -20,9 +20,9 @@ namespace MatchMakingMonitor.config.warshipsToday
 				.Concat(await GetEntries(Region.ASIA, logger)).ToList();
 
 			if (allRegions.Any())
-				await Task.Run(() =>
+				return await Task.Run(() =>
 				{
-					settings.BattleLimits = new double[] {150, 100, 80, 60, 40, 30, 20, 10, 0};
+					settings.BattleLimits = new double[] { 150, 100, 80, 60, 40, 30, 20, 10, 0 };
 					settings.WinRateLimits = allRegions.AvgWinRate().OrderedArray().Calc(0, true);
 					settings.AvgFragsLimits = allRegions.AvgFrags().OrderedArray().Calc(0, true);
 					settings.AvgXpLimits = Tiers
@@ -37,7 +37,11 @@ namespace MatchMakingMonitor.config.warshipsToday
 						.OrderedArray().Calc(500 * t, false).LimitsTier(t)).ToArray();
 					settings.AvgDmgLimits.AirCarrier = Tiers.Select(t => allRegions.Tier(t).Type(ShipType.AirCarrier).AvgDmg()
 						.OrderedArray().Calc(500 * t, false).LimitsTier(t)).ToArray();
+
+					return true;
 				});
+
+			return false;
 		}
 
 		private static async Task<WarshipsTodayEntry[]> GetEntries(Region region, ILogger logger)

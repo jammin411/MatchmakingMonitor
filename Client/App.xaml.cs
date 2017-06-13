@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Reflection;
 using System.Windows;
+using MatchmakingMonitor;
 using MatchMakingMonitor.Services;
 using MatchMakingMonitor.SocketIO;
 
@@ -15,6 +16,12 @@ namespace MatchMakingMonitor
 	{
 		public static bool IsDebug;
 		private SocketIoService _socketIoService;
+#if !DEBUG
+		private static readonly Uri BaseUri = new Uri("https://monitor.pepespub.de");
+#endif
+#if DEBUG
+		private static readonly Uri BaseUri = new Uri("http://monitor.local");
+#endif
 
 		protected override void OnStartup(StartupEventArgs e)
 		{
@@ -27,7 +34,7 @@ namespace MatchMakingMonitor
 			Current.MainWindow.Show();
 
 
-			CheckForUpdate();
+			CheckForUpdate(IoCKernel.Get<SettingsWrapper>());
 			_socketIoService = IoCKernel.Get<SocketIoService>();
 #if DEBUG
 			_socketIoService.Connect();
@@ -46,13 +53,13 @@ namespace MatchMakingMonitor
 			Current.MainWindow = IoCKernel.Get<MainWindow>();
 		}
 
-		private static async void CheckForUpdate()
+		private static async void CheckForUpdate(SettingsWrapper settingsWrapper)
 		{
 			try
 			{
 				var client = new HttpClient
 				{
-					BaseAddress = new Uri("http://monitor.pepespub.de")
+					BaseAddress = BaseUri
 				};
 
 				var response = await client.GetAsync("/api/version/latest");
@@ -62,12 +69,17 @@ namespace MatchMakingMonitor
 				var currentVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
 				if (latestVersion.CompareTo(currentVersion) <= 0) return;
-				var messageBoxResult =
-					MessageBox.Show(
-						$"A newer version is available for download.{Environment.NewLine}Current version: {currentVersion}, Latest version: {latestVersion}{Environment.NewLine}Go to download page?",
-						"Newer version available", MessageBoxButton.YesNo);
-				if (messageBoxResult == MessageBoxResult.Yes)
-					Process.Start("http://monitor.pepespub.de/download/latest");
+				if (settingsWrapper.CurrentSettings.AutomaticAppUpdate)
+					new UpdateWindow(new Uri(BaseUri, "/api/download/latest")).Show();
+				else
+				{
+					var messageBoxResult =
+						MessageBox.Show(
+							$"A newer version is available for download.{Environment.NewLine}Current version: {currentVersion}, Latest version: {latestVersion}{Environment.NewLine}Go to download page?",
+							"Newer version available", MessageBoxButton.YesNo);
+					if (messageBoxResult == MessageBoxResult.Yes)
+						Process.Start("http://monitor.pepespub.de/download/latest");
+				}
 			}
 			catch (Exception e)
 			{

@@ -8,6 +8,8 @@ namespace MatchMakingMonitor.View.Settings
 		private readonly ILimitsEditor _limitsEditor;
 		private bool _suppressUpdate;
 
+		private bool _textboxEnabled;
+
 		private string _value1;
 
 		private string _value2;
@@ -32,6 +34,16 @@ namespace MatchMakingMonitor.View.Settings
 			_limitsEditor = limitsEditor;
 			_limitsEditor.RegisterValuesChanged(UpdateValuesFromEditor);
 			UpdateValuesFromEditor();
+		}
+
+		public bool TextboxEnabled
+		{
+			get => _textboxEnabled;
+			set
+			{
+				_textboxEnabled = value;
+				FirePropertyChanged();
+			}
 		}
 
 		public string Name { get; set; }

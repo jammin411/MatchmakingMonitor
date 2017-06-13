@@ -7,7 +7,7 @@ namespace TestSocketApp
 	{
 		private static void Main()
 		{
-			var socket = IO.Socket("http://localhost:4000", new IO.Options {AutoConnect = false});
+			var socket = IO.Socket("http://localhost:4000", new IO.Options { AutoConnect = false });
 
 			socket.On(Socket.EVENT_CONNECT, () =>
 			{

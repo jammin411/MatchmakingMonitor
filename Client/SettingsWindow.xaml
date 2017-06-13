@@ -27,23 +27,32 @@
 					</Grid.ColumnDefinitions>
 					<TextBlock Grid.Column="0" FontSize="10" FontWeight="Bold" Text="{Binding Name}" VerticalAlignment="Center" />
 					<TextBox Grid.Column="1" Margin="5" TextAlignment="Center" PreviewTextInput="DoubleValidationTextBox"
-					         Text="{Binding Value1, UpdateSourceTrigger=PropertyChanged}" />
+					         IsEnabled="{Binding TextboxEnabled}"
+									 Text="{Binding Value1, UpdateSourceTrigger=PropertyChanged}" />
 					<TextBox Grid.Column="2" Margin="5" TextAlignment="Center" PreviewTextInput="DoubleValidationTextBox"
-					         Text="{Binding Value2, UpdateSourceTrigger=PropertyChanged}" />
+					         IsEnabled="{Binding TextboxEnabled}"
+									 Text="{Binding Value2, UpdateSourceTrigger=PropertyChanged}" />
 					<TextBox Grid.Column="3" Margin="5" TextAlignment="Center" PreviewTextInput="DoubleValidationTextBox"
-					         Text="{Binding Value3, UpdateSourceTrigger=PropertyChanged}" />
+					         IsEnabled="{Binding TextboxEnabled}"
+									 Text="{Binding Value3, UpdateSourceTrigger=PropertyChanged}" />
 					<TextBox Grid.Column="4" Margin="5" TextAlignment="Center" PreviewTextInput="DoubleValidationTextBox"
-					         Text="{Binding Value4, UpdateSourceTrigger=PropertyChanged}" />
+					         IsEnabled="{Binding TextboxEnabled}"
+									 Text="{Binding Value4, UpdateSourceTrigger=PropertyChanged}" />
 					<TextBox Grid.Column="5" Margin="5" TextAlignment="Center" PreviewTextInput="DoubleValidationTextBox"
-					         Text="{Binding Value5, UpdateSourceTrigger=PropertyChanged}" />
+					         IsEnabled="{Binding TextboxEnabled}"
+									 Text="{Binding Value5, UpdateSourceTrigger=PropertyChanged}" />
 					<TextBox Grid.Column="6" Margin="5" TextAlignment="Center" PreviewTextInput="DoubleValidationTextBox"
-					         Text="{Binding Value6, UpdateSourceTrigger=PropertyChanged}" />
+					         IsEnabled="{Binding TextboxEnabled}"
+									 Text="{Binding Value6, UpdateSourceTrigger=PropertyChanged}" />
 					<TextBox Grid.Column="7" Margin="5" TextAlignment="Center" PreviewTextInput="DoubleValidationTextBox"
-					         Text="{Binding Value7, UpdateSourceTrigger=PropertyChanged}" />
+					         IsEnabled="{Binding TextboxEnabled}"
+									 Text="{Binding Value7, UpdateSourceTrigger=PropertyChanged}" />
 					<TextBox Grid.Column="8" Margin="5" TextAlignment="Center" PreviewTextInput="DoubleValidationTextBox"
-					         Text="{Binding Value8, UpdateSourceTrigger=PropertyChanged}" />
+					         IsEnabled="{Binding TextboxEnabled}"
+									 Text="{Binding Value8, UpdateSourceTrigger=PropertyChanged}" />
 					<TextBox Grid.Column="9" Margin="5" TextAlignment="Center" PreviewTextInput="DoubleValidationTextBox"
-					         Text="{Binding Value9, UpdateSourceTrigger=PropertyChanged}" />
+					         IsEnabled="{Binding TextboxEnabled}"
+									 Text="{Binding Value9, UpdateSourceTrigger=PropertyChanged}" />
 				</Grid>
 			</DataTemplate>
 		</ResourceDictionary>
@@ -57,10 +66,12 @@
 				          ItemsSource="{Binding FontSizes}"
 				          SelectedValue="{Binding FontSize}" />
 			</StackPanel>
-			<StackPanel Orientation="Vertical" Margin="20,0,0,0">
-				<TextBlock Text="Hide players that have less than 10 battles in the current ship" />
-				<CheckBox IsChecked="{Binding HideLowBattles}" Margin="0,3,0,0" />
+			<StackPanel Orientation="Vertical" Margin="20, 5, 0, 0">
+				<CheckBox IsChecked="{Binding AutomaticAppUpdate}" Margin="0,0,0,2" Content="Automatically download new version" />
+				<CheckBox IsChecked="{Binding HideLowBattles}" Margin="0,0,0,2" Content="Hide players that have less than 10 battles in the current ship" />
+				<CheckBox IsChecked="{Binding AutomaticLimitsSync}" Margin="0,0,0,2" Content="Synchronize limits from warships.today on app start" />
 			</StackPanel>
+
 		</StackPanel>
 		<Grid Name="SettingsGrid" VerticalAlignment="Top" Margin="0,10,0,10">
 			<Grid.ColumnDefinitions>

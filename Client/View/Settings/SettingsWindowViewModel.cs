@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows;
+using MatchMakingMonitor.config;
 using MatchMakingMonitor.config.Reflection;
 using MatchMakingMonitor.Services;
 using MatchMakingMonitor.View.Util;
@@ -15,6 +16,8 @@ namespace MatchMakingMonitor.View.Settings
 
 		private int _fontSize;
 		private bool _hideLowBattles;
+		private bool _automaticLimitsSync;
+		private bool _automaticAppUpdate;
 
 		[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 		public SettingsWindowViewModel(SettingsWrapper settingsWrapper)
@@ -27,6 +30,8 @@ namespace MatchMakingMonitor.View.Settings
 
 			_fontSize = _settingsWrapper.CurrentSettings.FontSize;
 			_hideLowBattles = _settingsWrapper.CurrentSettings.HideLowBattles;
+			_automaticLimitsSync = _settingsWrapper.CurrentSettings.AutomaticLimitsSync;
+			_automaticAppUpdate = _settingsWrapper.CurrentSettings.AutomaticAppUpdate;
 
 			ColorsViewModel = new ColorsViewModel("Colors",
 				new ColorsEditor(_settingsWrapper.SettingChangedSubject, ref settingsWrapper.CurrentSettings.Colors));
@@ -64,6 +69,8 @@ namespace MatchMakingMonitor.View.Settings
 
 			WeightsViewModel =
 				new WeightsViewModel(new WeightsEditor(_settingsWrapper.SettingChangedSubject, _settingsWrapper.CurrentSettings));
+
+			SetTextboxState(!_automaticLimitsSync);
 		}
 
 		public SettingsWindowViewModel()
@@ -74,7 +81,7 @@ namespace MatchMakingMonitor.View.Settings
 		public RelayCommand ExportCommand { get; set; }
 		public RelayCommand ImportCommand { get; set; }
 
-		public ObservableCollection<int> FontSizes { get; } = new ObservableCollection<int> {8, 9, 10, 11, 12, 13, 14};
+		public ObservableCollection<int> FontSizes { get; } = new ObservableCollection<int> { 8, 9, 10, 11, 12, 13, 14 };
 
 		public ColorsViewModel ColorsViewModel { get; }
 		public ObservableCollection<LimitsViewModel> StaticViewModels { get; }
@@ -108,6 +115,33 @@ namespace MatchMakingMonitor.View.Settings
 				_hideLowBattles = value;
 				_settingsWrapper.CurrentSettings.HideLowBattles = value;
 				_settingsWrapper.SettingChangedSubject.OnNext(new ChangedSetting(oldValue, _hideLowBattles));
+				FirePropertyChanged();
+			}
+		}
+
+		public bool AutomaticLimitsSync
+		{
+			get => _automaticLimitsSync;
+			set
+			{
+				var oldValue = _automaticLimitsSync;
+				_automaticLimitsSync = value;
+				_settingsWrapper.CurrentSettings.AutomaticLimitsSync = value;
+				_settingsWrapper.SettingChangedSubject.OnNext(new ChangedSetting(oldValue, _automaticLimitsSync, nameof(SettingsJson.AutomaticLimitsSync)));
+				SetTextboxState(!value);
+				FirePropertyChanged();
+			}
+		}
+
+		public bool AutomaticAppUpdate
+		{
+			get => _automaticAppUpdate;
+			set
+			{
+				var oldValue = _automaticAppUpdate;
+				_automaticAppUpdate = value;
+				_settingsWrapper.CurrentSettings.AutomaticAppUpdate = value;
+				_settingsWrapper.SettingChangedSubject.OnNext(new ChangedSetting(oldValue, _automaticAppUpdate, nameof(SettingsJson.AutomaticAppUpdate)));
 				FirePropertyChanged();
 			}
 		}
@@ -151,6 +185,7 @@ namespace MatchMakingMonitor.View.Settings
 		{
 			FontSize = _settingsWrapper.CurrentSettings.FontSize;
 			HideLowBattles = _settingsWrapper.CurrentSettings.HideLowBattles;
+			AutomaticLimitsSync = _settingsWrapper.CurrentSettings.AutomaticLimitsSync;
 			ColorsViewModel.LoadValues();
 			WeightsViewModel.LoadValues();
 
@@ -161,6 +196,17 @@ namespace MatchMakingMonitor.View.Settings
 				.Concat(AvgDmgDestroyerViewModels)
 				.Concat(AvgDmgAirCarrierViewModels))
 				viewModel.LoadValues();
+		}
+
+		private void SetTextboxState(bool enabled)
+		{
+			foreach (var viewModel in StaticViewModels
+				.Concat(AvgXpViewModels)
+				.Concat(AvgDmgBattleshipViewModels)
+				.Concat(AvgDmgCruiserViewModels)
+				.Concat(AvgDmgDestroyerViewModels)
+				.Concat(AvgDmgAirCarrierViewModels))
+				viewModel.TextboxEnabled = enabled;
 		}
 	}
 }

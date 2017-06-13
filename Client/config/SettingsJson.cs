@@ -42,6 +42,10 @@ namespace MatchMakingMonitor.config
 
 		[JsonProperty("version")] public string Version;
 
+		[JsonProperty("automaticLimitsSync")] public bool AutomaticLimitsSync;
+
+		[JsonProperty("automaticAppUpdate")] public bool AutomaticAppUpdate;
+
 		[JsonProperty("winRateLimits")] [ExportSetting] public double[] WinRateLimits;
 
 		[JsonProperty("winRateWeight")] [ExportSetting] public double WinRateWeight;

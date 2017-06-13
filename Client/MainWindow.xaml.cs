@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Reflection;
 using System.Windows;
 using MatchmakingMonitor.config;
 using MatchMakingMonitor.Services;
@@ -14,6 +16,8 @@ namespace MatchMakingMonitor
 		public MainWindow(SettingsWrapper settingsWrapper)
 		{
 			InitializeComponent();
+
+			Title += $" (v{Assembly.GetExecutingAssembly().GetName().Version})";
 
 			_settingsWrapper = settingsWrapper;
 #if !DEBUG

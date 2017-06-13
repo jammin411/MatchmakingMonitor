@@ -120,7 +120,8 @@ namespace MatchMakingMonitor.Services
 				_logger.Error("Error occured while checking versions", e);
 				WriteDefaults();
 			}
-			await SyncWithRemoteSettings();
+			if (CurrentSettings.AutomaticLimitsSync)
+				await SyncWithRemoteSettings();
 			if (string.IsNullOrEmpty(CurrentSettings.Token))
 				CurrentSettings.Token = Guid.NewGuid().ToString();
 			InternalSave();
@@ -206,8 +207,8 @@ namespace MatchMakingMonitor.Services
 		public async Task SyncWithRemoteSettings()
 		{
 			var sourceSettings = await Task.Run(() => JsonConvert.DeserializeObject<SettingsJson>(Defaults()));
-			await RemoteStats.Get(sourceSettings, _logger);
-			CopyUiSettings(CurrentSettings, sourceSettings);
+			if (await RemoteStats.Get(sourceSettings, _logger))
+				CopyUiSettings(CurrentSettings, sourceSettings);
 		}
 
 		public void Save()
@@ -236,7 +237,7 @@ namespace MatchMakingMonitor.Services
 		{
 			var obs = SettingChangedSubject.AsObservable().Where(s => s != null && (s.Key == key && s.HasChanged || s.Initial));
 			if (initial)
-				SettingChangedSubject.OnNext(new ChangedSetting(null, null, key) {Initial = true});
+				SettingChangedSubject.OnNext(new ChangedSetting(null, null, key) { Initial = true });
 			return obs;
 		}
 
@@ -263,21 +264,21 @@ namespace MatchMakingMonitor.Services
 				targetSettings.WinRateLimits[i] = sourceSettings.WinRateLimits[i];
 
 			for (var i = 0; i < sourceSettings.AvgXpLimits.Length; i++)
-			for (var x = 0; x < sourceSettings.AvgXpLimits[i].Values.Length; x++)
-				targetSettings.AvgXpLimits[i].Values[x] = sourceSettings.AvgXpLimits[i].Values[x];
+				for (var x = 0; x < sourceSettings.AvgXpLimits[i].Values.Length; x++)
+					targetSettings.AvgXpLimits[i].Values[x] = sourceSettings.AvgXpLimits[i].Values[x];
 
 			for (var i = 0; i < sourceSettings.AvgDmgLimits.Battleship.Length; i++)
-			for (var x = 0; x < sourceSettings.AvgDmgLimits.Battleship[i].Values.Length; x++)
-				targetSettings.AvgDmgLimits.Battleship[i].Values[x] = sourceSettings.AvgDmgLimits.Battleship[i].Values[x];
+				for (var x = 0; x < sourceSettings.AvgDmgLimits.Battleship[i].Values.Length; x++)
+					targetSettings.AvgDmgLimits.Battleship[i].Values[x] = sourceSettings.AvgDmgLimits.Battleship[i].Values[x];
 			for (var i = 0; i < sourceSettings.AvgDmgLimits.Cruiser.Length; i++)
-			for (var x = 0; x < sourceSettings.AvgDmgLimits.Cruiser[i].Values.Length; x++)
-				targetSettings.AvgDmgLimits.Cruiser[i].Values[x] = sourceSettings.AvgDmgLimits.Cruiser[i].Values[x];
+				for (var x = 0; x < sourceSettings.AvgDmgLimits.Cruiser[i].Values.Length; x++)
+					targetSettings.AvgDmgLimits.Cruiser[i].Values[x] = sourceSettings.AvgDmgLimits.Cruiser[i].Values[x];
 			for (var i = 0; i < sourceSettings.AvgDmgLimits.Destroyer.Length; i++)
-			for (var x = 0; x < sourceSettings.AvgDmgLimits.Destroyer[i].Values.Length; x++)
-				targetSettings.AvgDmgLimits.Destroyer[i].Values[x] = sourceSettings.AvgDmgLimits.Destroyer[i].Values[x];
+				for (var x = 0; x < sourceSettings.AvgDmgLimits.Destroyer[i].Values.Length; x++)
+					targetSettings.AvgDmgLimits.Destroyer[i].Values[x] = sourceSettings.AvgDmgLimits.Destroyer[i].Values[x];
 			for (var i = 0; i < sourceSettings.AvgDmgLimits.AirCarrier.Length; i++)
-			for (var x = 0; x < sourceSettings.AvgDmgLimits.AirCarrier[i].Values.Length; x++)
-				targetSettings.AvgDmgLimits.AirCarrier[i].Values[x] = sourceSettings.AvgDmgLimits.AirCarrier[i].Values[x];
+				for (var x = 0; x < sourceSettings.AvgDmgLimits.AirCarrier[i].Values.Length; x++)
+					targetSettings.AvgDmgLimits.AirCarrier[i].Values[x] = sourceSettings.AvgDmgLimits.AirCarrier[i].Values[x];
 
 			if (sourceSettings.BattleWeight > 0)
 				targetSettings.BattleWeight = sourceSettings.BattleWeight;
@@ -302,7 +303,7 @@ namespace MatchMakingMonitor.Services
 			{
 				var convertFromString = ColorConverter.ConvertFromString(colorValue);
 				if (convertFromString == null) return System.Windows.Media.Brushes.Black;
-				var brush = new SolidColorBrush((Color) convertFromString);
+				var brush = new SolidColorBrush((Color)convertFromString);
 				brush.Freeze();
 				return brush;
 			}).ToArray();
