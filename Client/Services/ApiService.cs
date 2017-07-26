@@ -71,7 +71,7 @@ namespace MatchMakingMonitor.Services
 				var baseUrl = _settingsWrapper.BaseUrl;
 				_httpClient = new HttpClient {BaseAddress = new Uri(baseUrl)};
 
-				var tasks = replay.Vehicles.Select(GetAsync).ToList();
+				var tasks = replay.Vehicles.Select(replayVehicle => GetAsync(replayVehicle, replay.MatchGroup.Equals("ranked", StringComparison.InvariantCultureIgnoreCase))).ToList();
 				var list = await Task.WhenAll(tasks);
 				return list.Where(p => p != null);
 			}
@@ -83,7 +83,7 @@ namespace MatchMakingMonitor.Services
 		}
 
 		[SuppressMessage("ReSharper", "InvertIf")]
-		private async Task<PlayerShip> GetAsync(ReplayVehicle replayVehicle)
+		private async Task<PlayerShip> GetAsync(ReplayVehicle replayVehicle, bool ranked)
 		{
 			var wgShip = WgShips.SingleOrDefault(s => s.ShipId == replayVehicle.ShipId);
 			try
@@ -99,15 +99,21 @@ namespace MatchMakingMonitor.Services
 						var player = players.Data.SingleOrDefault(p => p.Nickname == replayVehicle.Name);
 						if (player != null)
 						{
-							var shipStatsResponse = await _httpClient.GetAsync(
-								$"wows/ships/stats/?application_id={ApplicationId}&account_id={player.AccountId}&ship_id={replayVehicle.ShipId}");
+							var statsUrl = ranked ? $"wows/seasons/shipstats/?application_id={ApplicationId}&account_id={player.AccountId}&ship_id={replayVehicle.ShipId}&season_id=7" : $"wows/ships/stats/?application_id={ApplicationId}&account_id={player.AccountId}&ship_id={replayVehicle.ShipId}";
+							var shipStatsResponse = await _httpClient.GetAsync(statsUrl);
 							if (shipStatsResponse.StatusCode == HttpStatusCode.OK)
 							{
 								var shipStatsJson = await shipStatsResponse.Content.ReadAsStringAsync();
-								shipStatsJson = shipStatsJson.Replace("\"" + player.AccountId + "\":", "\"Ships\":");
+								shipStatsJson = ranked ? shipStatsJson.Replace("\"" + player.AccountId + "\":", "\"season_wrapper\":").Replace("\"7\":", "\"season_data\":") : shipStatsJson.Replace("\"" + player.AccountId + "\":", "\"Ships\":");
 								var shipStats = await Task.Run(() => JsonConvert.DeserializeObject<WgPlayerShipsStatsResult>(shipStatsJson));
 								if (shipStats?.Status != "error")
 								{
+									if (ranked && shipStats?.Data?.SeasonsWrapper != null && shipStats.Data.SeasonsWrapper.Any())
+									{
+										var rankedShip = shipStats.Data.SeasonsWrapper.First().Seasons.SeasonData.Ship;
+										var ship = WgStatsShip.FromRanked(rankedShip, player.AccountId, replayVehicle.ShipId);
+										return new PlayerShip(ship, player, wgShip, replayVehicle.Relation);
+									}
 									if (shipStats?.Data?.Ships != null && shipStats.Data.Ships.Any())
 									{
 										var ship = shipStats.Data.Ships.First();

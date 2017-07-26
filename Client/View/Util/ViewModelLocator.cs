@@ -15,21 +15,15 @@ namespace MatchMakingMonitor.View.Util
 
 		public HeaderViewModel HeaderViewModel => IsInDesignMode() ? new HeaderViewModel() : IoCKernel.Get<HeaderViewModel>();
 
-		public SubHeaderViewModel SubHeaderViewModel
-		{
-			get
-			{
-				if (IsInDesignMode())
-					return new SubHeaderViewModel();
-				return IoCKernel.Get<SubHeaderViewModel>();
-			}
-		}
+		public SubHeaderViewModel SubHeaderViewModel => IsInDesignMode() ? new SubHeaderViewModel() : IoCKernel.Get<SubHeaderViewModel>();
 
 		public SettingsWindowViewModel SettingsViewModel => IsInDesignMode()
 			? new SettingsWindowViewModel()
 			: IoCKernel.Get<SettingsWindowViewModel>();
 
 		public StatsViewModel StatsViewModel => IsInDesignMode() ? new StatsViewModel() : IoCKernel.Get<StatsViewModel>();
+
+		public QrCodeViewModel QrCodeViewModel => IsInDesignMode() ? new QrCodeViewModel() : IoCKernel.Get<QrCodeViewModel>();
 
 		private bool IsInDesignMode()
 		{

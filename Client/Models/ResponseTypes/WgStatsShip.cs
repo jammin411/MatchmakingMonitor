@@ -27,5 +27,16 @@ namespace MatchMakingMonitor.Models.ResponseTypes
 
 		[JsonProperty("private")]
 		public string Private { get; set; }
+
+		public static WgStatsShip FromRanked(WgStatsRankedShip rankedShip, long accountId, long shipId)
+		{
+			return new WgStatsShip
+			{
+				AccountId = accountId,
+				ShipId = shipId,
+				Battles = rankedShip.Battles,
+				Pvp = WgStatsPvp.FromRanked(rankedShip)
+			};
+		}
 	}
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="clr-namespace:MatchMakingMonitor.Models"
         mc:Ignorable="d"
-        Title="WoWReplays Matchmaking Monitor"
+        Title="Matchmaking Monitor"
         WindowStartupLocation="Manual"
         WindowState="Normal"
         Icon="Images/favicon.ico"
@@ -25,7 +25,7 @@
 								<Image HorizontalAlignment="Left" VerticalAlignment="Center" Height="32" Margin="10,0,0,0" Width="32"
 								       Source="Images/32x32Icon.png" RenderTransformOrigin="1,0.094" />
 								<TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,-2,0,0" TextWrapping="Wrap"
-								           Text="WoWReplays.com" Foreground="White" FontSize="18" />
+								           Text="Matchmaking Monitor" Foreground="White" FontSize="18" />
 							</StackPanel>
 						</ControlTemplate>
 					</Button.Template>
@@ -38,7 +38,22 @@
 					</StackPanel>-->
 
 					<StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0">
-						<!--<Image x:Name="QrCode" Margin="0,0,10,0" Source="Images/qrcodeIcon.png" MouseDown="OpenQrCodeWindow" Height="32" VerticalAlignment="Center" HorizontalAlignment="Right" Width="30" Cursor="Hand"/>-->
+						<!--<Button Command="{Binding QrCodeClickCommand}" Margin="0,0,10,0">
+							<Button.Template>
+								<ControlTemplate>
+									<Image  Source="Images/qrcodeIcon.png" Height="32" VerticalAlignment="Center" HorizontalAlignment="Right"
+									       Width="30" Cursor="Hand" />
+								</ControlTemplate>
+							</Button.Template>
+						</Button>-->
+						<Button Visibility="{Binding CanExport}" Command="{Binding ExportStatsCommand}" Margin="0,0,10,0">
+							<Button.Template>
+								<ControlTemplate>
+									<Image Source="Images/file-export.png" Height="32" VerticalAlignment="Center" HorizontalAlignment="Right"
+									       Width="30" Cursor="Hand" />
+								</ControlTemplate>
+							</Button.Template>
+						</Button>
 						<Button Command="{Binding SettingsCommand}">
 							<Button.Template>
 								<ControlTemplate>

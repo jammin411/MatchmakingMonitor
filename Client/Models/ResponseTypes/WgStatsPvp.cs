@@ -108,5 +108,17 @@ namespace MatchMakingMonitor.Models.ResponseTypes
 
 		[JsonProperty("battles_since_512")]
 		public int BattlesSince512 { get; set; }
+
+		public static WgStatsPvp FromRanked(WgStatsRankedShip rankedShip)
+		{
+			return new WgStatsPvp
+			{
+				Battles = rankedShip.Battles,
+				Wins = rankedShip.Wins,
+				DamageDealt = rankedShip.DamageDealt,
+				Frags = rankedShip.Frags,
+				Xp = rankedShip.Xp
+			};
+		}
 	}
 }

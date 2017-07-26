@@ -21,11 +21,6 @@ namespace MatchMakingMonitor.Services
 {
 	public class SettingsWrapper : ViewModelBase
 	{
-		private static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings
-		{
-			NullValueHandling = NullValueHandling.Ignore
-		};
-
 		private static readonly string SettingsPath =
 			Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config", "settings.json");
 

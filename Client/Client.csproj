@@ -77,8 +77,11 @@
     <Reference Include="EngineIoClientDotNet, Version=0.9.22.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EngineIoClientDotNet.0.9.22\lib\net45\EngineIoClientDotNet.dll</HintPath>
     </Reference>
+    <Reference Include="Gma.QrCodeNet.Encoding, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Gma.QrCodeNet.0.4.1.2\lib\net40\Gma.QrCodeNet.Encoding.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
@@ -87,6 +90,7 @@
       <HintPath>..\packages\SocketIoClientDotNet.0.9.13\lib\net45\SocketIoClientDotNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Reactive.Core, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
@@ -157,6 +161,7 @@
     <Compile Include="config\warshipsToday\WarshipsTodayStats.cs" />
     <Compile Include="config\warshipsToday\WarshipsTodayEntry.cs" />
     <Compile Include="config\warshipsToday\WarshipsTodayVehicle.cs" />
+    <Compile Include="Models\ExportPlayerStats.cs" />
     <Compile Include="Models\MobileColorKeys.cs" />
     <Compile Include="Models\ResponseTypes\ShipType.cs" />
     <Compile Include="Models\ResponseTypes\ShipTier.cs" />
@@ -273,7 +278,9 @@
     <Resource Include="Images\96x96Icon.png" />
     <Resource Include="Images\favicon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\file-export.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\connectionIcon.png" />
     <Resource Include="Images\qrcodeIcon.png" />

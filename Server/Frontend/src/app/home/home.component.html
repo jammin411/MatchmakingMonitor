@@ -3,7 +3,7 @@
 	<md-card-content>
 		<p>
 			This is just a small website to provide the downloads and some information about the app.
-			<br/><br/>
+			<br /><br />
 			You can contact me in the <a href="http://forum.worldofwarships.eu/index.php?/user/cpt-stewie-503276471/" target="_blank">EU</a>/<a href="http://forum.worldofwarships.com/index.php?/user/cpt-stewie-1026312329/" target="_blank">NA</a> forum (cpt_stewie) or on the wowreplays.com <a href="https://discord.gg/ckQA449" target="_blank">discord</a>
 		</p>
 		<button md-raised-button routerLink="/download" color="accent">Downloads / Changelogs</button>
@@ -57,6 +57,33 @@
 		</md-card>
 	</div>
 	<div>
-
+		<md-card>
+			<h2>Mobile app testing</h2>
+			<md-card-content>
+				<p>
+					I've been working on an app with some content for Wows and I've also integrated something for the MatchmakingMonitor.
+					Below you can find downloads for an Android app (apk) and a version of the MatchmakingMonitor with all the needed features enabled.
+					<br /><br />
+					For the android app you need to enable <a href="https://android.gadgethacks.com/how-to/android-basics-enable-unknown-sources-sideload-apps-0161947/" target="_blank">"Trust unknown sources"</a>. <br/>
+					For the MatchmakingMonitor i just suggest you to use a different folder.
+					<br /><br />
+					For it to work you have to open the app, navigate to MatchmakingMonitor and click connect. <br/><br/>
+					If everything works you should see a camera display. Now you need to click on the QR Code icon on the top right in the MatchmakingMonitor and scan it with your phone. <br/><br/>
+					When the screen on the phone switches to another view it worked. <br/><br/>
+					Now every time you have a new match in the MatchmakingMonitor it updates the app. Also, the settings are synced with the app. If you, for example, change a color, it will change in the app as well.
+					<br/><br/>
+					Due to it not being a stable release I can't promise that it will work and also I haven't figured out how to deal with the colors on the dark background, which will also be a challenge for the Dark Theme I have planned for the MatchmakingMonitor.
+					<br/><br/>
+					If you have any suggestions for this issues don't hesitate to contact me. Also, if the app doesn't work on your phone, please send a bug report including your phone model and android version.
+					<br/><br/>
+					Thank you and enjoy :)
+					<br/><br/>
+					<a (click)="downloadApp($event)">Android App</a>
+					<br/><br/>
+					<a (click)="downloadMonitor($event)">MatchmakingMonitor</a>
+				</p>
+				
+			</md-card-content>
+		</md-card>
 	</div>
 </div>

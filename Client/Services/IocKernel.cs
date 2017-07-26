@@ -21,6 +21,7 @@ namespace MatchMakingMonitor.Services
 			_kernel.Bind<SettingsWrapper>().To<SettingsWrapper>().InSingletonScope();
 
 			_kernel.Bind<StatsViewModel>().To<StatsViewModel>().InSingletonScope();
+			_kernel.Bind<QrCodeViewModel>().To<QrCodeViewModel>().InSingletonScope();
 		}
 
 		public static T Get<T>()

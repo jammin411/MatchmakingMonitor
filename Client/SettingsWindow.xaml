@@ -28,31 +28,31 @@
 					<TextBlock Grid.Column="0" FontSize="10" FontWeight="Bold" Text="{Binding Name}" VerticalAlignment="Center" />
 					<TextBox Grid.Column="1" Margin="5" TextAlignment="Center" PreviewTextInput="DoubleValidationTextBox"
 					         IsEnabled="{Binding TextboxEnabled}"
-									 Text="{Binding Value1, UpdateSourceTrigger=PropertyChanged}" />
+					         Text="{Binding Value1, UpdateSourceTrigger=PropertyChanged}" />
 					<TextBox Grid.Column="2" Margin="5" TextAlignment="Center" PreviewTextInput="DoubleValidationTextBox"
 					         IsEnabled="{Binding TextboxEnabled}"
-									 Text="{Binding Value2, UpdateSourceTrigger=PropertyChanged}" />
+					         Text="{Binding Value2, UpdateSourceTrigger=PropertyChanged}" />
 					<TextBox Grid.Column="3" Margin="5" TextAlignment="Center" PreviewTextInput="DoubleValidationTextBox"
 					         IsEnabled="{Binding TextboxEnabled}"
-									 Text="{Binding Value3, UpdateSourceTrigger=PropertyChanged}" />
+					         Text="{Binding Value3, UpdateSourceTrigger=PropertyChanged}" />
 					<TextBox Grid.Column="4" Margin="5" TextAlignment="Center" PreviewTextInput="DoubleValidationTextBox"
 					         IsEnabled="{Binding TextboxEnabled}"
-									 Text="{Binding Value4, UpdateSourceTrigger=PropertyChanged}" />
+					         Text="{Binding Value4, UpdateSourceTrigger=PropertyChanged}" />
 					<TextBox Grid.Column="5" Margin="5" TextAlignment="Center" PreviewTextInput="DoubleValidationTextBox"
 					         IsEnabled="{Binding TextboxEnabled}"
-									 Text="{Binding Value5, UpdateSourceTrigger=PropertyChanged}" />
+					         Text="{Binding Value5, UpdateSourceTrigger=PropertyChanged}" />
 					<TextBox Grid.Column="6" Margin="5" TextAlignment="Center" PreviewTextInput="DoubleValidationTextBox"
 					         IsEnabled="{Binding TextboxEnabled}"
-									 Text="{Binding Value6, UpdateSourceTrigger=PropertyChanged}" />
+					         Text="{Binding Value6, UpdateSourceTrigger=PropertyChanged}" />
 					<TextBox Grid.Column="7" Margin="5" TextAlignment="Center" PreviewTextInput="DoubleValidationTextBox"
 					         IsEnabled="{Binding TextboxEnabled}"
-									 Text="{Binding Value7, UpdateSourceTrigger=PropertyChanged}" />
+					         Text="{Binding Value7, UpdateSourceTrigger=PropertyChanged}" />
 					<TextBox Grid.Column="8" Margin="5" TextAlignment="Center" PreviewTextInput="DoubleValidationTextBox"
 					         IsEnabled="{Binding TextboxEnabled}"
-									 Text="{Binding Value8, UpdateSourceTrigger=PropertyChanged}" />
+					         Text="{Binding Value8, UpdateSourceTrigger=PropertyChanged}" />
 					<TextBox Grid.Column="9" Margin="5" TextAlignment="Center" PreviewTextInput="DoubleValidationTextBox"
 					         IsEnabled="{Binding TextboxEnabled}"
-									 Text="{Binding Value9, UpdateSourceTrigger=PropertyChanged}" />
+					         Text="{Binding Value9, UpdateSourceTrigger=PropertyChanged}" />
 				</Grid>
 			</DataTemplate>
 		</ResourceDictionary>
@@ -86,21 +86,10 @@
 				<ColumnDefinition Width="1*" />
 				<ColumnDefinition Width="1*" />
 			</Grid.ColumnDefinitions>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="19" />
-			</Grid.RowDefinitions>
 
 			<!--#region Row 0-->
 
-			<TextBlock Grid.Column="1" Grid.Row="0" FontSize="11" HorizontalAlignment="Center" Text="Super-unicum" />
-			<TextBlock Grid.Column="2" Grid.Row="0" FontSize="11" HorizontalAlignment="Center" Text="Unicum" />
-			<TextBlock Grid.Column="3" Grid.Row="0" FontSize="11" HorizontalAlignment="Center" Text="Great" />
-			<TextBlock Grid.Column="4" Grid.Row="0" FontSize="11" HorizontalAlignment="Center" Text="Very good" />
-			<TextBlock Grid.Column="5" Grid.Row="0" FontSize="11" HorizontalAlignment="Center" Text="Good" />
-			<TextBlock Grid.Column="6" Grid.Row="0" FontSize="11" HorizontalAlignment="Center" Text="Average" />
-			<TextBlock Grid.Column="7" Grid.Row="0" FontSize="11" HorizontalAlignment="Center" Text="Below average" />
-			<TextBlock Grid.Column="8" Grid.Row="0" FontSize="11" HorizontalAlignment="Center" Text="Bad" />
-			<TextBlock Grid.Column="9" Grid.Row="0" FontSize="11" HorizontalAlignment="Center" Text="Very bad" />
+
 		</Grid>
 		<Grid>
 			<Grid.ColumnDefinitions>
@@ -115,16 +104,31 @@
 				<ColumnDefinition Width="1*" />
 				<ColumnDefinition Width="1*" />
 			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="19" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<TextBlock Grid.Column="1" Grid.Row="0" FontSize="11" HorizontalAlignment="Center" Text="Super-unicum" />
+			<TextBlock Grid.Column="2" Grid.Row="0" FontSize="11" HorizontalAlignment="Center" Text="Unicum" />
+			<TextBlock Grid.Column="3" Grid.Row="0" FontSize="11" HorizontalAlignment="Center" Text="Great" />
+			<TextBlock Grid.Column="4" Grid.Row="0" FontSize="11" HorizontalAlignment="Center" Text="Very good" />
+			<TextBlock Grid.Column="5" Grid.Row="0" FontSize="11" HorizontalAlignment="Center" Text="Good" />
+			<TextBlock Grid.Column="6" Grid.Row="0" FontSize="11" HorizontalAlignment="Center" Text="Average" />
+			<TextBlock Grid.Column="7" Grid.Row="0" FontSize="11" HorizontalAlignment="Center" Text="Below average" />
+			<TextBlock Grid.Column="8" Grid.Row="0" FontSize="11" HorizontalAlignment="Center" Text="Bad" />
+			<TextBlock Grid.Column="9" Grid.Row="0" FontSize="11" HorizontalAlignment="Center" Text="Very bad" />
+
 			<TextBlock Grid.Column="0" FontSize="10" FontWeight="Bold" Text="Colors" VerticalAlignment="Center" />
-			<xctk:ColorPicker Grid.Column="1" Margin="5" SelectedColor="{Binding ColorsViewModel.Color1}" />
-			<xctk:ColorPicker Grid.Column="2" Margin="5" SelectedColor="{Binding ColorsViewModel.Color2}" />
-			<xctk:ColorPicker Grid.Column="3" Margin="5" SelectedColor="{Binding ColorsViewModel.Color3}" />
-			<xctk:ColorPicker Grid.Column="4" Margin="5" SelectedColor="{Binding ColorsViewModel.Color4}" />
-			<xctk:ColorPicker Grid.Column="5" Margin="5" SelectedColor="{Binding ColorsViewModel.Color5}" />
-			<xctk:ColorPicker Grid.Column="6" Margin="5" SelectedColor="{Binding ColorsViewModel.Color6}" />
-			<xctk:ColorPicker Grid.Column="7" Margin="5" SelectedColor="{Binding ColorsViewModel.Color7}" />
-			<xctk:ColorPicker Grid.Column="8" Margin="5" SelectedColor="{Binding ColorsViewModel.Color8}" />
-			<xctk:ColorPicker Grid.Column="9" Margin="5" SelectedColor="{Binding ColorsViewModel.Color9}" />
+			<xctk:ColorPicker Grid.Column="1" Grid.Row="1" Margin="5" SelectedColor="{Binding ColorsViewModel.Color1}" />
+			<xctk:ColorPicker Grid.Column="2" Grid.Row="1" Margin="5" SelectedColor="{Binding ColorsViewModel.Color2}" />
+			<xctk:ColorPicker Grid.Column="3" Grid.Row="1" Margin="5" SelectedColor="{Binding ColorsViewModel.Color3}" />
+			<xctk:ColorPicker Grid.Column="4" Grid.Row="1" Margin="5" SelectedColor="{Binding ColorsViewModel.Color4}" />
+			<xctk:ColorPicker Grid.Column="5" Grid.Row="1" Margin="5" SelectedColor="{Binding ColorsViewModel.Color5}" />
+			<xctk:ColorPicker Grid.Column="6" Grid.Row="1" Margin="5" SelectedColor="{Binding ColorsViewModel.Color6}" />
+			<xctk:ColorPicker Grid.Column="7" Grid.Row="1" Margin="5" SelectedColor="{Binding ColorsViewModel.Color7}" />
+			<xctk:ColorPicker Grid.Column="8" Grid.Row="1" Margin="5" SelectedColor="{Binding ColorsViewModel.Color8}" />
+			<xctk:ColorPicker Grid.Column="9" Grid.Row="1" Margin="5" SelectedColor="{Binding ColorsViewModel.Color9}" />
 		</Grid>
 		<!--<StackPanel>
 			

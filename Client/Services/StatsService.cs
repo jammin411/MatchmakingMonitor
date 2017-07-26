@@ -23,10 +23,12 @@ namespace MatchMakingMonitor.Services
 		private readonly SocketIoService _socketIoService;
 
 		private readonly BehaviorSubject<StatsStatus> _statsStatusChangedSubject;
-
 		private readonly BehaviorSubject<List<DisplayPlayerStats>> _statsSubject;
+
 		private Region _currentRegion;
 		private Replay _currentReplay;
+
+		public List<DisplayPlayerStats> CurrentStats;
 
 		public StatsService(ILogger logger, SettingsWrapper settingsWrapper, WatcherService watcherService,
 			ApiService apiService, SocketIoService socketIoService)
@@ -91,11 +93,11 @@ namespace MatchMakingMonitor.Services
 					{
 						try
 						{
-							var stats = await ComputeDisplayPlayer(players);
+							CurrentStats = await ComputeDisplayPlayer(players);
 							_statsStatusChangedSubject.OnNext(StatsStatus.Fetched);
-							_socketIoService.Hub.SendColorKeys(stats.Select(p => p.GetColorKeys()).ToList());
-							_socketIoService.Hub.SendPlayers(stats.Select(p => p.ToMobile()).ToList());
-							_statsSubject.OnNext(stats);
+							_socketIoService.Hub.SendColorKeys(CurrentStats.Select(p => p.GetColorKeys()).ToList());
+							_socketIoService.Hub.SendPlayers(CurrentStats.Select(p => p.ToMobile()).ToList());
+							_statsSubject.OnNext(CurrentStats);
 						}
 						catch (Exception e)
 						{

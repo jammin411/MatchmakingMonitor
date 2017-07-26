@@ -4,6 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="QrCode" Height="300" Width="300">
-	<Grid />
+        Title="QrCode" Height="350" Width="350"
+				ResizeMode="NoResize"
+        DataContext="{Binding QrCodeViewModel, Source={StaticResource ViewModelLocator}}">
+	<StackPanel Orientation="Vertical">
+		<Image Name="QrCode" Source="{Binding QrCode}" VerticalAlignment="Top" Height="280" Width="280"></Image>
+		<!--<TextBox Text="{Binding Token}"></TextBox>-->
+		<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+			<Button Content="Generate" Command="{Binding GenerateCommand}"></Button>
+		</StackPanel>
+	</StackPanel>
 </Window>

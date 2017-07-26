@@ -36,4 +36,20 @@ export class HomeComponent {
 			});
 		}
 	}
+
+	public downloadApp(event: MouseEvent) {
+		event.preventDefault();
+		if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+			ga('send', 'event', { eventCategory: 'download', eventAction: 'download-beta', eventLabel: 'android-app' });
+		}
+		window.location.href = '/wowsaio-beta.apk';
+	}
+
+	public downloadMonitor(event: MouseEvent) {
+		event.preventDefault();
+		if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+			ga('send', 'event', { eventCategory: 'download', eventAction: 'download-beta', eventLabel: 'monitor' });
+		}
+		window.location.href = '/MatchmakingMonitor-Beta.zip';
+	}
 }
