@@ -198,6 +198,7 @@
     <Compile Include="UpdateWindow.xaml.cs">
       <DependentUpon>UpdateWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ColorHelper.cs" />
     <Compile Include="View\Settings\ColorsEditor.cs" />
     <Compile Include="View\Settings\ColorsViewModel.cs" />
     <Compile Include="View\Settings\ILimitsEditor.cs" />
@@ -284,6 +285,9 @@
   <ItemGroup>
     <Resource Include="Images\connectionIcon.png" />
     <Resource Include="Images\qrcodeIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\record-rec.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

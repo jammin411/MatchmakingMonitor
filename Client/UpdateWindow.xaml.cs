@@ -7,17 +7,20 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using MatchMakingMonitor.Services;
-using Path = System.IO.Path;
 
 namespace MatchmakingMonitor
 {
 	/// <summary>
-	/// Interaction logic for UpdateWindow.xaml
+	///   Interaction logic for UpdateWindow.xaml
 	/// </summary>
 	public partial class UpdateWindow
 	{
-		private readonly string _executablePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MatchmakingMonitor.exe");
-		private readonly string _executableBackupPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MatchmakingMonitor.exe.bak");
+		private readonly string _executableBackupPath =
+			Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MatchmakingMonitor.exe.bak");
+
+		private readonly string _executablePath =
+			Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MatchmakingMonitor.exe");
+
 		public UpdateWindow(Uri downloadUri)
 		{
 			InitializeComponent();
@@ -58,7 +61,8 @@ namespace MatchmakingMonitor
 						}
 					}
 				});
-				var messageBoxResult = MessageBox.Show("Application has been updated to the latest version. Restart required.", "Application updated", MessageBoxButton.OK);
+				var messageBoxResult = MessageBox.Show("Application has been updated to the latest version. Restart required.",
+					"Application updated", MessageBoxButton.OK);
 				if (messageBoxResult != MessageBoxResult.OK) return;
 				if (Application.ResourceAssembly.Location != null) Process.Start(Application.ResourceAssembly.Location);
 				Application.Current.Shutdown();
@@ -66,7 +70,10 @@ namespace MatchmakingMonitor
 			catch (Exception e)
 			{
 				logger.Error("Error during automatic app update", e);
-				var messageBoxResult = MessageBox.Show("An error occured when trying to update the app. Try disabling automatic update and download the latest version manually", "Update error", MessageBoxButton.OK);
+				var messageBoxResult =
+					MessageBox.Show(
+						"An error occured when trying to update the app. Try disabling automatic update and download the latest version manually",
+						"Update error", MessageBoxButton.OK);
 				if (messageBoxResult != MessageBoxResult.OK) return;
 				Close();
 			}

@@ -8,6 +8,10 @@ namespace MatchMakingMonitor.config
 	{
 		[JsonProperty("appIds")] public AppId[] AppIds;
 
+		[JsonProperty("automaticAppUpdate")] public bool AutomaticAppUpdate;
+
+		[JsonProperty("automaticLimitsSync")] public bool AutomaticLimitsSync;
+
 		[JsonProperty("avgDmgLimits")] [ExportSetting] public LimitsType AvgDmgLimits;
 
 		[JsonProperty("avgDmgWeight")] [ExportSetting] public double AvgDmgWeight;
@@ -41,10 +45,6 @@ namespace MatchMakingMonitor.config
 		[JsonProperty("token")] public string Token;
 
 		[JsonProperty("version")] public string Version;
-
-		[JsonProperty("automaticLimitsSync")] public bool AutomaticLimitsSync;
-
-		[JsonProperty("automaticAppUpdate")] public bool AutomaticAppUpdate;
 
 		[JsonProperty("winRateLimits")] [ExportSetting] public double[] WinRateLimits;
 

@@ -68,7 +68,9 @@ namespace MatchMakingMonitor
 
 				if (latestVersion.CompareTo(currentVersion) <= 0) return;
 				if (settingsWrapper.CurrentSettings.AutomaticAppUpdate)
+				{
 					new UpdateWindow(new Uri(BaseUri, "/api/download/latest")).Show();
+				}
 				else
 				{
 					var messageBoxResult =

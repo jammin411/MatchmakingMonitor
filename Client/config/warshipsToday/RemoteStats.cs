@@ -10,7 +10,7 @@ namespace MatchMakingMonitor.config.warshipsToday
 {
 	internal static class RemoteStats
 	{
-		private static readonly int[] Tiers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+		private static readonly int[] Tiers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
 		public static async Task<bool> Get(SettingsJson settings, ILogger logger)
 		{
@@ -22,7 +22,7 @@ namespace MatchMakingMonitor.config.warshipsToday
 			if (allRegions.Any())
 				return await Task.Run(() =>
 				{
-					settings.BattleLimits = new double[] { 150, 100, 80, 60, 40, 30, 20, 10, 0 };
+					settings.BattleLimits = new double[] {150, 100, 80, 60, 40, 30, 20, 10, 0};
 					settings.WinRateLimits = allRegions.AvgWinRate().OrderedArray().Calc(0, true);
 					settings.AvgFragsLimits = allRegions.AvgFrags().OrderedArray().Calc(0, true);
 					settings.AvgXpLimits = Tiers

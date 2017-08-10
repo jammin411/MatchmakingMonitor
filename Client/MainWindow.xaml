@@ -46,6 +46,14 @@
 								</ControlTemplate>
 							</Button.Template>
 						</Button>-->
+						<Button Visibility="{Binding CanEnableReplays}" Command="{Binding EnableReplayCommand}" Margin="0,0,10,0">
+							<Button.Template>
+								<ControlTemplate>
+									<Image Source="Images/record-rec.png" Height="32" VerticalAlignment="Center" HorizontalAlignment="Right"
+									       Width="30" Cursor="Hand" />
+								</ControlTemplate>
+							</Button.Template>
+						</Button>
 						<Button Visibility="{Binding CanExport}" Command="{Binding ExportStatsCommand}" Margin="0,0,10,0">
 							<Button.Template>
 								<ControlTemplate>
@@ -156,11 +164,29 @@
 						<ColumnDefinition Width="50*" />
 					</Grid.ColumnDefinitions>
 					<StackPanel Grid.Column="0">
-						<TextBlock FontSize="15" FontWeight="Bold" Foreground="Green">Friendly team</TextBlock>
+						<StackPanel Orientation="Horizontal">
+							<TextBlock FontSize="15" FontWeight="Bold" Foreground="Green">Friendly team</TextBlock>
+							<TextBlock FontSize="15" Margin="10,0,0,0" Foreground="Black">Avg XP:</TextBlock>
+							<TextBlock FontSize="15" Margin="5,0,0,0" Foreground="Black" Text="{Binding AvgXpFriendly}" />
+							<TextBlock FontSize="15" Margin="10,0,0,0" Foreground="Black">Avg Winrate:</TextBlock>
+							<TextBlock FontSize="15" Margin="5,0,0,0" Foreground="Black" Text="{Binding AvgWinrateFriendly}" />
+							<TextBlock FontSize="15" Foreground="Black">%</TextBlock>
+							<TextBlock FontSize="15" Margin="10,0,0,0" Foreground="Black">Avg Battles:</TextBlock>
+							<TextBlock FontSize="15" Margin="5,0,0,0" Foreground="Black" Text="{Binding AvgBattlesFriendly}" />
+						</StackPanel>
 						<ItemsControl ItemsSource="{Binding FriendlyPlayers}" ItemTemplate="{StaticResource PlayerTemplate}" />
 					</StackPanel>
 					<StackPanel Grid.Column="1">
-						<TextBlock FontSize="15" FontWeight="Bold" Foreground="OrangeRed">Enemy team</TextBlock>
+						<StackPanel Orientation="Horizontal">
+							<TextBlock FontSize="15" FontWeight="Bold" Foreground="OrangeRed">Enemy team</TextBlock>
+							<TextBlock FontSize="15" Margin="10,0,0,0" Foreground="Black">Avg XP:</TextBlock>
+							<TextBlock FontSize="15" Margin="5,0,0,0" Foreground="Black" Text="{Binding AvgXpEnemy}" />
+							<TextBlock FontSize="15" Margin="10,0,0,0" Foreground="Black">Avg Winrate:</TextBlock>
+							<TextBlock FontSize="15" Margin="5,0,0,0" Foreground="Black" Text="{Binding AvgWinrateEnemy}" />
+							<TextBlock FontSize="15" Foreground="Black">%</TextBlock>
+							<TextBlock FontSize="15" Margin="10,0,0,0" Foreground="Black">Avg Battles:</TextBlock>
+							<TextBlock FontSize="15" Margin="5,0,0,0" Foreground="Black" Text="{Binding AvgBattlesEnemy}" />
+						</StackPanel>
 						<ItemsControl ItemsSource="{Binding EnemyPlayers}" ItemTemplate="{StaticResource PlayerTemplate}" />
 					</StackPanel>
 				</Grid>

@@ -13,11 +13,11 @@ namespace MatchMakingMonitor.View.Settings
 	public class SettingsWindowViewModel : ViewModelBase
 	{
 		private readonly SettingsWrapper _settingsWrapper;
+		private bool _automaticAppUpdate;
+		private bool _automaticLimitsSync;
 
 		private int _fontSize;
 		private bool _hideLowBattles;
-		private bool _automaticLimitsSync;
-		private bool _automaticAppUpdate;
 
 		[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 		public SettingsWindowViewModel(SettingsWrapper settingsWrapper)
@@ -81,7 +81,7 @@ namespace MatchMakingMonitor.View.Settings
 		public RelayCommand ExportCommand { get; set; }
 		public RelayCommand ImportCommand { get; set; }
 
-		public ObservableCollection<int> FontSizes { get; } = new ObservableCollection<int> { 8, 9, 10, 11, 12, 13, 14 };
+		public ObservableCollection<int> FontSizes { get; } = new ObservableCollection<int> {8, 9, 10, 11, 12, 13, 14};
 
 		public ColorsViewModel ColorsViewModel { get; }
 		public ObservableCollection<LimitsViewModel> StaticViewModels { get; }
@@ -127,7 +127,8 @@ namespace MatchMakingMonitor.View.Settings
 				var oldValue = _automaticLimitsSync;
 				_automaticLimitsSync = value;
 				_settingsWrapper.CurrentSettings.AutomaticLimitsSync = value;
-				_settingsWrapper.SettingChangedSubject.OnNext(new ChangedSetting(oldValue, _automaticLimitsSync, nameof(SettingsJson.AutomaticLimitsSync)));
+				_settingsWrapper.SettingChangedSubject.OnNext(
+					new ChangedSetting(oldValue, _automaticLimitsSync, nameof(SettingsJson.AutomaticLimitsSync)));
 				SetTextboxState(!value);
 				FirePropertyChanged();
 			}
@@ -141,7 +142,8 @@ namespace MatchMakingMonitor.View.Settings
 				var oldValue = _automaticAppUpdate;
 				_automaticAppUpdate = value;
 				_settingsWrapper.CurrentSettings.AutomaticAppUpdate = value;
-				_settingsWrapper.SettingChangedSubject.OnNext(new ChangedSetting(oldValue, _automaticAppUpdate, nameof(SettingsJson.AutomaticAppUpdate)));
+				_settingsWrapper.SettingChangedSubject.OnNext(
+					new ChangedSetting(oldValue, _automaticAppUpdate, nameof(SettingsJson.AutomaticAppUpdate)));
 				FirePropertyChanged();
 			}
 		}

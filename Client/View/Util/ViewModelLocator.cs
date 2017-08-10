@@ -15,7 +15,9 @@ namespace MatchMakingMonitor.View.Util
 
 		public HeaderViewModel HeaderViewModel => IsInDesignMode() ? new HeaderViewModel() : IoCKernel.Get<HeaderViewModel>();
 
-		public SubHeaderViewModel SubHeaderViewModel => IsInDesignMode() ? new SubHeaderViewModel() : IoCKernel.Get<SubHeaderViewModel>();
+		public SubHeaderViewModel SubHeaderViewModel => IsInDesignMode()
+			? new SubHeaderViewModel()
+			: IoCKernel.Get<SubHeaderViewModel>();
 
 		public SettingsWindowViewModel SettingsViewModel => IsInDesignMode()
 			? new SettingsWindowViewModel()
