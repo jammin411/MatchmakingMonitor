@@ -38,6 +38,15 @@ namespace MatchMakingMonitor
 			_socketIoService = IoCKernel.Get<SocketIoService>();
 			//_socketIoService.Connect();
 			base.OnStartup(e);
+			DispatcherUnhandledException += App_DispatcherUnhandledException;
+		}
+
+		private static void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+		{
+			if (!e.Handled)
+			{
+				IoCKernel.Get<ILogger>().Error("Error occured", e.Exception);
+			}
 		}
 
 		protected override void OnExit(ExitEventArgs e)
@@ -67,19 +76,20 @@ namespace MatchMakingMonitor
 				var currentVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
 				if (latestVersion.CompareTo(currentVersion) <= 0) return;
-				if (settingsWrapper.CurrentSettings.AutomaticAppUpdate)
-				{
-					new UpdateWindow(new Uri(BaseUri, "/api/download/latest")).Show();
-				}
-				else
-				{
-					var messageBoxResult =
-						MessageBox.Show(
-							$"A newer version is available for download.{Environment.NewLine}Current version: {currentVersion}, Latest version: {latestVersion}{Environment.NewLine}Go to download page?",
-							"Newer version available", MessageBoxButton.YesNo);
-					if (messageBoxResult == MessageBoxResult.Yes)
-						Process.Start("http://monitor.pepespub.de/download/latest");
-				}
+				//TODO: Find a solution for automatic updates
+				//if (settingsWrapper.CurrentSettings.AutomaticAppUpdate)
+				//{
+				//	new UpdateWindow(new Uri(BaseUri, "/api/download/latest")).Show();
+				//}
+				//else
+				//{
+				var messageBoxResult =
+					MessageBox.Show(
+						$"A newer version is available for download.{Environment.NewLine}Current version: {currentVersion}, Latest version: {latestVersion}{Environment.NewLine}Go to download page?",
+						"Newer version available", MessageBoxButton.YesNo);
+				if (messageBoxResult == MessageBoxResult.Yes)
+					Process.Start("http://monitor.pepespub.de/download/latest");
+				//}
 			}
 			catch (Exception e)
 			{

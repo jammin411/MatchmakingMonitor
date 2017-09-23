@@ -22,22 +22,30 @@ namespace MatchMakingMonitor.config.warshipsToday
 			if (allRegions.Any())
 				return await Task.Run(() =>
 				{
-					settings.BattleLimits = new double[] {150, 100, 80, 60, 40, 30, 20, 10, 0};
-					settings.WinRateLimits = allRegions.AvgWinRate().OrderedArray().Calc(0, true);
-					settings.AvgFragsLimits = allRegions.AvgFrags().OrderedArray().Calc(0, true);
-					settings.AvgXpLimits = Tiers
-						.Select(t => allRegions.Tier(t).AvgXp().OrderedArray().Calc(5 * t, false).LimitsTier(t))
-						.ToArray();
+					try
+					{
+						settings.BattleLimits = new double[] {150, 100, 80, 60, 40, 30, 20, 10, 0};
+						settings.WinRateLimits = allRegions.AvgWinRate().OrderedArray().Calc(0, true);
+						settings.AvgFragsLimits = allRegions.AvgFrags().OrderedArray().Calc(0, true);
+						settings.AvgXpLimits = Tiers
+							.Select(t => allRegions.Tier(t).AvgXp().OrderedArray().Calc(5 * t, false).LimitsTier(t))
+							.ToArray();
 
-					settings.AvgDmgLimits.Battleship = Tiers.Select(t => allRegions.Tier(t).Type(ShipType.Battleship).AvgDmg()
-						.OrderedArray().Calc(500 * t, false).LimitsTier(t)).ToArray();
-					settings.AvgDmgLimits.Cruiser = Tiers.Select(t => allRegions.Tier(t).Type(ShipType.Cruiser).AvgDmg().OrderedArray()
-						.Calc(500 * t, false).LimitsTier(t)).ToArray();
-					settings.AvgDmgLimits.Destroyer = Tiers.Select(t => allRegions.Tier(t).Type(ShipType.Destroyer).AvgDmg()
-						.OrderedArray().Calc(500 * t, false).LimitsTier(t)).ToArray();
-					settings.AvgDmgLimits.AirCarrier = Tiers.Select(t => allRegions.Tier(t).Type(ShipType.AirCarrier).AvgDmg()
-						.OrderedArray().Calc(500 * t, false).LimitsTier(t)).ToArray();
-
+						settings.AvgDmgLimits.Battleship = Tiers.Select(t => allRegions.Tier(t).Type(ShipType.Battleship).AvgDmg()
+							.OrderedArray().Calc(500 * t, false).LimitsTier(t)).ToArray();
+						settings.AvgDmgLimits.Cruiser = Tiers.Select(t => allRegions.Tier(t).Type(ShipType.Cruiser).AvgDmg()
+							.OrderedArray()
+							.Calc(500 * t, false).LimitsTier(t)).ToArray();
+						settings.AvgDmgLimits.Destroyer = Tiers.Select(t => allRegions.Tier(t).Type(ShipType.Destroyer).AvgDmg()
+							.OrderedArray().Calc(500 * t, false).LimitsTier(t)).ToArray();
+						settings.AvgDmgLimits.AirCarrier = Tiers.Select(t => allRegions.Tier(t).Type(ShipType.AirCarrier).AvgDmg()
+							.OrderedArray().Calc(500 * t, false).LimitsTier(t)).ToArray();
+					}
+					catch (Exception e)
+					{
+						logger.Error($"Error calculating average limits from warships.today", e);
+					}
+					
 					return true;
 				});
 
