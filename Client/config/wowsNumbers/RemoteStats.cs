@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using MatchmakingMonitor.Models.ResponseTypes;
 using MatchmakingMonitor.Services;
 using Newtonsoft.Json;
 
-namespace MatchmakingMonitor.config.warshipsToday
+namespace MatchmakingMonitor.config.wowsNumbers
 {
   internal static class RemoteStats
   {
@@ -31,14 +31,18 @@ namespace MatchmakingMonitor.config.warshipsToday
               .Select(t => allRegions.Tier(t).AvgXp().OrderedArray().Calc(5 * t, false).LimitsTier(t))
               .ToArray();
 
-            settings.AvgDmgLimits.Battleship = Tiers.Select(t => allRegions.Tier(t).Type(ShipType.Battleship).AvgDmg()
+            settings.AvgDmgLimits.Battleship = Tiers.Select(t => allRegions.Tier(t).Type(WowsNumbersShipType.Battleship)
+              .AvgDmg()
               .OrderedArray().Calc(500 * t, false).LimitsTier(t)).ToArray();
-            settings.AvgDmgLimits.Cruiser = Tiers.Select(t => allRegions.Tier(t).Type(ShipType.Cruiser).AvgDmg()
+            settings.AvgDmgLimits.Cruiser = Tiers.Select(t => allRegions.Tier(t).Type(WowsNumbersShipType.Cruiser)
+              .AvgDmg()
               .OrderedArray()
               .Calc(500 * t, false).LimitsTier(t)).ToArray();
-            settings.AvgDmgLimits.Destroyer = Tiers.Select(t => allRegions.Tier(t).Type(ShipType.Destroyer).AvgDmg()
+            settings.AvgDmgLimits.Destroyer = Tiers.Select(t => allRegions.Tier(t).Type(WowsNumbersShipType.Destroyer)
+              .AvgDmg()
               .OrderedArray().Calc(500 * t, false).LimitsTier(t)).ToArray();
-            settings.AvgDmgLimits.AirCarrier = Tiers.Select(t => allRegions.Tier(t).Type(ShipType.AirCarrier).AvgDmg()
+            settings.AvgDmgLimits.AirCarrier = Tiers.Select(t => allRegions.Tier(t)
+              .Type(WowsNumbersShipType.AircraftCarrier).AvgDmg()
               .OrderedArray().Calc(500 * t, false).LimitsTier(t)).ToArray();
           }
           catch (Exception e)
@@ -52,26 +56,31 @@ namespace MatchmakingMonitor.config.warshipsToday
       return false;
     }
 
-    private static async Task<WarshipsTodayEntry[]> GetEntries(Region region, ILogger logger)
+    private static async Task<WowsNumbersShipEntry[]> GetEntries(Region region, ILogger logger)
     {
       try
       {
+        var regionString = region == Region.EU ? string.Empty : $"{region}.";
         var client = new HttpClient
         {
-          BaseAddress = new Uri($"https://api.{region}.warships.today")
+          BaseAddress = new Uri($"https://{regionString}wows-numbers.com")
         };
 
-        var response = await client.GetAsync("api/vehicles");
+        var response = await client.GetAsync("ships");
 
-        if (!response.IsSuccessStatusCode) return new WarshipsTodayEntry[0];
+        if (!response.IsSuccessStatusCode) return new WowsNumbersShipEntry[0];
 
-        var json = await response.Content.ReadAsStringAsync();
-        return await Task.Run(() => JsonConvert.DeserializeObject<WarshipsTodayEntry[]>(json));
+        var html = await response.Content.ReadAsStringAsync();
+        var regex = new Regex("dataProvider.ships = (\\[(.)*\\])", RegexOptions.Multiline);
+        var match = regex.Match(html);
+        if (!match.Success) throw new Exception("No ship data found");
+
+        return await Task.Run(() => JsonConvert.DeserializeObject<WowsNumbersShipEntry[]>(match.Groups[1].Value));
       }
       catch (Exception e)
       {
         logger.Error($"Error retreiving data from url 'https://api.{region}.warships.today'", e);
-        return new WarshipsTodayEntry[0];
+        return new WowsNumbersShipEntry[0];
       }
     }
   }

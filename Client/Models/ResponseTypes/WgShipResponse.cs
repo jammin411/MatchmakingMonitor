@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace MatchMakingMonitor.Models.ResponseTypes
+namespace MatchmakingMonitor.Models.ResponseTypes
 {
-	public class WgShipResponse
-	{
-		[JsonProperty("data")]
-		public List<WgShip> Data { get; set; }
-	}
+  public class WgShipResponse
+  {
+    [JsonProperty("data")]
+    public List<WgShip> Data { get; set; }
+  }
 }

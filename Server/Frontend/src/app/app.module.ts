@@ -16,30 +16,30 @@ import { ChangelogDialog } from './download/changelog.component';
 import { ApiService } from './services/api.service';
 
 @NgModule({
-	declarations: [
-		AppComponent,
-		HomeComponent,
-		DownloadComponent,
-		ChangelogDialog
-	],
-	entryComponents: [ChangelogDialog],
-	imports: [
-		BrowserModule,
-		HttpModule,
-		FormsModule,
-		ReactiveFormsModule,
-		BrowserAnimationsModule,
-		NoopAnimationsModule,
-		AppRoutingModule,
-		MaterialModule,
-		MdProgressSpinnerModule,
-		MdSelectModule,
-		MdCardModule,
-		MdListModule,
-		MarkdownModule.forRoot()
-	],
-	providers: [ApiService],
-	bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    DownloadComponent,
+    ChangelogDialog
+  ],
+  entryComponents: [ChangelogDialog],
+  imports: [
+    BrowserModule,
+    HttpModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    NoopAnimationsModule,
+    AppRoutingModule,
+    MaterialModule,
+    MdProgressSpinnerModule,
+    MdSelectModule,
+    MdCardModule,
+    MdListModule,
+    MarkdownModule.forRoot()
+  ],
+  providers: [ApiService],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

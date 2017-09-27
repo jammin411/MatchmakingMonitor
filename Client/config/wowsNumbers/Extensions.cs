@@ -3,43 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using MatchmakingMonitor.Models.ResponseTypes;
 
-namespace MatchmakingMonitor.config.warshipsToday
+namespace MatchmakingMonitor.config.wowsNumbers
 {
   public static class Extensions
   {
-    public static IEnumerable<WarshipsTodayEntry> Tier(this IEnumerable<WarshipsTodayEntry> entries, int tier)
+    public static IEnumerable<WowsNumbersShipEntry> Tier(this IEnumerable<WowsNumbersShipEntry> entries, int tier)
     {
-      return entries.Where(s => s.Vehicle.Ship.Tier == tier);
+      return entries.Where(s => s.Tier == tier);
     }
 
-    public static IEnumerable<WarshipsTodayEntry> Type(this IEnumerable<WarshipsTodayEntry> entries, ShipType type)
+    public static IEnumerable<WowsNumbersShipEntry> Type(this IEnumerable<WowsNumbersShipEntry> entries,
+      WowsNumbersShipType type)
     {
-      return entries.Where(s => s.Vehicle.Ship.Type == type);
+      return entries.Where(s => s.Type == type);
     }
 
-    public static IEnumerable<double> AvgWinRate(this IEnumerable<WarshipsTodayEntry> entries)
+    public static IEnumerable<double> AvgWinRate(this IEnumerable<WowsNumbersShipEntry> entries)
     {
-      return entries.Select(s =>
-        Math.Round(s.Statistics.ShipStatistics.Wins / s.Statistics.ShipStatistics.Battles * 100,
-          2));
+      return entries.Select(s => s.WinRate);
     }
 
-    public static IEnumerable<double> AvgFrags(this IEnumerable<WarshipsTodayEntry> entries)
+    public static IEnumerable<double> AvgFrags(this IEnumerable<WowsNumbersShipEntry> entries)
     {
-      return entries.Select(s => Math.Round(s.Statistics.ShipStatistics.Frags / s.Statistics.ShipStatistics.Battles,
-        2));
+      return entries.Select(s => s.AvgFrags);
     }
 
-    public static IEnumerable<double> AvgXp(this IEnumerable<WarshipsTodayEntry> entries)
+    public static IEnumerable<double> AvgXp(this IEnumerable<WowsNumbersShipEntry> entries)
     {
-      return entries.Select(s => Math.Round(s.Statistics.ShipStatistics.Xp / s.Statistics.ShipStatistics.Battles, 2));
+      return entries.Select(s => s.AvgXp);
     }
 
-    public static IEnumerable<double> AvgDmg(this IEnumerable<WarshipsTodayEntry> entries)
+    public static IEnumerable<double> AvgDmg(this IEnumerable<WowsNumbersShipEntry> entries)
     {
-      return entries.Select(s =>
-        Math.Round(s.Statistics.ShipStatistics.DamageDealt / s.Statistics.ShipStatistics.Battles,
-          2));
+      return entries.Select(s => s.AvgDamageDealt);
     }
 
     public static double[] OrderedArray(this IEnumerable<double> entries)

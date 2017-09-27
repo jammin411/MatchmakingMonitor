@@ -1,11 +1,11 @@
 ﻿{
-	"/api": {
-		"target": {
-			"host": "monitor.local",
-			"port": 80,
-			"protocol": "http:"
-		},
-		"secure": false,
-		"changeOrigin": true
-	}
+  "/api": {
+    "target": {
+      "host": "monitor.local",
+      "port": 80,
+      "protocol": "http:"
+    },
+    "secure": false,
+    "changeOrigin": true
+  }
 }

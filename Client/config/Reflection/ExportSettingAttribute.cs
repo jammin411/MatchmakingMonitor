@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace MatchMakingMonitor.config.Reflection
+namespace MatchmakingMonitor.config.Reflection
 {
-	public class ExportSettingAttribute : Attribute
-	{
-	}
+  public class ExportSettingAttribute : Attribute
+  {
+  }
 }

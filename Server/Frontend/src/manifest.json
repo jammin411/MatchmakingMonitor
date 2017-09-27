@@ -1,6 +1,6 @@
 ﻿{
-	"name": "Matchmaking Monitor",
-	"gcm_sender_id": "448878969319",
-	"permissions": [
-	]
+  "name": "Matchmaking Monitor",
+  "gcm_sender_id": "448878969319",
+  "permissions": [
+  ]
 }

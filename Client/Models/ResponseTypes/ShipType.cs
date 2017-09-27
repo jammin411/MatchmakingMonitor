@@ -1,10 +1,10 @@
-﻿namespace MatchMakingMonitor.Models.ResponseTypes
+﻿namespace MatchmakingMonitor.Models.ResponseTypes
 {
-	public enum ShipType
-	{
-		Destroyer,
-		Cruiser,
-		Battleship,
-		AirCarrier
-	}
+  public enum ShipType
+  {
+    Destroyer,
+    Cruiser,
+    Battleship,
+    AirCarrier
+  }
 }

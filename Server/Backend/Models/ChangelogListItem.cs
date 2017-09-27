@@ -1,6 +1,6 @@
 ﻿namespace Backend.Models
 {
-	internal class ChangelogListItem
-	{
-	}
+  internal class ChangelogListItem
+  {
+  }
 }

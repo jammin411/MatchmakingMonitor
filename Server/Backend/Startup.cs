@@ -9,15 +9,15 @@ using Owin;
 
 namespace Backend
 {
-	public class Startup
-	{
-		public void Configuration(IAppBuilder app)
-		{
-			var config = new HttpConfiguration();
-			var routes = RouteTable.Routes;
+  public class Startup
+  {
+    public void Configuration(IAppBuilder app)
+    {
+      var config = new HttpConfiguration();
+      var routes = RouteTable.Routes;
 
-			config.MapHttpAttributeRoutes(new CentralizedPrefixProvider("api"));
-			routes.Clear();
+      config.MapHttpAttributeRoutes(new CentralizedPrefixProvider("api"));
+      routes.Clear();
 
 
 #if DEBUG
@@ -26,34 +26,31 @@ namespace Backend
         c.PrettyPrint();
         c.SingleApiVersion("v1", "MatchmakingMonitor");
         c.DescribeAllEnumsAsStrings();
-      }).EnableSwaggerUi(c =>
-      {
-        c.DisableValidator();
-      });
+      }).EnableSwaggerUi(c => { c.DisableValidator(); });
 #endif
 
-			config.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
+      config.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
 
-			ConfigureStaticFiles(app);
+      ConfigureStaticFiles(app);
 
-			app.UseWebApi(config);
-		}
+      app.UseWebApi(config);
+    }
 
-		private static void ConfigureStaticFiles(IAppBuilder app)
-		{
-			var root = AppDomain.CurrentDomain.BaseDirectory;
-			var wwwroot = Path.Combine(root, "wwwroot");
+    private static void ConfigureStaticFiles(IAppBuilder app)
+    {
+      var root = AppDomain.CurrentDomain.BaseDirectory;
+      var wwwroot = Path.Combine(root, "wwwroot");
 
-			var fileServerOptions = new FileServerOptions
-			{
-				EnableDefaultFiles = true,
-				EnableDirectoryBrowsing = false,
-				RequestPath = new PathString(string.Empty),
-				FileSystem = new PhysicalFileSystem(wwwroot)
-			};
+      var fileServerOptions = new FileServerOptions
+      {
+        EnableDefaultFiles = true,
+        EnableDirectoryBrowsing = false,
+        RequestPath = new PathString(string.Empty),
+        FileSystem = new PhysicalFileSystem(wwwroot)
+      };
 
-			fileServerOptions.StaticFileOptions.ServeUnknownFileTypes = true;
-			app.UseFileServer(fileServerOptions);
-		}
-	}
+      fileServerOptions.StaticFileOptions.ServeUnknownFileTypes = true;
+      app.UseFileServer(fileServerOptions);
+    }
+  }
 }

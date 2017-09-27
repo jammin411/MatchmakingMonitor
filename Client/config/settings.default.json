@@ -1,284 +1,284 @@
 {
-	"version": "{{versionPlaceholder}}",
-	"installDirectory": "C:\\Games\\World_of_Warships",
-	"automaticLimitsSync": true,
-	"automaticAppUpdate": true,
-	"region": 1,
-	"appIds": [
-		{
-			"region": 0,
-			"id": "8c4616d4f59f9e915d214c514f7661f2"
-		},
-		{
-			"region": 1,
-			"id": "04c8800d343d496e7ae9c94ba6e51a0b"
-		},
-		{
-			"region": 2,
-			"id": "92669bcd3cb4978e78a387bdc2e7f8d6"
-		},
-		{
-			"region": 3,
-			"id": "a7079ba49e5487b6936aed9176c13968"
-		}
-	],
-	"baseUrls": [
-		{
-			"region": 0,
-			"url": "https://api.worldofwarships.eu"
-		},
-		{
-			"region": 1,
-			"url": "https://api.worldofwarships.com"
-		},
-		{
-			"region": 2,
-			"url": "https://api.worldofwarships.ru"
-		},
-		{
-			"region": 3,
-			"url": "https://api.worldofwarships.asia"
-		}
-	],
-	"token": "",
-	"lastWindowProperties": {
-		"left": 0,
-		"top": 0,
-		"width": 0,
-		"height": 0,
-		"maximized": true
-	},
-	"colors": [
-		"#401070",
-		"#793db6",
-		"#3972c6",
-		"#4099bf",
-		"#4d7326",
-		"#ccb800",
-		"#cc7a00",
-		"#cd3333",
-		"#930d0d"
-	],
-	"fontSize": 12,
-	"hideLowBattles": true,
-	"battleLimits": [0, 0, 0, 0, 0, 0, 0, 0, 0],
-	"winRateLimits": [0, 0, 0, 0, 0, 0, 0, 0, 0],
-	"avgFragsLimits": [0, 0, 0, 0, 0, 0, 0, 0, 0],
-	"avgXpLimits": [
-		{
-			"tier": 1,
-			"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-		},
-		{
-			"tier": 2,
-			"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-		},
-		{
-			"tier": 3,
-			"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-		},
-		{
-			"tier": 4,
-			"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-		},
-		{
-			"tier": 5,
-			"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-		},
-		{
-			"tier": 6,
-			"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-		},
-		{
-			"tier": 7,
-			"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-		},
-		{
-			"tier": 8,
-			"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-		},
-		{
-			"tier": 9,
-			"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-		},
-		{
-			"tier": 10,
-			"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-		}
-	],
-	"avgDmgLimits": {
-		"destroyer": [
-			{
-				"tier": 1,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 2,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 3,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 4,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 5,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 6,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 7,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 8,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 9,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 10,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			}
-		],
-		"battleship": [
-			{
-				"tier": 1,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 2,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 3,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 4,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 5,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 6,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 7,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 8,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 9,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 10,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			}
-		],
-		"cruiser": [
-			{
-				"tier": 1,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 2,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 3,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 4,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 5,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 6,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 7,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 8,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 9,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 10,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			}
-		],
-		"airCarrier": [
-			{
-				"tier": 1,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 2,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 3,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 4,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 5,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 6,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 7,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 8,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 9,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			},
-			{
-				"tier": 10,
-				"values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
-			}
-		]
-	},
-	"BattleWeight": 1.2,
-	"avgFragsWeight": 1.1,
-	"avgXpWeight": 0.8,
-	"avgDmgWeight": 0.9,
-	"winRateWeight": 1
+  "version": "{{versionPlaceholder}}",
+  "installDirectory": "C:\\Games\\World_of_Warships",
+  "automaticLimitsSync": true,
+  "automaticAppUpdate": true,
+  "region": 1,
+  "appIds": [
+    {
+      "region": 0,
+      "id": "8c4616d4f59f9e915d214c514f7661f2"
+    },
+    {
+      "region": 1,
+      "id": "04c8800d343d496e7ae9c94ba6e51a0b"
+    },
+    {
+      "region": 2,
+      "id": "92669bcd3cb4978e78a387bdc2e7f8d6"
+    },
+    {
+      "region": 3,
+      "id": "a7079ba49e5487b6936aed9176c13968"
+    }
+  ],
+  "baseUrls": [
+    {
+      "region": 0,
+      "url": "https://api.worldofwarships.eu"
+    },
+    {
+      "region": 1,
+      "url": "https://api.worldofwarships.com"
+    },
+    {
+      "region": 2,
+      "url": "https://api.worldofwarships.ru"
+    },
+    {
+      "region": 3,
+      "url": "https://api.worldofwarships.asia"
+    }
+  ],
+  "token": "",
+  "lastWindowProperties": {
+    "left": 0,
+    "top": 0,
+    "width": 0,
+    "height": 0,
+    "maximized": true
+  },
+  "colors": [
+    "#401070",
+    "#793db6",
+    "#3972c6",
+    "#4099bf",
+    "#4d7326",
+    "#ccb800",
+    "#cc7a00",
+    "#cd3333",
+    "#930d0d"
+  ],
+  "fontSize": 12,
+  "hideLowBattles": true,
+  "battleLimits": [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  "winRateLimits": [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  "avgFragsLimits": [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  "avgXpLimits": [
+    {
+      "tier": 1,
+      "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      "tier": 2,
+      "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      "tier": 3,
+      "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      "tier": 4,
+      "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      "tier": 5,
+      "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      "tier": 6,
+      "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      "tier": 7,
+      "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      "tier": 8,
+      "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      "tier": 9,
+      "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      "tier": 10,
+      "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    }
+  ],
+  "avgDmgLimits": {
+    "destroyer": [
+      {
+        "tier": 1,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 2,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 3,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 4,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 5,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 6,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 7,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 8,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 9,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 10,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      }
+    ],
+    "battleship": [
+      {
+        "tier": 1,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 2,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 3,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 4,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 5,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 6,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 7,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 8,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 9,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 10,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      }
+    ],
+    "cruiser": [
+      {
+        "tier": 1,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 2,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 3,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 4,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 5,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 6,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 7,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 8,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 9,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 10,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      }
+    ],
+    "airCarrier": [
+      {
+        "tier": 1,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 2,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 3,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 4,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 5,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 6,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 7,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 8,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 9,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        "tier": 10,
+        "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      }
+    ]
+  },
+  "BattleWeight": 1.2,
+  "avgFragsWeight": 1.1,
+  "avgXpWeight": 0.8,
+  "avgDmgWeight": 0.9,
+  "winRateWeight": 1
 }

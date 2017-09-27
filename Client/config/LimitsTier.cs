@@ -1,12 +1,12 @@
-﻿using MatchMakingMonitor.Models.ResponseTypes;
+﻿using MatchmakingMonitor.Models.ResponseTypes;
 using Newtonsoft.Json;
 
-namespace MatchMakingMonitor.config
+namespace MatchmakingMonitor.config
 {
-	public class LimitsTier
-	{
-		[JsonProperty("tier")] public ShipTier ShipTier;
+  public class LimitsTier
+  {
+    [JsonProperty("tier")] public ShipTier ShipTier;
 
-		[JsonProperty("values")] public double[] Values;
-	}
+    [JsonProperty("values")] public double[] Values;
+  }
 }

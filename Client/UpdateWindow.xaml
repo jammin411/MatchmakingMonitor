@@ -6,8 +6,8 @@
         mc:Ignorable="d"
         Title="Updating..." Height="100" Width="300" ResizeMode="NoResize" WindowState="Normal"
         WindowStartupLocation="CenterScreen">
-	<StackPanel Orientation="Vertical" Margin="10">
-		<ProgressBar VerticalAlignment="Center" Height="20" Name="ProgressBar" Value="50" />
-		<TextBlock VerticalAlignment="Center" Name="ProgressText" HorizontalAlignment="Right" Text="0 / 100" />
-	</StackPanel>
+  <StackPanel Orientation="Vertical" Margin="10">
+    <ProgressBar VerticalAlignment="Center" Height="20" Name="ProgressBar" Value="50" />
+    <TextBlock VerticalAlignment="Center" Name="ProgressText" HorizontalAlignment="Right" Text="0 / 100" />
+  </StackPanel>
 </Window>

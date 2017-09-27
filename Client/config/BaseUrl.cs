@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json;
 
-namespace MatchMakingMonitor.config
+namespace MatchmakingMonitor.config
 {
-	public class AppId
-	{
-		[JsonProperty("region")]
-		public Region Region { get; set; }
+  public class AppId
+  {
+    [JsonProperty("region")]
+    public Region Region { get; set; }
 
-		[JsonProperty("id")]
-		public string Id { get; set; }
-	}
+    [JsonProperty("id")]
+    public string Id { get; set; }
+  }
 }

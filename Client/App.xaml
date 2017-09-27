@@ -1,13 +1,25 @@
-﻿<Application x:Class="MatchMakingMonitor.App"
+﻿<Application x:Class="MatchmakingMonitor.App"
              x:Name="App"
              ShutdownMode="OnMainWindowClose"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:util="clr-namespace:MatchMakingMonitor.View.Util"
+             xmlns:util="clr-namespace:MatchmakingMonitor.View.Util"
              mc:Ignorable="d">
-	<Application.Resources>
-		<util:ViewModelLocator x:Key="ViewModelLocator" d:IsDataSource="true" />
-	</Application.Resources>
+  <Application.Resources>
+    <ResourceDictionary>
+
+      <util:ViewModelLocator x:Key="ViewModelLocator" d:IsDataSource="true" />
+
+      <ResourceDictionary.MergedDictionaries>
+
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Indigo.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Amber.xaml" />
+
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
 </Application>

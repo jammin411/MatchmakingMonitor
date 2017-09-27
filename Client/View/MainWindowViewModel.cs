@@ -1,8 +1,8 @@
-﻿using MatchMakingMonitor.View.Util;
+﻿using MatchmakingMonitor.View.Util;
 
-namespace MatchMakingMonitor.View
+namespace MatchmakingMonitor.View
 {
-	public class MainWindowViewModel : ViewModelBase
-	{
-	}
+  public class MainWindowViewModel : ViewModelBase
+  {
+  }
 }

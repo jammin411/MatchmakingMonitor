@@ -1,16 +1,16 @@
 using Newtonsoft.Json;
 
-namespace MatchMakingMonitor.Models.ResponseTypes
+namespace MatchmakingMonitor.Models.ResponseTypes
 {
-	public class WgStatsPlayer
-	{
-		[JsonProperty("nickname")]
-		public string Nickname { get; set; }
+  public class WgStatsPlayer
+  {
+    [JsonProperty("nickname")]
+    public string Nickname { get; set; }
 
-		[JsonProperty("account_id")]
-		public long AccountId { get; set; }
+    [JsonProperty("account_id")]
+    public long AccountId { get; set; }
 
-		[JsonProperty("Region")]
-		public string Region { get; set; }
-	}
+    [JsonProperty("Region")]
+    public string Region { get; set; }
+  }
 }
