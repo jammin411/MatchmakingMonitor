@@ -180,12 +180,12 @@ namespace MatchmakingMonitor.Models
     }
 
 
-    public string TextBattles => Player.Battles.ToString(CultureInfo.InvariantCulture);
-    public string TextWins => Player.Wins.ToString(CultureInfo.InvariantCulture);
-    public string TextWinRate => $"{WinRate}%";
-    public string TextAvgXp => AvgXp.ToString(CultureInfo.InvariantCulture);
-    public string TextAvgFrags => AvgFrags.ToString(CultureInfo.InvariantCulture);
-    public string TextAvgDamage => AvgDamage.ToString(CultureInfo.InvariantCulture);
+    public string TextBattles => $"Battles: {Player.Battles}";
+    public string TextWins => $"Wins: {Player.Wins}";
+    public string TextWinRate => $"WinRate: {WinRate}%";
+    public string TextAvgXp => $"Avg XP: {AvgXp}";
+    public string TextAvgFrags => $"Avg Frags: {AvgFrags}";
+    public string TextAvgDamage => $"Avg Damage: {AvgDamage}";
     public string TextName => Player?.Nickname;
 
     public string TextShipName => $"{ShipName} (Tier {Player.ShipTier})";

@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using MatchmakingMonitor.config;
 using MatchmakingMonitor.Models;
 using MatchmakingMonitor.Services;
 using MatchmakingMonitor.SocketIO;
@@ -209,8 +210,9 @@ namespace MatchmakingMonitor.View
 
     private void OpenPlayerDetail(IReadOnlyList<string> param)
     {
+      var regionString = _settingsWrapper.CurrentSettings.Region == Region.EU ? string.Empty : $"{_settingsWrapper.CurrentSettings.Region}.";
       if (param[0] != "0")
-        Process.Start($"https://{_settingsWrapper.CurrentSettings.Region}.warships.today/player/{param[0]}/{param[1]}");
+        Process.Start($"https://{regionString}wows-numbers.com/player/{param[0]},{param[1]}");
     }
   }
 }
