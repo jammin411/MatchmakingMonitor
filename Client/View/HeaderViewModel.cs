@@ -53,6 +53,9 @@ namespace MatchmakingMonitor.View
         var path = Path.Combine(_settingsWrapper.CurrentSettings.InstallDirectory, "preferences.xml");
         CanEnableReplays = File.Exists(path);
       });
+
+      if(_settingsWrapper.CurrentSettings.DarkMode)
+        SwitchTheme();
     }
 
     public RelayCommand OpenWebsiteCommand { get; set; }
@@ -178,7 +181,7 @@ namespace MatchmakingMonitor.View
       }
     }
 
-    private static void SwitchTheme()
+    private void SwitchTheme()
     {
       var existingResourceDictionary = Application.Current.Resources.MergedDictionaries
         .Where(rd => rd.Source != null)
@@ -195,6 +198,9 @@ namespace MatchmakingMonitor.View
 
       Application.Current.Resources.MergedDictionaries.Remove(existingResourceDictionary);
       Application.Current.Resources.MergedDictionaries.Add(newResourceDictionary);
+
+      _settingsWrapper.CurrentSettings.DarkMode = isLight;
+      _settingsWrapper.Save();
     }
   }
 }

@@ -39,6 +39,8 @@ namespace MatchmakingMonitor.config
 
     [JsonProperty("lastWindowProperties")] public LastWindowProperties LastWindowProperties;
 
+    [JsonProperty("darkMode")] public bool DarkMode;
+
     [JsonProperty("region")] public Region Region;
 
     [JsonProperty("token")] public string Token;

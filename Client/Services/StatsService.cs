@@ -89,7 +89,7 @@ namespace MatchmakingMonitor.Services
           _statsStatusChangedSubject.OnNext(StatsStatus.Fetching);
           var players = (await _apiService.Players(_currentReplay)).OrderByDescending(p => p.ShipType)
             .ThenByDescending(p => p.ShipTier).ToArray();
-          if (players.Count(p => p.AccountId != 0) > 6)
+          if (players.Count(p => p.AccountId != 0) != 0)
           {
             try
             {

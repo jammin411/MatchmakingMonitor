@@ -19,7 +19,7 @@ namespace MatchmakingMonitor
       Title += $" (v{Assembly.GetExecutingAssembly().GetName().Version})";
 
       _settingsWrapper = settingsWrapper;
-#if !DEBUG
+//#if !DEBUG
       Left = _settingsWrapper.CurrentSettings.LastWindowProperties.Left;
       Top = _settingsWrapper.CurrentSettings.LastWindowProperties.Top;
       if (_settingsWrapper.CurrentSettings.LastWindowProperties.Width > 0)
@@ -29,7 +29,7 @@ namespace MatchmakingMonitor
         Height = _settingsWrapper.CurrentSettings.LastWindowProperties.Height;
 
       WindowState = _settingsWrapper.CurrentSettings.LastWindowProperties.WindowState;
-#endif
+//#endif
     }
 
     private void WindowSizeChanged(object sender, SizeChangedEventArgs e)
@@ -41,15 +41,15 @@ namespace MatchmakingMonitor
     {
       var lwp = new LastWindowProperties();
       if (Left > 0)
-        lwp.Left = 0;
+        lwp.Left = Left;
       if (Top > 0)
-        lwp.Top = 0;
+        lwp.Top = Top;
       if (ActualWidth > 0)
-        lwp.Width = 0;
+        lwp.Width = ActualWidth;
       if (ActualHeight > 0)
-        lwp.Height = 0;
+        lwp.Height = ActualHeight;
       if (WindowState != WindowState.Minimized)
-        lwp.WindowState = 0;
+        lwp.WindowState = WindowState;
 
       _settingsWrapper.SetLastWindowProperties(lwp);
     }
