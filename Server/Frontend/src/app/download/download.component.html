@@ -1,16 +1,19 @@
 <div class="half-wrapper">
   <div>
-    <md-card class="download-card">
+    <mat-card class="download-card">
       <h1>Download</h1>
-      <md-card-content>
-        <md-select placeholder="Select version" [(ngModel)]="selectedVersion" (change)="selectVersion($event.value)">
-          <md-option *ngFor="let version of allVersions" [value]="version">
-            {{version}}
-          </md-option>
-        </md-select>
-        <button md-raised-button color="accent" (click)="startDownloading()">Download</button>
-      </md-card-content>
-      <md-card-content *ngIf="downloading">
+      <mat-card-content>
+        <mat-form-field>
+          <mat-select placeholder="Select version" [(ngModel)]="selectedVersion" (change)="selectVersion($event.value)">
+            <mat-option *ngFor="let version of allVersions" [value]="version">
+              {{version}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+       
+        <button mat-raised-button color="accent" (click)="startDownloading()">Download</button>
+      </mat-card-content>
+      <mat-card-content *ngIf="downloading">
         <p>
           <ng-container *ngIf="remaining > 0">
             Download starting in {{remaining}} seconds.
@@ -21,13 +24,13 @@
           <br/>
           Click <a (click)="clickHere($event)">here</a> if the download does not start automatically.
         </p>
-      </md-card-content>
-    </md-card>
+      </mat-card-content>
+    </mat-card>
 
 
-    <md-card class="instructions-card">
+    <mat-card class="instructions-card">
       <h2>Instructions</h2>
-      <md-card-content>
+      <mat-card-content>
         <ol>
           <li>
             Download the .zip file and extract it in a folder of your choice
@@ -39,22 +42,22 @@
             Start the .exe
           </li>
         </ol>
-      </md-card-content>
-    </md-card>
+      </mat-card-content>
+    </mat-card>
   </div>
   <div>
-    <md-card>
+    <mat-card>
       <h2>Changelogs</h2>
-      <md-card-content>
+      <mat-card-content>
         <div class="changelog-wrapper">
-          <md-list *ngIf="changelogs">
-            <a md-list-item (click)="openChangelog(c)" *ngFor="let c of changelogs"> {{c}} </a>
-          </md-list>
+          <mat-list *ngIf="changelogs">
+            <a mat-list-item (click)="openChangelog(c)" *ngFor="let c of changelogs"> {{c}} </a>
+          </mat-list>
           <p *ngIf="changelogs && changelogs.length === 0">
             No changelogs found
           </p>
         </div>
-      </md-card-content>
-    </md-card>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>

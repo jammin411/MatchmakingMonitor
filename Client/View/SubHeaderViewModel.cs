@@ -169,8 +169,7 @@ namespace MatchmakingMonitor.View
     private void InitPath()
     {
       var directory = _settingsWrapper.CurrentSettings.InstallDirectory;
-      if (Directory.Exists(Path.Combine(directory, "replays")) &&
-          File.Exists(Path.Combine(directory, "WorldOfWarships.exe")))
+      if (Directory.Exists(Path.Combine(directory, "replays")))
       {
         InstallDirectoryColor = Brushes.Green;
         InstallDirectoryText = directory;

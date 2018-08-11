@@ -1,4 +1,4 @@
-@import '../node_modules/@angular/material/_theming.scss';
+@import '~@angular/material/theming';
 
 @include mat-core();
 
@@ -10,129 +10,134 @@ $theme: mat-light-theme($primary, $accent);
 @include angular-material-theme($theme);
 
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-	margin: 0;
-	font-family: 'Roboto', sans-serif;
-	color: #333 !important;
-	background: #fafafa !important;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  color: #333 !important;
+  background: #fafafa !important;
 }
 
 h1, h2, h3, p {
-	margin-top: 0;
+  margin-top: 0;
 }
 
 h1,
 h1.mat-dialog-title {
-	font-size: 2em;
-	font-weight: 400;
-	margin-bottom: 2rem;
+  font-size: 2em;
+  font-weight: 400;
+  margin-bottom: 2rem;
 }
 
 h2 {
-	font-weight: 300;
-	margin-bottom: 0.7rem;
+  font-weight: 300;
+  margin-bottom: 0.7rem;
 }
 
 p {
-	font-size: 1.2rem;
-	line-height: 1.5rem;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
 
-	&.centered {
-		text-align: center;
-	}
+  &.centered {
+    text-align: center;
+  }
 }
 
 a {
-	cursor: pointer;
-	color: #3f51b5;
+  cursor: pointer;
+  color: #3f51b5;
 
-	&.unstyled {
-		text-decoration: none;
-		color: #FFF;
-	}
+  &.unstyled {
+    text-decoration: none;
+    color: #FFF;
+  }
 }
 
 ul {
-	margin: 0;
-	padding: 0;
-	margin-bottom: 20px;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 20px;
 
-	li {
-		margin: 0;
-		padding: 0;
-		margin-left: 20px;
-		margin-bottom: 5px;
-	}
+  li {
+    margin: 0;
+    padding: 0;
+    margin-left: 20px;
+    margin-bottom: 5px;
+  }
 }
 
 .spacer-hor {
-	height: 20px;
-	clear: both;
+  height: 20px;
+  clear: both;
 }
 
-.mat-toolbar-row {
-	.app-toolbar-filler {
-		flex: 1 1 auto;
-	}
+.mat-toolbar-single-row {
+  .app-toolbar-filler {
+    flex: 1 1 auto;
+  }
 }
 
 .app-inner {
-	max-width: 1200px;
-	width: 100%;
-	margin: auto;
-	padding-top: 20px;
-	//padding: 20px;
-	//background: #FFF
+  max-width: 1200px;
+  width: 100%;
+  margin: auto;
+  padding-top: 20px;
+  //padding: 20px;
+  //background: #FFF
 }
 
 .half-wrapper {
-	flex-direction: row;
-	display: flex;
+  flex-direction: row;
+  display: flex;
 
-	> div {
-		flex: 1;
+  > div {
+    flex: 1;
 
-		&:first-child {
-			margin-right: 10px;
-		}
+    &:first-child {
+      margin-right: 10px;
+    }
 
-		&:last-child {
-			margin-left: 10px;
-		}
-	}
+    &:last-child {
+      margin-left: 10px;
+    }
+  }
 }
 
 .download-card {
-	margin-bottom: 20px;
+  margin-bottom: 20px;
 
-	p {
-		text-align: center;
-	}
+  p {
+    text-align: center;
+  }
 }
 
 .instructions-card {
-	li {
-		font-size: 1.2rem;
-		margin-bottom: 0.8rem;
-	}
+  li {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+  }
 }
 
 form {
-	.row {
-		margin-bottom: 10px;
-	}
+  .row {
+    margin-bottom: 10px;
+  }
 
-	.full-width {
-		width: 100%;
-	}
+  .full-width {
+    width: 100%;
+  }
 
-	.form-error {
-		color: #f44336;
-	}
+  .form-error {
+    color: #f44336;
+  }
 }
 
 markdown {
+}
+
+iframe {
+  width: 100%;
+  height: 450px;
 }

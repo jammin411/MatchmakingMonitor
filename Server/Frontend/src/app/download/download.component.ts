@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+
+import { filter } from 'rxjs/operators';
 
 import { ApiService } from '../services/api.service';
 
@@ -20,8 +22,8 @@ export class DownloadComponent {
 
   public changelogs: string[];
 
-  constructor(private api: ApiService, private dialog: MdDialog, private activatedRoute: ActivatedRoute) {
-    this.activatedRoute.params.filter(p => p['version']).subscribe(p => {
+  constructor(private api: ApiService, private dialog: MatDialog, private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.params.pipe(filter(p => p['version'])).subscribe(p => {
       this.selectVersion(p['version']);
       this.api.getLatestVersion().subscribe(v => this.selectedVersion = v);
       this.startDownloading();
@@ -54,12 +56,12 @@ export class DownloadComponent {
     this.remaining = time;
     this.timeout = setTimeout(() => this.downloadLink(), time * 1000);
     this.interval = setInterval(() => {
-        if (this.remaining > 0) {
-          this.remaining--;
-        } else {
-          clearInterval(this.interval);
-        }
-      },
+      if (this.remaining > 0) {
+        this.remaining--;
+      } else {
+        clearInterval(this.interval);
+      }
+    },
       1000);
   }
 

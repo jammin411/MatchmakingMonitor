@@ -1,5 +1,6 @@
 ﻿using System;
 using MatchmakingMonitor.config;
+using Newtonsoft.Json;
 
 namespace MatchmakingMonitor.Services
 {
@@ -17,6 +18,8 @@ namespace MatchmakingMonitor.Services
         From1030(settings);
       if (settingsVersion.CompareTo(new Version("1.0.4.0")) <= 0)
         From1040(settings);
+      if (settingsVersion.CompareTo(new Version("1.1.0.4")) <= 0)
+        From1104(settings);
     }
 
     public static void From1000(SettingsJson settings)
@@ -39,6 +42,15 @@ namespace MatchmakingMonitor.Services
     {
       settings.AutomaticLimitsSync = true;
       settings.AutomaticAppUpdate = true;
+    }
+
+    public static void From1104(SettingsJson settings)
+    {
+      var defaults = JsonConvert.DeserializeObject<SettingsJson>(SettingsWrapper.Defaults());
+      settings.AppIds[0].Id = defaults.AppIds[0].Id;
+      settings.AppIds[1].Id = defaults.AppIds[1].Id;
+      settings.AppIds[2].Id = defaults.AppIds[2].Id;
+      settings.AppIds[3].Id = defaults.AppIds[3].Id;
     }
   }
 }

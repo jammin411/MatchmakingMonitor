@@ -115,7 +115,7 @@ namespace MatchmakingMonitor.Services
             if (player != null)
             {
               var statsUrl = ranked
-                ? $"wows/seasons/shipstats/?application_id={ApplicationId}&account_id={player.AccountId}&ship_id={replayVehicle.ShipId}&season_id=8"
+                ? $"wows/seasons/shipstats/?application_id={ApplicationId}&account_id={player.AccountId}&ship_id={replayVehicle.ShipId}&season_id=9"
                 : $"wows/ships/stats/?application_id={ApplicationId}&account_id={player.AccountId}&ship_id={replayVehicle.ShipId}";
               var shipStatsResponse = await _httpClient.GetAsync(statsUrl);
               if (shipStatsResponse.StatusCode == HttpStatusCode.OK)
@@ -123,7 +123,7 @@ namespace MatchmakingMonitor.Services
                 var shipStatsJson = await shipStatsResponse.Content.ReadAsStringAsync();
                 shipStatsJson = ranked
                   ? shipStatsJson.Replace("\"" + player.AccountId + "\":", "\"season_wrapper\":")
-                    .Replace("\"8\":", "\"season_data\":")
+                    .Replace("\"9\":", "\"season_data\":")
                   : shipStatsJson.Replace("\"" + player.AccountId + "\":", "\"Ships\":");
                 var shipStats = await Task.Run(() =>
                   JsonConvert.DeserializeObject<WgPlayerShipsStatsResult>(shipStatsJson));

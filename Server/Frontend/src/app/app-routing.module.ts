@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { DownloadComponent } from './download/download.component';
+import { PrivacyComponent } from './pricacy/privacy.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'download/:version',
     component: DownloadComponent
+  },
+  {
+    path: 'privacy',
+    component: PrivacyComponent
   }
 ];
 

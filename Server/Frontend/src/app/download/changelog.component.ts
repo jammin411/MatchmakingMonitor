@@ -1,11 +1,11 @@
 import { Component, Inject } from '@angular/core';
-import { MD_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'changelog-dialog',
   template:
-    '<h1 md-dialog-title>{{data.title}}</h1><md-dialog-content><markdown>{{data.text}}</markdown></md-dialog-content>'
+    '<h1 mat-dialog-title>{{data.title}}</h1><mat-dialog-content><markdown>{{data.text}}</markdown></mat-dialog-content>'
 })
 export class ChangelogDialog {
-  constructor(@Inject(MD_DIALOG_DATA) public data: any) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 }

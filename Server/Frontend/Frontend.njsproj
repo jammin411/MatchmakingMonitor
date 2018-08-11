@@ -5,6 +5,8 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>Frontend</Name>
     <RootNamespace>Frontend</RootNamespace>
+    <ToolsVersionPromptShown>0.0</ToolsVersionPromptShown>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -25,7 +27,7 @@
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
     <EnableTypeScript>true</EnableTypeScript>
-    <StartWebBrowser>false</StartWebBrowser>
+    <StartWebBrowser>False</StartWebBrowser>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,12 +36,13 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include=".angular-cli.json" />
+    <Content Include="angular.json" />
     <Content Include="package.json" />
     <Content Include="proxy.conf.json" />
     <Content Include="src\app\app.component.html" />
     <Content Include="src\app\download\download.component.html" />
     <Content Include="src\app\home\home.component.html" />
+    <Content Include="src\app\pricacy\privacy.component.html" />
     <Content Include="src\assets\.gitkeep" />
     <Content Include="src\favicon.ico" />
     <Content Include="src\index.html" />
@@ -56,6 +59,7 @@
     <Folder Include="src\app\" />
     <Folder Include="src\app\home\" />
     <Folder Include="src\app\download\" />
+    <Folder Include="src\app\pricacy\" />
     <Folder Include="src\app\services\" />
     <Folder Include="src\assets\" />
     <Folder Include="src\environments\" />
@@ -67,6 +71,7 @@
     <TypeScriptCompile Include="src\app\download\changelog.component.ts" />
     <TypeScriptCompile Include="src\app\download\download.component.ts" />
     <TypeScriptCompile Include="src\app\home\home.component.ts" />
+    <TypeScriptCompile Include="src\app\pricacy\privacy.component.ts" />
     <TypeScriptCompile Include="src\app\services\api.service.ts" />
     <TypeScriptCompile Include="src\environments\environment.prod.ts" />
     <TypeScriptCompile Include="src\environments\environment.ts" />

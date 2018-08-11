@@ -35,8 +35,7 @@ namespace MatchmakingMonitor.Services
       settingsWrapper.SettingChanged(nameof(SettingsJson.InstallDirectory)).Subscribe(key =>
       {
         var directory = settingsWrapper.CurrentSettings.InstallDirectory;
-        if (Directory.Exists(Path.Combine(directory, "replays")) &&
-            File.Exists(Path.Combine(directory, "WorldOfWarships.exe")))
+        if (Directory.Exists(Path.Combine(directory, "replays")))
         {
           fileSystemWatcher.Path = Path.Combine(directory, "replays");
           fileSystemWatcher.EnableRaisingEvents = true;

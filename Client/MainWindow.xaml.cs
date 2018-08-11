@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Forms;
 using MatchmakingMonitor.config;
 using MatchmakingMonitor.Services;
 
@@ -19,7 +20,7 @@ namespace MatchmakingMonitor
       Title += $" (v{Assembly.GetExecutingAssembly().GetName().Version})";
 
       _settingsWrapper = settingsWrapper;
-//#if !DEBUG
+
       Left = _settingsWrapper.CurrentSettings.LastWindowProperties.Left;
       Top = _settingsWrapper.CurrentSettings.LastWindowProperties.Top;
       if (_settingsWrapper.CurrentSettings.LastWindowProperties.Width > 0)
@@ -29,7 +30,6 @@ namespace MatchmakingMonitor
         Height = _settingsWrapper.CurrentSettings.LastWindowProperties.Height;
 
       WindowState = _settingsWrapper.CurrentSettings.LastWindowProperties.WindowState;
-//#endif
     }
 
     private void WindowSizeChanged(object sender, SizeChangedEventArgs e)
@@ -40,10 +40,8 @@ namespace MatchmakingMonitor
     protected override void OnClosing(CancelEventArgs e)
     {
       var lwp = new LastWindowProperties();
-      if (Left > 0)
-        lwp.Left = Left;
-      if (Top > 0)
-        lwp.Top = Top;
+      lwp.Left = Left;
+      lwp.Top = Top;
       if (ActualWidth > 0)
         lwp.Width = ActualWidth;
       if (ActualHeight > 0)

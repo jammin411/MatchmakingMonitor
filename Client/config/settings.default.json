@@ -8,19 +8,19 @@
   "appIds": [
     {
       "region": 0,
-      "id": "8c4616d4f59f9e915d214c514f7661f2"
+      "id": "ab4db4fb4c38d200d600dd4bcf6f3f0e"
     },
     {
       "region": 1,
-      "id": "04c8800d343d496e7ae9c94ba6e51a0b"
+      "id": "46c98851c21453f3222565addf85cc6b"
     },
     {
       "region": 2,
-      "id": "92669bcd3cb4978e78a387bdc2e7f8d6"
+      "id": "8a3bd5c28bbfef3ff12cd97dcd1a240c"
     },
     {
       "region": 3,
-      "id": "a7079ba49e5487b6936aed9176c13968"
+      "id": "6ce102e94ae822ebdad20e54dd4335ff"
     }
   ],
   "baseUrls": [
